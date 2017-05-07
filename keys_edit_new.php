@@ -206,7 +206,7 @@ foreach ($keys->mKeyFields as $keyField)
                     AND ( cat_org_id = '. $gCurrentOrganization->getValue('org_id'). '
                      OR cat_org_id IS NULL )) ';
             	
-			$sql = 'SELECT usr_id, CONCAT(last_name.usd_value , \', \', first_name.usd_value , \', \', postcode.usd_value, \' \', city.usd_value, \', \', street.usd_value) as name
+			$sql = 'SELECT usr_id, CONCAT(last_name.usd_value, \', \', first_name.usd_value,  IFNULL(CONCAT(\', \', postcode.usd_value),\'\'), IFNULL(CONCAT(\' \', city.usd_value),\'\'), IFNULL(CONCAT(\', \', street.usd_value),\'\')  ) as name
                       FROM '. TBL_USERS. '
                       JOIN '. TBL_USER_DATA. ' as last_name
                         ON last_name.usd_usr_id = usr_id
@@ -214,13 +214,13 @@ foreach ($keys->mKeyFields as $keyField)
                       JOIN '. TBL_USER_DATA. ' as first_name
                         ON first_name.usd_usr_id = usr_id
                        AND first_name.usd_usf_id = '. $gProfileFields->getProperty('FIRST_NAME', 'usf_id'). '
-                      JOIN '. TBL_USER_DATA. ' as postcode
+                 LEFT JOIN '. TBL_USER_DATA. ' as postcode
                         ON postcode.usd_usr_id = usr_id
                        AND postcode.usd_usf_id = '. $gProfileFields->getProperty('POSTCODE', 'usf_id'). '  		
-                      JOIN '. TBL_USER_DATA. ' as city
+                 LEFT JOIN '. TBL_USER_DATA. ' as city
                         ON city.usd_usr_id = usr_id
                        AND city.usd_usf_id = '. $gProfileFields->getProperty('CITY', 'usf_id'). '
-                      JOIN '. TBL_USER_DATA. ' as street
+                 LEFT JOIN '. TBL_USER_DATA. ' as street
                         ON street.usd_usr_id = usr_id
                        AND street.usd_usf_id = '. $gProfileFields->getProperty('ADDRESS', 'usf_id'). '
                      WHERE usr_valid = 1'.$memberCondition.' ORDER BY last_name.usd_value, first_name.usd_value';
