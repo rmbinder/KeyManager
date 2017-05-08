@@ -50,6 +50,7 @@
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Name des Plugins</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">bereite Daten für Druck vor...</string>
+    <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>    
     <string name="PLG_KEYMANAGER_ROLE_SELECTION">Rollenwahl</string>
     <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC">Wähle die Rollen aus, deren Mitglieder das Plugin aufrufen dürfen.</string>
     <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC2">Wähle die Rollen aus, deren Mitglieder die Einstellungen des Plugins aufrufen dürfen.</string>

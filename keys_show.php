@@ -26,11 +26,12 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
-$getMode          = admFuncVariableIsValid($_GET, 'mode',           'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
-$getFullScreen    = admFuncVariableIsValid($_GET, 'full_screen',    'bool');
-$getFilterString  = admFuncVariableIsValid($_GET, 'filter_string',  'string', array('defaultValue' => ''));
-$getFilterKeyName = admFuncVariableIsValid($_GET, 'filter_keyname', 'string', array('defaultValue' => ''));
-$getShowAll       = admFuncVariableIsValid($_GET, 'show_all',       'bool');
+$getMode           = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
+$getFullScreen     = admFuncVariableIsValid($_GET, 'full_screen',     'bool');
+$getFilterString   = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => ''));
+$getFilterKeyName  = admFuncVariableIsValid($_GET, 'filter_keyname',  'string', array('defaultValue' => ''));
+$getFilterReceiver = admFuncVariableIsValid($_GET, 'filter_receiver', 'int');
+$getShowAll        = admFuncVariableIsValid($_GET, 'show_all',        'bool');
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
@@ -160,9 +161,16 @@ if ($getMode !== 'csv')
         // create html page object
         $page = new HtmlPage();
 
+        $selectBoxKeyNameLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/key.png"
+            alt="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" />';
+        $selectBoxReceiverLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/profile.png"
+            alt="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" title="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" />';
+        
         if ($getFullScreen)
         {
             $page->hideThemeHtml();
+            $selectBoxKeyNameLabel = $gL10n->get('PLG_KEYMANAGER_KEYNAME');
+            $selectBoxReceiverLabel = $gL10n->get('PLG_KEYMANAGER_RECEIVER');
         }
 
         $page->setTitle($title);
@@ -178,7 +186,20 @@ if ($getMode !== 'csv')
                      INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
                              ON kmf_id = kmd_kmf_id
                           WHERE kmf_name_intern = \'KEYNAME\'  ';
-        $form->addSelectBoxFromSql('filter_keyname', $gL10n->get('PLG_KEYMANAGER_KEYNAME'), $gDb, $sql, array('defaultValue' => $getFilterKeyName , 'showContextDependentFirstEntry' => true));
+        $form->addSelectBoxFromSql('filter_keyname', $selectBoxKeyNameLabel, $gDb, $sql, array('defaultValue' => $getFilterKeyName , 'showContextDependentFirstEntry' => true));
+        // read all receiver
+        $sql = 'SELECT DISTINCT kmd_value, CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value)
+                           FROM '.TBL_KEYMANAGER_DATA.'
+                     INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
+                             ON kmf_id = kmd_kmf_id
+                      LEFT JOIN '. TBL_USER_DATA. ' as last_name
+                             ON last_name.usd_usr_id = kmd_value
+                            AND last_name.usd_usf_id = '. $gProfileFields->getProperty('LAST_NAME', 'usf_id'). '
+                      LEFT JOIN '. TBL_USER_DATA. ' as first_name
+                             ON first_name.usd_usr_id = kmd_value
+                            AND first_name.usd_usf_id = '. $gProfileFields->getProperty('FIRST_NAME', 'usf_id'). '
+                          WHERE kmf_name_intern = \'RECEIVER\'  ';
+        $form->addSelectBoxFromSql('filter_receiver',$selectBoxReceiverLabel, $gDb, $sql, array('defaultValue' => $getFilterReceiver , 'showContextDependentFirstEntry' => true));
         $form->addInput('show_all', '', $getShowAll, array('property' => FIELD_HIDDEN));
         $form->addInput('full_screen', '', $getFullScreen, array('property' => FIELD_HIDDEN));      
         $form->addSubmitButton('btn_send', $gL10n->get('SYS_OK'));
@@ -192,12 +213,12 @@ if ($getMode !== 'csv')
                     var result = $(this).val();
                     $(this).prop("selectedIndex", 0);
                     self.location.href = "'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?" +
-                        "mode=" + result + "&filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&show_all='.$getShowAll.'";
+                        "mode=" + result + "&filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'";
                 }
             });
 
             $("#menu_item_print_view").click(function() {
-                window.open("'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&show_all='.$getShowAll.'&mode=print", "_blank");
+                window.open("'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'&mode=print", "_blank");
             });',
             true
         );
@@ -209,23 +230,23 @@ if ($getMode !== 'csv')
 
         if ($getFullScreen)
         {
-            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=false',
+            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=false',
                 $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=true',
+            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=true',
                 $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
         }
 
         if ($getShowAll == true)
         {
-        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=0',
+        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=0',
         			$gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), 'checkbox_checked.gif');
         }
         else
         {
-        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=1',
+        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=1',
         			$gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), 'checkbox.gif');
         }
         
@@ -381,7 +402,8 @@ foreach ($keys->keys as $key)
     {
         $kmfNameIntern = $keyField->getValue('kmf_name_intern');
         
-        if ($getFilterKeyName <> '' && $kmfNameIntern === 'KEYNAME' && $getFilterKeyName !=  $keys->getValue($kmfNameIntern, 'database') )
+        if (($getFilterKeyName <> '' && $kmfNameIntern === 'KEYNAME' && $getFilterKeyName !=  $keys->getValue($kmfNameIntern, 'database'))
+        	|| ($getFilterReceiver <> 0 && $kmfNameIntern === 'RECEIVER' && $getFilterReceiver !=  $keys->getValue($kmfNameIntern)))
         {
         	continue 2;
         }

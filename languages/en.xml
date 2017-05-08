@@ -50,6 +50,7 @@
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Plug-in name</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">Ready data for printing ...</string>
+    <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>    
     <string name="PLG_KEYMANAGER_ROLE_SELECTION">Role selection</string>
     <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC">Choose from the rollers, whose members may call the plugin.</string>
     <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC2">Choose from the rollers, whose members may access the settings of the plugin.</string>
