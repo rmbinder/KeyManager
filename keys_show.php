@@ -198,7 +198,8 @@ if ($getMode !== 'csv')
                       LEFT JOIN '. TBL_USER_DATA. ' as first_name
                              ON first_name.usd_usr_id = kmd_value
                             AND first_name.usd_usf_id = '. $gProfileFields->getProperty('FIRST_NAME', 'usf_id'). '
-                          WHERE kmf_name_intern = \'RECEIVER\'  ';
+                          WHERE kmf_name_intern = \'RECEIVER\'
+                       ORDER BY CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value) ASC';
         $form->addSelectBoxFromSql('filter_receiver',$selectBoxReceiverLabel, $gDb, $sql, array('defaultValue' => $getFilterReceiver , 'showContextDependentFirstEntry' => true));
         $form->addInput('show_all', '', $getShowAll, array('property' => FIELD_HIDDEN));
         $form->addInput('full_screen', '', $getFullScreen, array('property' => FIELD_HIDDEN));      
