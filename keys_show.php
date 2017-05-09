@@ -185,7 +185,8 @@ if ($getMode !== 'csv')
                            FROM '.TBL_KEYMANAGER_DATA.'
                      INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
                              ON kmf_id = kmd_kmf_id
-                          WHERE kmf_name_intern = \'KEYNAME\'  ';
+                          WHERE kmf_name_intern = \'KEYNAME\' 
+                       ORDER BY kmd_value ASC';
         $form->addSelectBoxFromSql('filter_keyname', $selectBoxKeyNameLabel, $gDb, $sql, array('defaultValue' => $getFilterKeyName , 'showContextDependentFirstEntry' => true));
         // read all receiver
         $sql = 'SELECT DISTINCT kmd_value, CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value)
