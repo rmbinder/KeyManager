@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Versionsdatei fuer das Admidio-Plugin KeyManager
+ * Version file for the Admidio plugin KeyManager
  * 
  * @copyright 2004-2017 The Admidio Team
  * @see https://www.admidio.org/
@@ -9,5 +9,5 @@
  ***********************************************************************************************
  */
 
-$plugin_version = '1.0';
-$plugin_stand   = '30.04.2017';
+$plugin_version = '1.0.1';
+$plugin_stand   = '09.05.2017';
