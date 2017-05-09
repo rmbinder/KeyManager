@@ -161,6 +161,8 @@ if ($getMode !== 'csv')
         // create html page object
         $page = new HtmlPage();
 
+        $inputFilterStringLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/list.png"
+            alt="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" title="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" />';
         $selectBoxKeyNameLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/key.png"
             alt="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" />';
         $selectBoxReceiverLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/profile.png"
@@ -169,6 +171,7 @@ if ($getMode !== 'csv')
         if ($getFullScreen)
         {
             $page->hideThemeHtml();
+            $inputFilterStringLabel = $gL10n->get('PLG_KEYMANAGER_GENERAL');
             $selectBoxKeyNameLabel = $gL10n->get('PLG_KEYMANAGER_KEYNAME');
             $selectBoxReceiverLabel = $gL10n->get('PLG_KEYMANAGER_RECEIVER');
         }
@@ -179,7 +182,7 @@ if ($getMode !== 'csv')
         // create filter menu
         $filterNavbar = new HtmlNavbar('menu_list_filter', null, null, 'filter');
         $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_show.php', $page, array('type' => 'navbar', 'setFocus' => false));
-        $form->addInput('filter_string', $gL10n->get('PLG_KEYMANAGER_GENERAL'), $getFilterString);
+        $form->addInput('filter_string', $inputFilterStringLabel, $getFilterString);
         // read all keynames
         $sql = 'SELECT DISTINCT kmd_value, kmd_value
                            FROM '.TBL_KEYMANAGER_DATA.'
