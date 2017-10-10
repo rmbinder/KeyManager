@@ -96,17 +96,17 @@ $title = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 $headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 
 // if html mode and last url was not a list view then save this url to navigation stack
-if ($getMode === 'html' && strpos($gNavigation->getUrl(), 'keys_show.php') === false)
+if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keys_show.php') === false)
 {
     $gNavigation->addUrl(CURRENT_URL);
 }
 
-if ($getMode !== 'csv')
+if ($getMode != 'csv')
 {
     $datatable = false;
     $hoverRows = false;
 
-    if ($getMode === 'print')
+    if ($getMode == 'print')
     {
         // create html page object without the custom theme files
         $page = new HtmlPage();
@@ -117,7 +117,7 @@ if ($getMode !== 'csv')
         $page->setHeadline($headline);
         $table = new HtmlTable('adm_keys_table', $page, $hoverRows, $datatable, $classTable);
     }
-    elseif ($getMode === 'pdf')
+    elseif ($getMode == 'pdf')
     {
         require_once(ADMIDIO_PATH . FOLDER_LIBS_SERVER . '/tcpdf/tcpdf.php');
         $pdf = new TCPDF($orientation, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -153,7 +153,7 @@ if ($getMode !== 'csv')
         $table = new HtmlTable('adm_keys_table', null, $hoverRows, $datatable, $classTable);
         $table->addAttribute('border', '1');
     }
-    elseif ($getMode === 'html')
+    elseif ($getMode == 'html')
     {
         $datatable = true;
         $hoverRows = true;
@@ -289,7 +289,7 @@ if ($getMode !== 'csv')
 }
 
 // initialize array parameters for table and set the first column for the counter
-if ($getMode === 'html')
+if ($getMode == 'html')
 {
     $columnAlign  = array('left');
     $columnValues = array($gL10n->get('SYS_ABR_NO'));
@@ -309,14 +309,14 @@ foreach ($keys->mKeyFields as $keyField)
   
     $columnHeader = convlanguagePKM($keys->getProperty($kmfNameIntern, 'kmf_name'));
 
-    if ($keys->getProperty($kmfNameIntern, 'kmf_type') === 'CHECKBOX'
-        ||  $keys->getProperty($kmfNameIntern, 'kmf_type') === 'RADIO_BUTTON'
-        ||  $keys->getProperty($kmfNameIntern, 'kmf_type') === 'GENDER')
+    if ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'CHECKBOX'
+        ||  $keys->getProperty($kmfNameIntern, 'kmf_type') == 'RADIO_BUTTON'
+        ||  $keys->getProperty($kmfNameIntern, 'kmf_type') == 'GENDER')
     {
         $columnAlign[] = 'center';
     }
-    elseif ($keys->getProperty($kmfNameIntern, 'kmf_type') === 'NUMBER'
-       ||   $keys->getProperty($kmfNameIntern, 'kmf_type') === 'DECIMAL')
+    elseif ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'NUMBER'
+       ||   $keys->getProperty($kmfNameIntern, 'kmf_type') == 'DECIMAL')
     {
         $columnAlign[] = 'right';
     }
@@ -325,27 +325,27 @@ foreach ($keys->mKeyFields as $keyField)
         $columnAlign[] = 'left';
     }
 
-    if ($getMode === 'csv' && $columnNumber === 1)
+    if ($getMode == 'csv' && $columnNumber === 1)
     {
         // add serial
         $csvStr .= $valueQuotes.$gL10n->get('SYS_ABR_NO').$valueQuotes;
     }
 
-    if ($getMode === 'pdf' && $columnNumber === 1)
+    if ($getMode == 'pdf' && $columnNumber === 1)
     {
         // add serial
         $arrValidColumns[] = $gL10n->get('SYS_ABR_NO');
     }
     
-    if ($getMode === 'csv')
+    if ($getMode == 'csv')
     {
         $csvStr .= $separator.$valueQuotes.$columnHeader.$valueQuotes;
     }
-    elseif ($getMode === 'pdf')
+    elseif ($getMode == 'pdf')
     {
         $arrValidColumns[] = $columnHeader;
     }
-    elseif ($getMode === 'html' || $getMode === 'print')
+    elseif ($getMode == 'html' || $getMode == 'print')
     {
         $columnValues[] = $columnHeader;
     }
@@ -353,23 +353,23 @@ foreach ($keys->mKeyFields as $keyField)
  	$columnNumber++;
 }  // End-For
 
-if ($getMode === 'html')    //change/delete/print button only in html-view
+if ($getMode == 'html')    //change/delete/print button only in html-view
 {
 	$columnAlign[]  = 'center';
 	$columnValues[] = '&nbsp;';
 	$table->disableDatatablesColumnsSort(array(count($columnValues)));
 }
 
-if ($getMode === 'csv')
+if ($getMode == 'csv')
 {
     $csvStr .= "\n";
 }
-elseif ($getMode === 'html' || $getMode === 'print')
+elseif ($getMode == 'html' || $getMode == 'print')
 {
     $table->setColumnAlignByArray($columnAlign);
     $table->addRowHeadingByArray($columnValues);
 }
-elseif ($getMode === 'pdf')
+elseif ($getMode == 'pdf')
 {
     $table->setColumnAlignByArray($columnAlign);
     $table->addTableHeader();
@@ -407,8 +407,8 @@ foreach ($keys->keys as $key)
     {
         $kmfNameIntern = $keyField->getValue('kmf_name_intern');
         
-        if (($getFilterKeyName <> '' && $kmfNameIntern === 'KEYNAME' && $getFilterKeyName !=  $keys->getValue($kmfNameIntern, 'database'))
-        	|| ($getFilterReceiver <> 0 && $kmfNameIntern === 'RECEIVER' && $getFilterReceiver !=  $keys->getValue($kmfNameIntern)))
+        if (($getFilterKeyName <> '' && $kmfNameIntern == 'KEYNAME' && $getFilterKeyName !=  $keys->getValue($kmfNameIntern, 'database'))
+        	|| ($getFilterReceiver <> 0 && $kmfNameIntern == 'RECEIVER' && $getFilterReceiver !=  $keys->getValue($kmfNameIntern)))
         {
         	continue 2;
         }
@@ -429,10 +429,10 @@ foreach ($keys->keys as $key)
         
    		$content = $keys->getValue($kmfNameIntern, 'database');
    			
-		if ($kmfNameIntern === 'RECEIVER' && strlen($content) > 0)
+		if ($kmfNameIntern == 'RECEIVER' && strlen($content) > 0)
         {
         	$user->readDataById($content);
-          	if ($getMode === 'html')
+          	if ($getMode == 'html')
           	{
           		$content = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$content.'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';	
           	}
@@ -442,19 +442,19 @@ foreach ($keys->keys as $key)
           	}
         }
           
-		if ($kmfNameIntern === 'KEYNAME' && $getMode === 'html')
+		if ($kmfNameIntern == 'KEYNAME' && $getMode == 'html')
         {
           	$content = '<a href="'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_edit_new.php?key_id='.$key['kmk_id'].'">'.$content.'</a>';
         }
           
-        if ($keys->getProperty($kmfNameIntern, 'kmf_type') === 'CHECKBOX')
+        if ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'CHECKBOX')
         {
         	if ($content != 1)
             {
             	$content = 0;
             }
             	
-            if ($getMode === 'csv')
+            if ($getMode == 'csv' || $getMode == 'pdf')
             {
             	if ($content == 1)
                 {
@@ -470,14 +470,14 @@ foreach ($keys->keys as $key)
             	$content = $keys->getHtmlValue($kmfNameIntern, $content);
             }
         }
-        elseif ($keys->getProperty($kmfNameIntern, 'kmf_type') === 'DATE')
+        elseif ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'DATE')
         {
             $content = $keys->getHtmlValue($kmfNameIntern, $content);
         }
-        elseif ($keys->getProperty($kmfNameIntern, 'kmf_type') === 'DROPDOWN'
-             || $keys->getProperty($kmfNameIntern, 'kmf_type') === 'RADIO_BUTTON')
+        elseif ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'DROPDOWN'
+             || $keys->getProperty($kmfNameIntern, 'kmf_type') == 'RADIO_BUTTON')
         {
-        	if ($getMode === 'csv')
+        	if ($getMode == 'csv')
             {
             	$arrListValues = $keys->getProperty($kmfNameIntern, 'kmf_value_list', 'text');
             	$content = $arrListValues[$content];
@@ -489,7 +489,7 @@ foreach ($keys->keys as $key)
         }
 
         // format value for csv export
-        if ($getMode === 'csv')
+        if ($getMode == 'csv')
         {
         	$tmp_csv .= $separator.$valueQuotes.$content.$valueQuotes;
         }
@@ -508,7 +508,7 @@ foreach ($keys->keys as $key)
    		$columnNumber++;
     }
     
-    if ($getMode === 'html')    //Change/Delete/Print button only in html view
+    if ($getMode == 'html')    //Change/Delete/Print button only in html view
     {
     	$tempValue = '';
     	
@@ -533,7 +533,7 @@ foreach ($keys->keys as $key)
     //pruefung auf filterstring
     if ($getFilterString == '' || ($getFilterString <> '' && (stristr(implode('',$columnValues), $getFilterString  ) || stristr($tmp_csv, $getFilterString))))
     {
-    	if ($getMode === 'csv')
+    	if ($getMode == 'csv')
     	{
         	$csvStr .= $tmp_csv. "\n";
     	}
@@ -546,10 +546,8 @@ foreach ($keys->keys as $key)
     ++$listRowNumber;
 }  // End-While (end found key)
 
-$filename = '';
-
 // Settings for export file
-if ($getMode === 'csv' || $getMode === 'pdf')
+if ($getMode == 'csv' || $getMode == 'pdf')
 {
     // file name in the current directory...
     $filename .= '.'.$getMode;
@@ -567,12 +565,12 @@ if ($getMode === 'csv' || $getMode === 'pdf')
     header('Pragma: public');
 }
 
-if ($getMode === 'csv')
+if ($getMode == 'csv')
 {
     // download CSV file
     header('Content-Type: text/comma-separated-values; charset='.$charset);
 
-    if ($charset === 'iso-8859-1')
+    if ($charset == 'iso-8859-1')
     {
         echo utf8_decode($csvStr);
     }
@@ -582,7 +580,7 @@ if ($getMode === 'csv')
     }
 }
 // send the new PDF to the User
-elseif ($getMode === 'pdf')
+elseif ($getMode == 'pdf')
 {
 	// output the HTML content
 	$pdf->writeHTML($table->getHtmlTable(), true, false, true, false, '');
@@ -597,7 +595,7 @@ elseif ($getMode === 'pdf')
 	ignore_user_abort(true);
 	unlink(ADMIDIO_PATH . FOLDER_DATA . '/'.$filename);
 }
-elseif ($getMode === 'html' || $getMode === 'print')
+elseif ($getMode == 'html' || $getMode == 'print')
 {
     // add table list to the page
     $page->addHtml($table->show());
