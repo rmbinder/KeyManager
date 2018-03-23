@@ -71,7 +71,7 @@ function checkShowPluginPKM($array)
 
     foreach ($array as $i)
     {
-        if ($gCurrentUser->isMemberOfRole($i))
+        if ($gCurrentUser->isMemberOfRole((int) $i))
         {
             $showPlugin = true;
         } 

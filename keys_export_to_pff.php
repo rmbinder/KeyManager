@@ -29,7 +29,7 @@ $pPreferences->read();
 
 if (substr_count($gNavigation->getUrl(), 'keys_export_to_pff') === 1)
 {
-	admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder. '/keys_show.php');
+	admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder. '/keymanager.php');
 	// => EXIT
 }
     
