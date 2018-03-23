@@ -35,7 +35,7 @@ require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
 // Einbinden der Sprachdatei
-$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . $plugin_folder. '/languages');
+$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER. '/languages');
 
 $getMode           = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
 $getFullScreen     = admFuncVariableIsValid($_GET, 'full_screen',     'bool');
@@ -199,7 +199,7 @@ if ($getMode != 'csv')
 
         // create filter menu
         $filterNavbar = new HtmlNavbar('menu_list_filter', null, null, 'filter');
-        $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php', $page, array('type' => 'navbar', 'setFocus' => false));
+        $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', $page, array('type' => 'navbar', 'setFocus' => false));
         $form->addInput('filter_string', $inputFilterStringLabel, $getFilterString);
         // read all keynames
         $sql = 'SELECT DISTINCT kmd_value, kmd_value
@@ -235,13 +235,13 @@ if ($getMode != 'csv')
                 if ($(this).val().length > 1) {
                     var result = $(this).val();
                     $(this).prop("selectedIndex", 0);
-                    self.location.href = "'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php?" +
+                    self.location.href = "'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?" +
                         "mode=" + result + "&filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'";
                 }
             });
 
             $("#menu_item_print_view").click(function() {
-                window.open("'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php?filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'&mode=print", "_blank");
+                window.open("'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'&mode=print", "_blank");
             });',
             true
         );
@@ -253,23 +253,23 @@ if ($getMode != 'csv')
 
         if ($getFullScreen)
         {
-            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=false',
+            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=false',
                 $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=true',
+            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=true',
                 $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
         }
 
         if ($getShowAll == true)
         {
-        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=0',
+        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=0',
         			$gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), 'checkbox_checked.gif');
         }
         else
         {
-        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=1',
+        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=1',
         			$gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), 'checkbox.gif');
         }
         
@@ -280,9 +280,9 @@ if ($getMode != 'csv')
         
         if (checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
         {
-        	$listsMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_edit_new.php?key_id=0',
+        	$listsMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id=0',
         			$gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'add.png', 'left', 'menu_item_extras');
-        	$listsMenu->addItem('menu_prefs', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences.php',
+        	$listsMenu->addItem('menu_prefs', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php',
         			$gL10n->get('PLG_KEYMANAGER_SETTINGS'), 'options.png', 'left', 'menu_item_extras');
         }
 
@@ -462,7 +462,7 @@ foreach ($keys->keys as $key)
           
 		if ($kmfNameIntern == 'KEYNAME' && $getMode == 'html')
         {
-          	$content = '<a href="'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_edit_new.php?key_id='.$key['kmk_id'].'">'.$content.'</a>';
+          	$content = '<a href="'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id='.$key['kmk_id'].'">'.$content.'</a>';
         }
           
         if ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'CHECKBOX')
@@ -530,18 +530,18 @@ foreach ($keys->keys as $key)
     {
     	$tempValue = '';
     	
-    	$tempValue .='<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/keys_edit_new.php?key_id='.$key['kmk_id'].'">';
+    	$tempValue .='<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_edit_new.php?key_id='.$key['kmk_id'].'">';
     	$tempValue .='<img src="'.THEME_PATH.'/icons/edit.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_EDIT').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_EDIT').'"/>';
     	$tempValue .='</a>&nbsp;&nbsp;';
     	if ($pPreferences->isPffInst())
     	{
-    		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/keys_export_to_pff.php?key_id='.$key['kmk_id'].'">';
+    		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_export_to_pff.php?key_id='.$key['kmk_id'].'">';
     		$tempValue .='<img src="'.THEME_PATH.'/icons/print.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'" /></a>';
     		$tempValue .='</a>&nbsp;&nbsp;';
     	}
     	if (checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
     	{
-    		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/keys_delete.php?key_id='.$key['kmk_id'].'&key_former='.$key['kmk_former'].'">';
+    		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php?key_id='.$key['kmk_id'].'&key_former='.$key['kmk_former'].'">';
     		$tempValue .='<img src="'.THEME_PATH.'/icons/delete.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'" /></a>';
     	}
     	

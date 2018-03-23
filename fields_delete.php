@@ -74,7 +74,7 @@ switch ($getMode)
     	$page->addHtml('<p class="lead">'.$gL10n->get('PLG_KEYMANAGER_KEYFIELD_DELETE_DESC').'</p>');
     		
     	// show form
-    	$form = new HtmlForm('keyfield_delete_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/fields_delete.php?kmf_id='.$getKmfId.'&mode=2', $page);
+    	$form = new HtmlForm('keyfield_delete_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php?kmf_id='.$getKmfId.'&mode=2', $page);
     	
     	$form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
     			array('maxLength' => 100, 'property' => FIELD_DISABLED));

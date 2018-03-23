@@ -93,7 +93,7 @@ $profileFieldsEditMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl()
 
 // show form
 $form = new HtmlForm('key_fields_edit_form',
-                     ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/fields_function.php?kmf_id='.$getKmfId.'&amp;mode=1', $page);
+                     ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_function.php?kmf_id='.$getKmfId.'&amp;mode=1', $page);
 
 if ($keyField->getValue('kmf_system') == 1)
 {

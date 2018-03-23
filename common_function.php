@@ -13,8 +13,10 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 
 global $g_tbl_praefix;
 
-$plugin_folder = '/'.substr(__DIR__,strrpos(__DIR__,DIRECTORY_SEPARATOR)+1);
-
+if(!defined('PLUGIN_FOLDER'))
+{
+	define('PLUGIN_FOLDER', '/'.substr(__DIR__,strrpos(__DIR__,DIRECTORY_SEPARATOR)+1));
+}
 if (!defined('TBL_KEYMANAGER_FIELDS'))
 {
 	define('TBL_KEYMANAGER_FIELDS',  $g_tbl_praefix . '_keymanager_fields');

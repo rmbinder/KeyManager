@@ -96,10 +96,10 @@ switch ($getMode)
     		);
     	 }	
     	
-    	$form->addButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => THEME_URL .'/icons/delete.png', 'link' => ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/keys_delete.php?key_id='.$getKeyId.'&mode=2', 'class' => 'btn-primary col-sm-offset-3'));
+    	$form->addButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => THEME_URL .'/icons/delete.png', 'link' => ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php?key_id='.$getKeyId.'&mode=2', 'class' => 'btn-primary col-sm-offset-3'));
     	if (!$getKeyFormer)
     	{
-    		$form->addButton('btn_former', $gL10n->get('PLG_KEYMANAGER_FORMER'), array('icon' => THEME_URL .'/icons/eye_gray.png', 'link' => ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/keys_delete.php?key_id='.$getKeyId.'&mode=3', 'class' => 'btn-primary col-sm-offset-3'));
+    		$form->addButton('btn_former', $gL10n->get('PLG_KEYMANAGER_FORMER'), array('icon' => THEME_URL .'/icons/eye_gray.png', 'link' => ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php?key_id='.$getKeyId.'&mode=3', 'class' => 'btn-primary col-sm-offset-3'));
     		$form->addCustomContent('', '<br />'.$gL10n->get('PLG_KEYMANAGER_KEY_MAKE_TO_FORMER'));
     	}
     	

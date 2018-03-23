@@ -96,7 +96,7 @@ $fieldsMenu = $page->getMenu();
 $fieldsMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
 
 // define link to create new key field
-$fieldsMenu->addItem('menu_item_new_field', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/fields_edit_new.php',
+$fieldsMenu->addItem('menu_item_new_field', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php',
                      $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), 'add.png');
 
 // Create table
@@ -156,7 +156,7 @@ foreach ($keys->mKeyFields as $keyField)
                         'NUMBER'       => $gL10n->get('SYS_NUMBER'),
                         'DECIMAL'      => $gL10n->get('SYS_DECIMAL_NUMBER'));
 
-    $kmfSystem = '<a class="admidio-icon-link" href="'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/fields_edit_new.php?kmf_id='.$keyField->getValue('kmf_id').'"><img
+    $kmfSystem = '<a class="admidio-icon-link" href="'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php?kmf_id='.$keyField->getValue('kmf_id').'"><img
                     src="'.THEME_URL.'/icons/edit.png" alt="'.$gL10n->get('SYS_EDIT').'" title="'.$gL10n->get('SYS_EDIT').'" /></a>';
 
     if ($keyField->getValue('kmf_system') == 1)
@@ -165,13 +165,13 @@ foreach ($keys->mKeyFields as $keyField)
     }
     else
     {
-    	$kmfSystem .= '<a class="admidio-icon-link" href="'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/fields_delete.php?kmf_id='.$keyField->getValue('kmf_id').'"><img
+    	$kmfSystem .= '<a class="admidio-icon-link" href="'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php?kmf_id='.$keyField->getValue('kmf_id').'"><img
                     src="'.THEME_URL.'/icons/delete.png" alt="'.$gL10n->get('SYS_DELETE').'" title="'.$gL10n->get('SYS_DELETE').'" /></a>';
     }
 
     // create array with all column values
     $columnValues = array(
-        '<a href="'.ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/fields_edit_new.php?kmf_id='.$keyField->getValue('kmf_id').'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a>
+        '<a href="'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php?kmf_id='.$keyField->getValue('kmf_id').'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a>
         <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\'up\', '.$keyField->getValue('kmf_id').')">
             <img src="'.THEME_URL.'/icons/arrow_up.png" alt="'.$gL10n->get('ORG_FIELD_UP').'" title="'.$gL10n->get('ORG_FIELD_UP').'" /></a>
         <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\'down\', '.$keyField->getValue('kmf_id').')">

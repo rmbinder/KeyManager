@@ -144,7 +144,7 @@ $page->addHtml('
                 	<div id="collapse_interface_pff" class="panel-collapse collapse">
                     	<div class="panel-body">');
                         	// show form
-                    		$form = new HtmlForm('interface_pff_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences_function.php?form=interface_pff', $page, array('class' => 'form-preferences'));
+                    		$form = new HtmlForm('interface_pff_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php?form=interface_pff', $page, array('class' => 'form-preferences'));
                         	$form->addSelectBox('interface_pff', $gL10n->get('PLG_KEYMANAGER_CONFIGURATION'), $pPreferences->configpff['Formular']['desc'], array( 'defaultValue' => $pPreferences->config['Optionen']['interface_pff'], 'showContextDependentFirstEntry' => false));
                         	$form->addCustomContent('', '<br/>'.$gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF_DESC'));
                         	$form->addSubmitButton('btn_save_interface_pff', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL .'/icons/disk.png', 'class' => ' col-sm-offset-3'));
@@ -165,7 +165,7 @@ $page->addHtml('
                 <div id="collapse_plugin_control" class="panel-collapse collapse">
                     <div class="panel-body">');
                         // show form
-                        $form = new HtmlForm('plugin_control_preferences_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences_function.php?form=plugin_control', $page, array('class' => 'form-preferences'));
+                        $form = new HtmlForm('plugin_control_preferences_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php?form=plugin_control', $page, array('class' => 'form-preferences'));
                         $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
                                 FROM '.TBL_CATEGORIES.' AS cat, '.TBL_ROLES.' AS rol
                                 WHERE cat.cat_id = rol.rol_cat_id

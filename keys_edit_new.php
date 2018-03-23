@@ -64,7 +64,7 @@ if ($getKeyId != 0)
 	// show link to view profile field change history
 	if ($gPreferences['profile_log_edit_fields'] == 1)
 	{
-		$keyEditMenu->addItem('menu_item_change_history', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_history.php?key_id='.$getKeyId,
+		$keyEditMenu->addItem('menu_item_change_history', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php?key_id='.$getKeyId,
 			$gL10n->get('MEM_CHANGE_HISTORY'), 'clock.png');
 	}
 
@@ -72,23 +72,23 @@ if ($getKeyId != 0)
 
 	if (checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
 	{
-		$keyEditMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_edit_new.php?key_id=0',
+		$keyEditMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id=0',
 			$gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'add.png', 'left', 'menu_item_extras');
-		$keyEditMenu->addItem('menu_copy_key', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_edit_new.php?key_id='.$getKeyId.'&copy=1',
+		$keyEditMenu->addItem('menu_copy_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id='.$getKeyId.'&copy=1',
 			$gL10n->get('PLG_KEYMANAGER_KEY_COPY'), 'add.png', 'left', 'menu_item_extras');
-		$keyEditMenu->addItem('menu_delete_key', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_delete.php?key_id='.$getKeyId,
+		$keyEditMenu->addItem('menu_delete_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php?key_id='.$getKeyId,
 			$gL10n->get('PLG_KEYMANAGER_KEY_DELETE'), 'delete.png', 'left', 'menu_item_extras');
 	}
 
 	if ($pPreferences->isPffInst())
 	{
-		$keyEditMenu->addItem('menu_print_key', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_export_to_pff.php?key_id='.$getKeyId,
+		$keyEditMenu->addItem('menu_print_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_export_to_pff.php?key_id='.$getKeyId,
 			$gL10n->get('PLG_KEYMANAGER_KEY_PRINT'), 'print.png', 'left', 'menu_item_extras');
 	}
 }
 
 // create html form
-$form = new HtmlForm('edit_key_form', ADMIDIO_URL. FOLDER_PLUGINS . $plugin_folder .'/keys_save.php?key_id='.$getKeyId, $page);
+$form = new HtmlForm('edit_key_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_save.php?key_id='.$getKeyId, $page);
 
 foreach ($keys->mKeyFields as $keyField)
 {
