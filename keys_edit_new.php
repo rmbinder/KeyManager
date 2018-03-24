@@ -70,7 +70,7 @@ if ($getKeyId != 0)
 
 	$keyEditMenu->addItem('menu_item_extras', null, $gL10n->get('SYS_MORE_FEATURES'), null, 'left');  
 
-	if (checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+	if ($gCurrentUser->isAdministrator())
 	{
 		$keyEditMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id=0',
 			$gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'add.png', 'left', 'menu_item_extras');
@@ -92,7 +92,7 @@ $form = new HtmlForm('edit_key_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDE
 
 foreach ($keys->mKeyFields as $keyField)
 {
-	if (!checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+	if (!$gCurrentUser->isAdministrator())
 	{
 		$fieldProperty = FIELD_DISABLED;
 	}
@@ -116,7 +116,7 @@ foreach ($keys->mKeyFields as $keyField)
         $form->addInput('dummy','dummy', 'dummy', array('type' => 'date', 'property' => FIELD_HIDDEN) );
     }
 
-    if ($keys->getProperty($kmfNameIntern, 'kmf_mandatory') == 1 && checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+    if ($keys->getProperty($kmfNameIntern, 'kmf_mandatory') == 1 && $gCurrentUser->isAdministrator())
     {
         // set mandatory field
         $fieldProperty = FIELD_REQUIRED;

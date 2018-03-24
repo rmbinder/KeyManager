@@ -41,19 +41,16 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">In der Schlüsselfeldpflege können Schlüsselfelder angelegt und bearbeitet werden.</string>
     <string name="PLG_KEYMANAGER_KEYMANAGER">Schlüsselverwalter</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Schlüsselname</string>
+    <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string>        
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Neu</string>
     <string name="PLG_KEYMANAGER_ORG_CHOICE">Organisationswahl</string>    
-    <string name="PLG_KEYMANAGER_PLUGIN_CONTROL">Pluginfreigabe</string>
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">Stand</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plugininformationen</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Name des Plugins</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">bereite Daten für Druck vor...</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>    
-    <string name="PLG_KEYMANAGER_ROLE_SELECTION">Rollenwahl</string>
-    <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC">Wählen Sie die Rollen aus, deren Mitglieder das Plugin aufrufen dürfen.</string>
-    <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC2">Wählen Sie die Rollen aus, deren Mitglieder die Einstellungen des Plugins aufrufen dürfen.</string>    
     <string name="PLG_KEYMANAGER_SETTINGS">Einstellungen</string> 
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Alle Schlüssel anzeigen</string>
     <!-- Phrases only in Database -->

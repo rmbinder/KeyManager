@@ -26,6 +26,12 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
+// only authorized user are allowed to start this module
+if (!$gCurrentUser->isAdministrator())
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 // Initialize and check the parameters
 $getMode      = admFuncVariableIsValid($_GET, 'mode',      'numeric', array('defaultValue' => 1));
 $getKeyId     = admFuncVariableIsValid($_GET, 'key_id',    'int');
@@ -33,13 +39,6 @@ $getKeyFormer = admFuncVariableIsValid($_GET, 'key_former', 'bool');
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
-
-// only authorized user are allowed to start this module
-if (!checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
-{
-    $gMessage->setForwardUrl($gHomepage, 3000);
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
 
 $keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
 $keys->readKeyData($getKeyId, $gCurrentOrganization->getValue('org_id'));

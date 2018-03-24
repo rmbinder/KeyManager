@@ -12,11 +12,6 @@
 global $gL10n, $gProfileFields;
 
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration
-$config_default['Pluginfreigabe']['freigabe']        = array(getRole_IDPKM($gL10n->get('SYS_ADMINISTRATOR')),
-													         getRole_IDPKM($gL10n->get('SYS_MEMBER')));
-$config_default['Pluginfreigabe']['freigabe_config'] = array(getRole_IDPKM($gL10n->get('SYS_ADMINISTRATOR')),
-															 getRole_IDPKM($gL10n->get('SYS_MEMBER')));
-
 $config_default['Optionen']['interface_pff'] = 0;
 															
 $config_default['Plugininformationen']['version'] = '';

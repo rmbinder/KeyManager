@@ -37,6 +37,12 @@ require_once(__DIR__ . '/classes/configtable.php');
 // Einbinden der Sprachdatei
 $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER. '/languages');
 
+// only authorized user are allowed to start this module
+if (!isUserAuthorized($_SERVER['SCRIPT_NAME']))
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 $getMode           = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
 $getFullScreen     = admFuncVariableIsValid($_GET, 'full_screen',     'bool');
 $getFilterString   = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => ''));
@@ -278,7 +284,7 @@ if ($getMode != 'csv')
         // link to print overlay and exports
         $listsMenu->addItem('menu_item_print_view', '#', $gL10n->get('LST_PRINT_PREVIEW'), 'print.png', 'left', 'menu_item_extras');
         
-        if (checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+        if ($gCurrentUser->isAdministrator())
         {
         	$listsMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id=0',
         			$gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'add.png', 'left', 'menu_item_extras');
@@ -539,7 +545,7 @@ foreach ($keys->keys as $key)
     		$tempValue .='<img src="'.THEME_PATH.'/icons/print.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'" /></a>';
     		$tempValue .='</a>&nbsp;&nbsp;';
     	}
-    	if (checkShowPluginPKM($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+    	if ($gCurrentUser->isAdministrator())
     	{
     		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php?key_id='.$key['kmk_id'].'&key_former='.$key['kmk_former'].'">';
     		$tempValue .='<img src="'.THEME_PATH.'/icons/delete.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'" /></a>';

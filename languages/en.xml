@@ -41,19 +41,16 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Key fields can be created and edited in key field maintenance.</string>
     <string name="PLG_KEYMANAGER_KEYMANAGER">KeyManager</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Name of the key</string>
+    <string name="PLG_KEYMANAGER_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">New</string>
     <string name="PLG_KEYMANAGER_ORG_CHOICE">Organizational choice</string>    
-    <string name="PLG_KEYMANAGER_PLUGIN_CONTROL">Enabling plug-in</string>
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">Situation</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plug-in informations</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Plug-in name</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">Ready data for printing ...</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>    
-    <string name="PLG_KEYMANAGER_ROLE_SELECTION">Role selection</string>
-    <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC">Choose from the rollers, whose members may call the plugin.</string>
-    <string name="PLG_KEYMANAGER_ROLE_SELECTION_DESC2">Choose from the rollers, whose members may access the settings of the plugin.</string>
     <string name="PLG_KEYMANAGER_SETTINGS">Settings</string> 
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Display all keys</string>
     <!-- Phrases only in Database -->
