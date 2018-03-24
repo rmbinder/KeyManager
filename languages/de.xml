@@ -6,7 +6,7 @@
     <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- Die Tabelle #VAR1_BOLD# konnte nicht gelöscht werden, da sich darin noch Daten einer weiteren Organisation oder eines anderen Plugins befinden.\n</string> 
     <string name="PLG_KEYMANAGER_DEINST_DATA_DELETED_IN">- Daten in Tabelle #VAR1_BOLD# gelöscht.\n</string>  
     <string name="PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR">- Beim Löschen der Daten in Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string>
-    <string name="PLG_KEYMANAGER_DEINST_ENDMESSAGE">\nUm das Plugin vollständig zu entfernen, muss jetzt der Browser geschlossen und die Programmdateien und der Link im Menü entfernt werden. Der Button "Weiter" initialisert das Plugin neu mit Standardwerten.</string>
+    <string name="PLG_KEYMANAGER_DEINST_ENDMESSAGE">\nUm das Plugin vollständig zu entfernen, müssen noch die Programmdateien und der Menü-Eintrag gelöscht werden.</string>
     <string name="PLG_KEYMANAGER_DEINST_STARTMESSAGE">Folgende Löschvorgänge wurden durchgeführt:\n\n</string>
     <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR">- Beim Löschen der Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string> 
     <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE">- Die Tabelle #VAR1_BOLD# konnte nicht gelöscht werden, da sich darin noch Daten einer weiteren Organisation befinden.\n</string> 
