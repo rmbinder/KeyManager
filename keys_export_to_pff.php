@@ -33,8 +33,8 @@ if (substr_count($gNavigation->getUrl(), 'keys_export_to_pff') === 1)
 	// => EXIT
 }
     
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
-$keys->readKeyData($getKeyId, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
+$keys->readKeyData($getKeyId, ORG_ID);
     		
 $headline = $gL10n->get('PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT');
     		

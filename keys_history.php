@@ -31,8 +31,8 @@ $getKeyId    = admFuncVariableIsValid($_GET, 'key_id',           'int');
 $getDateFrom = admFuncVariableIsValid($_GET, 'filter_date_from', 'date', array('defaultValue' => $filterDateFrom->format($gPreferences['system_date'])));
 $getDateTo   = admFuncVariableIsValid($_GET, 'filter_date_to',   'date', array('defaultValue' => DATE_NOW));
 
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
-$keys->readKeyData($getKeyId, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
+$keys->readKeyData($getKeyId, ORG_ID);
 
 $user = new User($gDb, $gProfileFields);
 

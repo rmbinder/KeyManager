@@ -45,7 +45,7 @@ class ConfigTablePKM
      */
 	public function __construct()
 	{
-		global $gDb, $gCurrentOrganization, $g_tbl_praefix;
+		global $gDb, $g_tbl_praefix;
 
 		require_once(__DIR__ . '/../version.php');
 		include(__DIR__ . '/../configdata.php');
@@ -77,12 +77,12 @@ class ConfigTablePKM
 	 */
 	protected function checkPffInst()
 	{
-		global  $gDb, $gCurrentOrganization;
+		global  $gDb;
 		
 		$sql = 'SELECT COUNT(*) AS COUNT
             		       FROM '.$this->table_name.'
             		      WHERE plp_name = \'PFF__Plugininformationen__version\'
-            		        AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+            		        AND ( plp_org_id = '.ORG_ID.'
             	    	     OR plp_org_id IS NULL ) ';
 		$statement = $gDb->query($sql);
 		
@@ -112,7 +112,7 @@ class ConfigTablePKM
      */
 	public function init()
 	{
-		global $gL10n, $gDb, $gCurrentOrganization, $gProfileFields;
+		global $gL10n, $gDb, $gProfileFields;
 	
 		// pruefen, ob es die Tabelle bereits gibt
 		$sql = 'SHOW TABLES LIKE \''.TBL_KEYMANAGER_FIELDS.'\' ';
@@ -195,13 +195,13 @@ class ConfigTablePKM
 		$sql = 'SELECT *
             	  FROM '.TBL_KEYMANAGER_FIELDS.'
             	 WHERE kmf_name_intern = \'KEYNAME\'
-            	   AND kmf_org_id = \''.$gCurrentOrganization->getValue('org_id').'\' ';
+            	   AND kmf_org_id = \''.ORG_ID.'\' ';
 		$statement = $gDb->query($sql);
 		
 		if ($statement->rowCount() == 0)                 
 		{
 			$keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
-			$keyField->setValue('kmf_org_id', (int) $gCurrentOrganization->getValue('org_id'));
+			$keyField->setValue('kmf_org_id', (int) ORG_ID);
 			$keyField->setValue('kmf_sequence', 1);
 			$keyField->setValue('kmf_system', 1);
 			$keyField->setValue('kmf_mandatory', 1);
@@ -212,7 +212,7 @@ class ConfigTablePKM
 			$keyField->save();
 		
 			$keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
-			$keyField->setValue('kmf_org_id', (int) $gCurrentOrganization->getValue('org_id'));
+			$keyField->setValue('kmf_org_id', (int) ORG_ID);
 			$keyField->setValue('kmf_sequence', 2);
 			$keyField->setValue('kmf_system', 1);
 			$keyField->setValue('kmf_mandatory', 0);
@@ -223,7 +223,7 @@ class ConfigTablePKM
 			$keyField->save();
 		
 			$keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
-			$keyField->setValue('kmf_org_id', (int) $gCurrentOrganization->getValue('org_id'));
+			$keyField->setValue('kmf_org_id', (int) ORG_ID);
 			$keyField->setValue('kmf_sequence', 3);
 			$keyField->setValue('kmf_system', 1);
 			$keyField->setValue('kmf_mandatory', 0);
@@ -300,7 +300,7 @@ class ConfigTablePKM
         		$plp_name = self::$shortcut.'__'.$section.'__'.$key;
 				$sql = 'DELETE FROM '.$this->table_name.'
         				WHERE plp_name = \''.$plp_name.'\' 
-        				AND plp_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
+        				AND plp_org_id = '.ORG_ID.' ';
 				$gDb->query($sql);
 				unset($this->config[$section][$key]);
         	}
@@ -321,7 +321,7 @@ class ConfigTablePKM
      */
 	public function save()
 	{
-    	global $gDb, $gCurrentOrganization;
+    	global $gDb;
     
     	foreach ($this->config as $section => $sectiondata)
     	{
@@ -338,7 +338,7 @@ class ConfigTablePKM
             	$sql = ' SELECT plp_id 
             			   FROM '.$this->table_name.' 
             			  WHERE plp_name = \''.$plp_name.'\' 
-            			    AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+            			    AND ( plp_org_id = '.ORG_ID.'
                  		     OR plp_org_id IS NULL ) ';
             	$statement = $gDb->query($sql);
             	$row = $statement->fetchObject();
@@ -357,7 +357,7 @@ class ConfigTablePKM
             	else
             	{
   					$sql = 'INSERT INTO '.$this->table_name.' (plp_org_id, plp_name, plp_value) 
-  							VALUES (\''.$gCurrentOrganization->getValue('org_id').'\' ,\''.self::$shortcut.'__'.$section.'__'.$key.'\' ,\''.$value.'\')'; 
+  							VALUES (\''.ORG_ID.'\' ,\''.self::$shortcut.'__'.$section.'__'.$key.'\' ,\''.$value.'\')'; 
             		$gDb->query($sql); 
             	}   
         	} 
@@ -370,12 +370,12 @@ class ConfigTablePKM
      */
 	public function read()
 	{
-    	global $gDb, $gCurrentOrganization;
+    	global $gDb;
      
 		$sql = 'SELECT plp_id, plp_name, plp_value
              	  FROM '.$this->table_name.'
              	 WHERE plp_name LIKE \''.self::$shortcut.'__%\'
-             	   AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+             	   AND ( plp_org_id = '.ORG_ID.'
                  	OR plp_org_id IS NULL ) ';
 		$statement = $gDb->query($sql);
 	
@@ -402,12 +402,12 @@ class ConfigTablePKM
 	 */
 	public function readPff()
 	{
-		global $gDb, $gCurrentOrganization;
+		global $gDb;
 		 
 		$sql = ' SELECT plp_id, plp_name, plp_value
              	   FROM '.$this->table_name.'
              	  WHERE plp_name LIKE \'PFF__%\'
-             	    AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+             	    AND ( plp_org_id = '.ORG_ID.'
                  	 OR plp_org_id IS NULL ) ';
 		$statement = $gDb->query($sql);
 	
@@ -445,7 +445,7 @@ class ConfigTablePKM
      */
 	public function checkForUpdate()
 	{
-	 	global $gL10n, $gDb, $gCurrentOrganization;
+	 	global $gL10n, $gDb;
 	 	$ret = false;
  	
 	 	// pruefen, ob es die Tabelle ueberhaupt gibt
@@ -459,7 +459,7 @@ class ConfigTablePKM
     		$sql = 'SELECT plp_value 
             		  FROM '.$this->table_name.' 
             		 WHERE plp_name = \''.$plp_name.'\' 
-            		   AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+            		   AND ( plp_org_id = '.ORG_ID.'
             	    	OR plp_org_id IS NULL ) ';
     		$statement = $gDb->query($sql);
     		$row = $statement->fetchObject();
@@ -475,7 +475,7 @@ class ConfigTablePKM
     		$sql = 'SELECT plp_value 
             		  FROM '.$this->table_name.' 
             		 WHERE plp_name = \''.$plp_name.'\' 
-            		   AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+            		   AND ( plp_org_id = '.ORG_ID.'
                  		OR plp_org_id IS NULL ) ';
     		$statement = $gDb->query($sql);
     		$row = $statement->fetchObject();
@@ -500,7 +500,7 @@ class ConfigTablePKM
      */
 	public function deleteConfigData($deinst_org_select)
 	{
-    	global $gDb, $gCurrentOrganization, $gL10n;
+    	global $gDb, $gL10n;
  	
     	$result      = '';		
     	$sqlWhereCondition = '';
@@ -509,7 +509,7 @@ class ConfigTablePKM
 		
 		if ($deinst_org_select == 0)                    //0 = Daten nur in aktueller Org loeschen 
 		{
-			$sqlWhereCondition = 'AND plp_org_id =  \''.$gCurrentOrganization->getValue('org_id').'\' ';	
+			$sqlWhereCondition = 'AND plp_org_id =  \''.ORG_ID.'\' ';	
 		}
 
 		$sql = 'DELETE FROM '.$this->table_name.'
@@ -543,7 +543,7 @@ class ConfigTablePKM
 	 */
 	public function deleteKeyData($deinst_org_select)
 	{
-		global $gDb, $gCurrentOrganization, $gL10n, $g_tbl_praefix;
+		global $gDb, $gL10n, $g_tbl_praefix;
 	
 		$result = ''; 
 
@@ -553,7 +553,7 @@ class ConfigTablePKM
                           WHERE kmd_kmk_id IN 
               	        (SELECT kmk_id 
 					       FROM '.TBL_KEYMANAGER_KEYS.'
-                	      WHERE kmk_org_id = \''.$gCurrentOrganization->getValue('org_id').'\' )';
+                	      WHERE kmk_org_id = \''.ORG_ID.'\' )';
 	
 			$result_data = $gDb->query($sql);
 			$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_data' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_data'));
@@ -562,19 +562,19 @@ class ConfigTablePKM
                           WHERE kml_kmk_id IN 
 				        (SELECT kmk_id 
 					       FROM '.TBL_KEYMANAGER_KEYS.'
-                          WHERE kmk_org_id = \''.$gCurrentOrganization->getValue('org_id').'\' )';
+                          WHERE kmk_org_id = \''.ORG_ID.'\' )';
 
 			$result_log = $gDb->query($sql);
 			$result .= ($result_log ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_log' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_log'));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
-	        	          WHERE kmk_org_id = \''.$gCurrentOrganization->getValue('org_id').'\' ';
+	        	          WHERE kmk_org_id = \''.ORG_ID.'\' ';
 
 			$result_keys = $gDb->query($sql);
 			$result .= ($result_keys ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_keys' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_keys'));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_FIELDS.'
-                          WHERE kmf_org_id = \''.$gCurrentOrganization->getValue('org_id').'\' ';
+                          WHERE kmf_org_id = \''.ORG_ID.'\' ';
 			
 			$result_fields = $gDb->query($sql);
 			$result .= ($result_fields ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_fields' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_fields'));

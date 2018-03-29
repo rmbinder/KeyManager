@@ -23,8 +23,8 @@ require_once(__DIR__ . '/common_function.php');
 // Initialize and check the parameters
 $getKeyId  = admFuncVariableIsValid($_GET, 'key_id',  'int');
 
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
-$keys->readKeyData($getKeyId, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
+$keys->readKeyData($getKeyId, ORG_ID);
 
 if ($getKeyId == 0)
 {

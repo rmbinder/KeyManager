@@ -124,7 +124,7 @@ switch ($getMode)
     	
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_FIELDS.'
         		 WHERE kmf_id = '.$getKmfId.'
-    			   AND ( kmf_org_id = '.$gCurrentOrganization->getValue('org_id').'
+    			   AND ( kmf_org_id = '.ORG_ID.'
                     OR kmf_org_id IS NULL ) ';
     	$gDb->query($sql);
     	

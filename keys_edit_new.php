@@ -29,8 +29,8 @@ $getCopy  = admFuncVariableIsValid($_GET, 'copy',   'bool');
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
 
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
-$keys->readKeyData($getKeyId, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
+$keys->readKeyData($getKeyId, ORG_ID);
 
 // set headline of the script
 if ($getCopy)
@@ -203,7 +203,7 @@ foreach ($keys->mKeyFields as $keyField)
                     AND mem_end    > \''.DATE_NOW.'\'
                     AND rol_valid  = 1
                     AND rol_cat_id = cat_id
-                    AND ( cat_org_id = '. $gCurrentOrganization->getValue('org_id'). '
+                    AND ( cat_org_id = '. ORG_ID. '
                      OR cat_org_id IS NULL )) ';
             	
 			$sql = 'SELECT usr_id, CONCAT(last_name.usd_value, \', \', first_name.usd_value,  IFNULL(CONCAT(\', \', postcode.usd_value),\'\'), IFNULL(CONCAT(\' \', city.usd_value),\'\'), IFNULL(CONCAT(\', \', street.usd_value),\'\')  ) as name

@@ -17,6 +17,10 @@ if(!defined('PLUGIN_FOLDER'))
 {
 	define('PLUGIN_FOLDER', '/'.substr(__DIR__,strrpos(__DIR__,DIRECTORY_SEPARATOR)+1));
 }
+if(!defined('ORG_ID'))
+{
+	define('ORG_ID', (int) $gCurrentOrganization->getValue('org_id'));
+}
 if (!defined('TBL_KEYMANAGER_FIELDS'))
 {
 	define('TBL_KEYMANAGER_FIELDS',  $g_tbl_praefix . '_keymanager_fields');
@@ -41,14 +45,14 @@ if (!defined('TBL_KEYMANAGER_LOG'))
  */
 function getRole_IDPKM($role_name)
 {
-    global $gDb, $gCurrentOrganization;
+    global $gDb;
 	
     $sql    = 'SELECT rol_id
                  FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
                 WHERE rol_name   = \''.$role_name.'\'
                   AND rol_valid  = 1 
                   AND rol_cat_id = cat_id
-                  AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                  AND ( cat_org_id = '.ORG_ID.'
                    OR cat_org_id IS NULL ) ';
                       
     $statement = $gDb->query($sql);
@@ -173,7 +177,7 @@ function getNewNameIntern($name, $index)
  */
 function moveSequence($mode)
 {
-	global $gDb, $gCurrentOrganization, $keyField;
+	global $gDb, $keyField;
 
 	$mode = admStrToUpper($mode);
 	$kmfSequence = (int) $keyField->getValue('kmf_sequence');
@@ -184,7 +188,7 @@ function moveSequence($mode)
 		$sql = 'UPDATE '.TBL_KEYMANAGER_FIELDS.'
                    SET kmf_sequence = '.$kmfSequence.'
                  WHERE kmf_sequence = '.$kmfSequence.'-1
-                   AND ( kmf_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                   AND ( kmf_org_id = '.ORG_ID.'
                     OR kmf_org_id IS NULL ) ';
 		$gDb->query($sql );
 		--$kmfSequence;
@@ -195,7 +199,7 @@ function moveSequence($mode)
 		$sql = 'UPDATE '.TBL_KEYMANAGER_FIELDS.'
                    SET kmf_sequence = '.$kmfSequence.'
                  WHERE kmf_sequence = '.$kmfSequence.'+1
-                   AND ( kmf_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                   AND ( kmf_org_id = '.ORG_ID.'
                     OR kmf_org_id IS NULL ) ';
 		$gDb->query($sql );
 		++$kmfSequence;
@@ -214,11 +218,11 @@ function moveSequence($mode)
  */
 function genNewSequence()
 {
-	global $gDb, $gCurrentOrganization;
+	global $gDb;
 
 	$sql =  'SELECT max(kmf_sequence) as max_sequence
                    FROM '.TBL_KEYMANAGER_FIELDS.' 
-                  WHERE ( kmf_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                  WHERE ( kmf_org_id = '.ORG_ID.'
                      OR kmf_org_id IS NULL ) ';
 	$statement = $gDb->query($sql);
 	$row = $statement->fetch();

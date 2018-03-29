@@ -40,8 +40,8 @@ $getKeyFormer = admFuncVariableIsValid($_GET, 'key_former', 'bool');
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
 
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
-$keys->readKeyData($getKeyId, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
+$keys->readKeyData($getKeyId, ORG_ID);
 $user = new User($gDb, $gProfileFields);
 
 switch ($getMode)
@@ -119,7 +119,7 @@ switch ($getMode)
     
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
         		      WHERE kmk_id = '.$getKeyId.'
-    			        AND ( kmk_org_id = '.$gCurrentOrganization->getValue('org_id').'
+    			        AND ( kmk_org_id = '.ORG_ID.'
                          OR kmk_org_id IS NULL ) ';
     	$gDb->query($sql);
     	

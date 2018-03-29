@@ -46,7 +46,7 @@ if ($getKmfId > 0)
 
     // check if key field belongs to actual organization
     if ($keyField->getValue('kmf_org_id') > 0
-    && (int) $keyField->getValue('kmf_org_id') !== (int) $gCurrentOrganization->getValue('org_id'))
+    && (int) $keyField->getValue('kmf_org_id') !== (int) ORG_ID)
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
         // => EXIT
@@ -108,7 +108,7 @@ if($getMode === 1)
         }
     }
 
-    $keyField->setValue('kmf_org_id', (int) $gCurrentOrganization->getValue('org_id'));
+    $keyField->setValue('kmf_org_id', (int) ORG_ID);
     
     if ($keyField->isNewRecord())
     {

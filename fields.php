@@ -30,7 +30,7 @@ $gNavigation->addUrl(CURRENT_URL, $headline);
 
 unset($_SESSION['fields_request']);
 
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
 
 // create html page object
 $page = new HtmlPage($headline);

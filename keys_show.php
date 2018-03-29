@@ -85,9 +85,9 @@ $arrValidColumns = array();
 
 $csvStr = ''; // CSV file as string
 
-$keys = new Keys($gDb, $gCurrentOrganization->getValue('org_id'));
+$keys = new Keys($gDb, ORG_ID);
 $keys->showFormerKeys($getShowAll);
-$keys->readKeys($gCurrentOrganization->getValue('org_id'));
+$keys->readKeys(ORG_ID);
 
 $user = new User($gDb, $gProfileFields);
 
@@ -395,7 +395,7 @@ foreach ($keys->keys as $key)
 {
 	$tmp_csv = '';
 	
-	$keys->readKeyData($key['kmk_id'], $gCurrentOrganization->getValue('org_id'));
+	$keys->readKeyData($key['kmk_id'], ORG_ID);
 
     $columnValues = array();
     $content = '';

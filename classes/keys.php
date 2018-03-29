@@ -501,9 +501,7 @@ class Keys
      * save data of every key field
      */
     public function saveKeyData()
-    {
-    	global $gCurrentOrganization;
-    	
+    { 	
     	$this->mDb->startTransaction();
     
     	foreach ($this->mKeyData as $value)
@@ -680,9 +678,7 @@ class Keys
      */
     public function getNewKeyId()
     {
-    	global $gCurrentOrganization;
-    
-    	//If an error occured while generating a key, there is a KeyId but no data for that key.
+     	//If an error occured while generating a key, there is a KeyId but no data for that key.
     	//the following routine deletes these unused KeyIds
   		$sql = 'SELECT *
           	      FROM '.TBL_KEYMANAGER_KEYS.'
@@ -701,7 +697,7 @@ class Keys
     	if ($this->newKey)
     	{
     		$newKey = new TableAccess($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk');
-    		$newKey->setValue('kmk_org_id', $gCurrentOrganization->getValue('org_id'));
+    		$newKey->setValue('kmk_org_id', ORG_ID);
     		$newKey->setValue('kmk_former', 0);
     		$newKey->save();
     	
@@ -709,7 +705,7 @@ class Keys
     		return $this->mKeyId;
     		
     		// update key table
-    		$this->readKeys($gCurrentOrganization->getValue('org_id'));
+    		$this->readKeys(ORG_ID);
     	}
     }
 }
