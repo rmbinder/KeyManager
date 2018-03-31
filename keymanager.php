@@ -34,9 +34,6 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
-// Einbinden der Sprachdatei
-$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER. '/languages');
-
 // only authorized user are allowed to start this module
 if (!isUserAuthorized($_SERVER['SCRIPT_NAME']))
 {
