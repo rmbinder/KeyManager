@@ -52,7 +52,7 @@ $page->addJavascript('
 );
     	
 // show form
-$form = new HtmlForm('export_to_pff_form', ADMIDIO_URL . FOLDER_PLUGINS .'/formfiller/createpdf.php', $page, array('type' => 'filter'));
+$form = new HtmlForm('export_to_pff_form', ADMIDIO_URL . FOLDER_PLUGINS .'/'.$pPreferences->pffDir().'/createpdf.php', $page, array('type' => 'filter'));
     	
 foreach($keys->mKeyFields as $keyField)
 {    		

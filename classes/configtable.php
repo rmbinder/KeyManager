@@ -14,6 +14,9 @@
  *
  * Folgende Methoden stehen zur Verfuegung:
  *
+ * isPffInst()							  - gibt true zurueck, wenn das Plugin FormFiller installiert ist, ansonsten false
+ * pffDir()                               - gibt das Directory des Plugins FormFiller zurueck,
+ * 											gibt false zurueck, wenn es nicht oder mehr als einmal existiert
  * init()						          -	prueft, ob die Konfigurationstabelle existiert,
  * 									        legt sie ggf. an und befuellt sie mit Default-Werten
  * save() 						          - schreibt die Konfiguration in die Datenbank
@@ -36,7 +39,8 @@ class ConfigTablePKM
 	protected static $stand;
 	protected static $dbtoken;
 	protected static $dbtoken2;
-	protected $isPffInst; 			// is (P)lugin (f)orm (f)iller installed
+	protected $isPffInst; 			// (is) (P)lugin (f)orm (f)iller (Inst)alled
+	protected $pffDir;				// (p)lugin (f)orm (f)iller (Dir)ectory 
 	
 	public $config_default = array();	
 	
@@ -68,6 +72,7 @@ class ConfigTablePKM
 		self::$dbtoken2 = '#!#'; 
 
 		$this->config_default = $config_default;
+		$this->findPff();
 		$this->checkPffInst();
 	}
 	
@@ -86,7 +91,7 @@ class ConfigTablePKM
             	    	     OR plp_org_id IS NULL ) ';
 		$statement = $gDb->query($sql);
 		
-		if((int) $statement->fetchColumn() === 1  && file_exists( __DIR__ . '/../../formfiller/formfiller.php'))
+		if((int) $statement->fetchColumn() === 1  && $this->pffDir != false)
 		{
 			$this->isPffInst = true;
 		}
@@ -97,13 +102,58 @@ class ConfigTablePKM
 	}
 	
 	/**
-	 * If the recordset is new and wasn't read from database or was not stored in database
+	 * If the plugin FormFiller is installed
 	 * then this method will return true otherwise false
-	 * @return bool Returns @b true if record is not stored in database
+	 * @return bool Returns @b true if plugin FormFiller is installed
 	 */
 	public function isPffInst()
 	{
 		return $this->isPffInst;
+	}
+	
+	/**
+	 * Checks if a FormFiller directory exists
+	 * @return void
+	 */
+	protected function findPff()
+	{
+		$location = ADMIDIO_PATH . FOLDER_PLUGINS;
+		$searchedFile = 'formfiller.php';
+		$formFillerfiles = array();
+		$tempFiles = array();
+		
+		$all = opendir($location);
+		while ($found = readdir($all))
+		{
+			if (is_dir($location.'/'.$found) and $found<> ".." and $found<> ".")
+			{
+				$tempFiles= glob($location.'/'.$found.'/'. $searchedFile);
+				if (count($tempFiles) > 0)
+				{
+					$formFillerfiles[] = $found;              // only directory is needed
+				}
+			}
+		}
+		closedir($all);
+		unset($all);
+		
+		if (count($formFillerfiles) != 1)
+		{
+			$this->pffDir = false;
+		}
+		else
+		{
+			$this->pffDir = $formFillerfiles[0];
+		}
+	}
+	
+	/**
+	 * Returns the Plugin FormFiller directory
+	 * @return bool/string Returns the FormFiller directory otherwise false 
+	 */
+	public function pffDir()
+	{
+		return $this->pffDir;
 	}
 	
     /**
