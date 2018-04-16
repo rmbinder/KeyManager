@@ -59,13 +59,6 @@ $page->addJavascript('
                     $("#"+id+" .form-alert").animate({opacity: 1.0}, 2500);
                     $("#"+id+" .form-alert").fadeOut("slow");
                 }
-                else if(data == "convert_error") {
-                    $("#"+id+" .form-alert").attr("class", "alert alert-danger form-alert");
-                    $("#"+id+" .form-alert").html("<span class=\"glyphicon glyphicon-remove\"></span><strong>'.$gL10n->get('PLG_KEYMANAGER_NO_DATA_TO_CONVERT').'</strong>");
-                    $("#"+id+" .form-alert").fadeIn("slow");
-                    $("#"+id+" .form-alert").animate({opacity: 1.0}, 10000);
-                    $("#"+id+" .form-alert").fadeOut("slow");
-                }
                 else {
                     $("#"+id+" .form-alert").attr("class", "alert alert-danger form-alert");
                     $("#"+id+" .form-alert").fadeIn();
