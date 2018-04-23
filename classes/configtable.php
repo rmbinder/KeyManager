@@ -566,7 +566,7 @@ class ConfigTablePKM
         			  WHERE plp_name LIKE \''.self::$shortcut.'__%\'
                       '. $sqlWhereCondition ;
 		$result_data = $gDb->query($sql);
-		$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $this->table_name ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $this->table_name));
+		$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($this->table_name)) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($this->table_name)));
 		
 		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
 		$sql = 'SELECT * FROM '.$this->table_name.' ';
@@ -576,11 +576,11 @@ class ConfigTablePKM
     	{
         	$sql = 'DROP TABLE '.$this->table_name.' ';
         	$result_db = $gDb->query($sql);
-        	$result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', $this->table_name ) : $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', $this->table_name));
+        	$result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', array($this->table_name )) : $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', array($this->table_name)));
         }
         else
         {
-        	$result .= $gL10n->get('PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE', $this->table_name ) ;
+        	$result .= $gL10n->get('PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE', array($this->table_name )) ;
         }
 		
 		return $result;
@@ -606,7 +606,7 @@ class ConfigTablePKM
                 	      WHERE kmk_org_id = \''.ORG_ID.'\' )';
 	
 			$result_data = $gDb->query($sql);
-			$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_data' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_data'));
+			$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_data' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_data' )));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
                           WHERE kml_kmk_id IN 
@@ -615,19 +615,19 @@ class ConfigTablePKM
                           WHERE kmk_org_id = \''.ORG_ID.'\' )';
 
 			$result_log = $gDb->query($sql);
-			$result .= ($result_log ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_log' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_log'));
+			$result .= ($result_log ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_log' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_log')));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
 	        	          WHERE kmk_org_id = \''.ORG_ID.'\' ';
 
 			$result_keys = $gDb->query($sql);
-			$result .= ($result_keys ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_keys' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_keys'));
+			$result .= ($result_keys ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_keys' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_keys')));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_FIELDS.'
                           WHERE kmf_org_id = \''.ORG_ID.'\' ';
 			
 			$result_fields = $gDb->query($sql);
-			$result .= ($result_fields ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', $g_tbl_praefix . '_keymanager_fields' ) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', $g_tbl_praefix . '_keymanager_fields'));
+			$result .= ($result_fields ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_fields' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_fields')));
 		}
 		
 		//drop tables keys, data, log and fields 
@@ -650,11 +650,11 @@ class ConfigTablePKM
 			{
 				$sql = 'DROP TABLE '.$table_name.' ';
 				$result_db = $gDb->query($sql);
-				$result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', $table_name ) : $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', $table_name));
+				$result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', array($table_name )) : $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', array($table_name)));
 			}
 			else 
 			{
-				$result .= $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE', $table_name) ;
+				$result .= $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE', aray($table_name)) ;
 			}
 		}
 		
