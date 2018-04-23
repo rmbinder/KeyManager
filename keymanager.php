@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * KeyManager
  *
- * Version 1.1.0
+ * Version 1.1.1
  *
  * KeyManager is an Admidio plugin for managing building and room keys.
  * 
@@ -34,8 +34,11 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
+//$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/keymanager...
+$scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
+
 // only authorized user are allowed to start this module
-if (!isUserAuthorized($_SERVER['SCRIPT_NAME']))
+if (!isUserAuthorized($scriptName))
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
