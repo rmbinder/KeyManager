@@ -43,12 +43,48 @@ if (!isUserAuthorized($scriptName))
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
+$fullScreen_DefaultValue = false;
+if (!isset($_GET['full_screen']) && isset($_SESSION['pKeyManager']['full_screen']))
+{
+	$fullScreen_DefaultValue = $_SESSION['pKeyManager']['full_screen'];
+}
+
+$filterString_DefaultValue = '';
+if (!isset($_GET['filter_string']) && isset($_SESSION['pKeyManager']['filter_string']))
+{
+	$filterString_DefaultValue = $_SESSION['pKeyManager']['filter_string'];
+}
+
+$filterKeyName_DefaultValue = '';
+if (!isset($_GET['filter_keyname']) && isset($_SESSION['pKeyManager']['filter_keyname']))
+{
+	$filterKeyName_DefaultValue = $_SESSION['pKeyManager']['filter_keyname'];
+}
+
+$filterReceiver_DefaultValue = 0;
+if (!isset($_GET['filter_receiver']) && isset($_SESSION['pKeyManager']['filter_receiver']))
+{
+	$filterReceiver_DefaultValue = $_SESSION['pKeyManager']['filter_receiver'];
+}
+
+$showAll_DefaultValue = false;
+if (!isset($_GET['show_all']) && isset($_SESSION['pKeyManager']['show_all']))
+{
+	$showAll_DefaultValue = $_SESSION['pKeyManager']['show_all'];
+}
+
 $getMode           = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
-$getFullScreen     = admFuncVariableIsValid($_GET, 'full_screen',     'bool');
-$getFilterString   = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => ''));
-$getFilterKeyName  = admFuncVariableIsValid($_GET, 'filter_keyname',  'string', array('defaultValue' => ''));
-$getFilterReceiver = admFuncVariableIsValid($_GET, 'filter_receiver', 'int');
-$getShowAll        = admFuncVariableIsValid($_GET, 'show_all',        'bool');
+$getFullScreen     = admFuncVariableIsValid($_GET, 'full_screen',     'bool', array('defaultValue' => $fullScreen_DefaultValue));
+$getFilterString   = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => $filterString_DefaultValue));
+$getFilterKeyName  = admFuncVariableIsValid($_GET, 'filter_keyname',  'string', array('defaultValue' => $filterKeyName_DefaultValue));
+$getFilterReceiver = admFuncVariableIsValid($_GET, 'filter_receiver', 'int', array('defaultValue' => $filterReceiver_DefaultValue));
+$getShowAll        = admFuncVariableIsValid($_GET, 'show_all',        'bool', array('defaultValue' => $showAll_DefaultValue));
+
+$_SESSION['pKeyManager']['full_screen'] = $getFullScreen;
+$_SESSION['pKeyManager']['filter_string'] = $getFilterString;
+$_SESSION['pKeyManager']['filter_keyname'] = $getFilterKeyName;
+$_SESSION['pKeyManager']['filter_receiver'] = $getFilterReceiver;
+$_SESSION['pKeyManager']['show_all'] = $getShowAll;
 
 $pPreferences = new ConfigTablePKM();
 if ($pPreferences->checkForUpdate())
