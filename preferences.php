@@ -102,7 +102,27 @@ $page->addHtml('
                     $page->addHtml('</div>
                 </div>
             </div>
-                    	
+ 
+		<div class="panel panel-default" id="panel_synchronize">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="icon-text-link" data-toggle="collapse" data-parent="#accordion_options" href="#collapse_synchronize">
+                            <img src="'. THEME_URL .'/icons/edit.png" alt="'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE').'" title="'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE').'" />'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE').'
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_synchronize" class="panel-collapse collapse">
+                    <div class="panel-body">');
+                    	unset($_SESSION['pKeyManager']['synchronize']);
+                        // show form
+                        $form = new HtmlForm('synchronize_form', null, $page, array('class' => 'form-preferences'));
+                        $form->addButton('btn_synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), array('icon' => THEME_URL .'/icons/download.png', 'link' => 'synchronize.php', 'class' => 'btn-primary col-sm-offset-3'));
+                        $form->addCustomContent('', '<br/>'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_DESC'));
+                        $page->addHtml($form->show(false));
+                    $page->addHtml('</div>
+                </div>
+            </div>
+                   	
             <div class="panel panel-default" id="panel_deinstallation">
                 <div class="panel-heading">
                     <h4 class="panel-title">

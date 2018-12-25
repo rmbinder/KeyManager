@@ -44,6 +44,7 @@
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">New</string>
+    <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Number of keys</string>
     <string name="PLG_KEYMANAGER_ORG_CHOICE">Organizational choice</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">Situation</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plug-in informations</string>
@@ -53,6 +54,12 @@
     <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>    
     <string name="PLG_KEYMANAGER_SETTINGS">Settings</string> 
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Display all keys</string>
+    <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Special case: current user or administrator</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE">Synchronize users with recipients</string>
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">This allows users to be made without a key to a former user.\n\n A T T E N T I O N\n\n  This feature should only be used if KeyManager is operated in its own organization.</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">All users are recipients of a key, no reconciliation can be performed.</string>
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">This is just an overview of the comparison, nothing has been saved yet.\n\n Users can only be made to a former if the number of keys is 0 and they are not administrator or the current user.</string>
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">The listed users are now former.</string>
     <!-- Phrases only in Database -->
     <string name="PKM_KEYNAME">Name of the key</string>
     <string name="PKM_RECEIVED_ON">received on</string>

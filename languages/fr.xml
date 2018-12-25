@@ -44,6 +44,7 @@
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Le contrôle d\'autorisation du plug-in a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Nouveau</string>
+    <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Nombre de clés</string>    
     <string name="PLG_KEYMANAGER_ORG_CHOICE">Choix de l\'organisation</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">État</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Informations sur le plug-in</string>
@@ -53,6 +54,12 @@
     <string name="PLG_KEYMANAGER_RECEIVER">Destinataires</string>    
     <string name="PLG_KEYMANAGER_SETTINGS">Configurations</string> 
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Afficher toutes les clés</string>
+    <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Cas particulier: utilisateur actuel ou administrateur</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE">Synchroniser les utilisateurs avec les destinataires</string>
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">Cela permet aux utilisateurs d'être créés sans clé pour un ancien utilisateur.\n\n M I S E  E N  G A R D E\n\n Cette fonctionnalité ne doit être utilisée que si KeyManager est utilisé dans sa propre organisation.</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">Tous les utilisateurs sont les destinataires d'une clé, aucune réconciliation ne peut être effectuée.</string>
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">Ceci est juste un aperçu de la comparaison, rien n'a encore été enregistré.\n\n Les utilisateurs ne peuvent devenir des anciens que si le nombre de clés est 0 et qu'il ne s'agit ni de l'administrateur ni de l'utilisateur actuel.</string>
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">Les utilisateurs listés sont maintenant des anciens.</string>
     <!-- Phrases only in Database -->
     <string name="PKM_KEYNAME">Nom de clé</string>
     <string name="PKM_RECEIVED_ON">reçues le</string>
