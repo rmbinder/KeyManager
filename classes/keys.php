@@ -702,10 +702,11 @@ class Keys
     		$newKey->save();
     	
     		$this->mKeyId = $newKey->getValue('kmk_id');
-    		return $this->mKeyId;
     		
     		// update key table
     		$this->readKeys(ORG_ID);
+    		
+    		return $this->mKeyId;
     	}
     }
 }

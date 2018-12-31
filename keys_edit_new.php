@@ -279,6 +279,20 @@ foreach ($keys->mKeyFields as $keyField)
 	}
 }
 
+if ($getCopy)
+{
+	$form->addLine();
+	$form->addDescription($gL10n->get('PLG_KEYMANAGER_COPY_PREFERENCES').'<br/>');
+	$form->addInput('copy_number', $gL10n->get('PLG_KEYMANAGER_NUMBER'), 1, array('type' => 'number', 'minNumber' => 1, 'maxNumber' => 9999, 'step' => 1, 'helpTextIdInline' => 'PLG_KEYMANAGER_NUMBER_DESC'));
+	$sql = 'SELECT kmf_id, kmf_name
+              FROM '.TBL_KEYMANAGER_FIELDS.'
+             WHERE kmf_type = \'NUMBER\'
+               AND ( kmf_org_id = '.ORG_ID.'
+                OR kmf_org_id IS NULL )';
+	$form->addSelectBoxFromSql('copy_field', $gL10n->get('PLG_KEYMANAGER_FIELD'), $gDb, $sql, array('multiselect' => false, 'helpTextIdInline' => 'PLG_KEYMANAGER_FIELD_DESC'));
+	$form->addLine();
+}
+
 $form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL.'/icons/disk.png'));
 
 $infoKey = new TableAccess($gDb, TBL_KEYMANAGER_KEYS, 'kmk', (int) $getKeyId);

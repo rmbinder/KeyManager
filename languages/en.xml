@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
+    <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Settings for copying a key:</string>
     <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Delete only data of the current organization.</string>
     <string name="PLG_KEYMANAGER_DEINST_ALLORG">Delete data in all organizations.</string>
     <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- The table #VAR1_BOLD# could not be deleted because it still contains data from another organization or another plug-in.\n</string> 
@@ -17,6 +18,8 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Open documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Allows the documentation of the plugin can be opened (An existing Internet connection is required because the data is located on admidio.org).</string>
+    <string name="PLG_KEYMANAGER_FIELD">Field of a running no.</string>
+    <string name="PLG_KEYMANAGER_FIELD_DESC">Here a field of a consecutive number can be selected. In a selection, the current number is read out and increased according to the specified number.\n\nNOTE: FormFiller can only tell if a data field is of type "number". Whether a serial number is stored in this data field can not be recognized.</string>
     <string name="PLG_KEYMANAGER_FORMER">Make to former</string>    
     <string name="PLG_KEYMANAGER_GENERAL">general</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface to the plugin formfiller</string>
@@ -44,6 +47,8 @@
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">New</string>
+    <string name="PLG_KEYMANAGER_NUMBER">Number</string>
+    <string name="PLG_KEYMANAGER_NUMBER_DESC">Number of keys to be added</string>    
     <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Number of keys</string>
     <string name="PLG_KEYMANAGER_ORG_CHOICE">Organizational choice</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">Situation</string>

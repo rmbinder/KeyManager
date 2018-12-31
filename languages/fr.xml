@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>     
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
+    <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Paramètres de copie d'une clé:</string>
     <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Supprimer uniquement les données de l\'organisation actuelle.</string>
     <string name="PLG_KEYMANAGER_DEINST_ALLORG">Supprimer les données de toutes les organisations.</string>
     <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- La table #VAR1_BOLD# n\'a pas pu être supprimé parce qu\'il contient encore des données d\'une autre organisation ou d\'un autre plugin. \n</string> 
@@ -17,6 +18,8 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
+    <string name="PLG_KEYMANAGER_FIELD">Champ de course non.</string>
+    <string name="PLG_KEYMANAGER_FIELD_DESC">Ici, un champ d'un nombre consécutif peut être sélectionné. Dans une sélection, le numéro actuel est lu et augmenté en fonction du nombre spécifié.\n\nREMARQUE: FormFiller peut seulement dire si un champ de données est de type "numéro". Si un numéro de série est stocké dans ce champ de données ne peut pas être reconnu.</string>
     <string name="PLG_KEYMANAGER_FORMER">Retirer</string>
     <string name="PLG_KEYMANAGER_GENERAL">Généralement</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface avec le Plug-in FormFiller</string>
@@ -44,6 +47,8 @@
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Le contrôle d\'autorisation du plug-in a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Nouveau</string>
+    <string name="PLG_KEYMANAGER_NUMBER">Nombre</string>
+    <string name="PLG_KEYMANAGER_NUMBER_DESC">Nombre de clés à ajouter</string>    
     <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Nombre de clés</string>    
     <string name="PLG_KEYMANAGER_ORG_CHOICE">Choix de l\'organisation</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">État</string>
