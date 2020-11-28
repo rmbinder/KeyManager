@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Makes a user to a former if he does not have a key.
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  * 
@@ -36,14 +36,20 @@ $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
 
 $icon = array();
-$icon['member'] = array('image' => 'profile.png', 'text' => $gL10n->get('SYS_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
-$icon['not_member'] = array('image' => 'no_profile.png', 'text' => $gL10n->get('SYS_NOT_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
+$icon['member'] = array('image' => 'fa-user', 'text' => $gL10n->get('SYS_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
+$icon['not_member'] = array('image' => 'fa-user-slash', 'text' => $gL10n->get('SYS_NOT_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
+$icon['error'] = array('image' => 'fa-times', 'text' => $gL10n->get('SYS_ERROR'));
 
 // set headline of the script
 $headline = $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE');
 
+if (!StringUtils::strContains($gNavigation->getUrl(), 'synchronize.php'))
+{
+    $gNavigation->addUrl(CURRENT_URL, $headline);
+}
+
 // create html page object
-$page = new HtmlPage($headline);
+$page = new HtmlPage('plg-keymanager-synchronize', $headline);
 
 if ($getMode == 'preview')     //Default
 {
@@ -80,7 +86,7 @@ if ($getMode == 'preview')     //Default
 				'first_name' => $row['first_name'],
 				'count' => 0,
 				'delete_marker' => true,
-				'info' => '<img src="'.THEME_URL.'/icons/'.$icon['member']['image'].'" alt="'.$icon['member']['text'].'" title="'.$icon['member']['text'].'" /> -> <img src="'.THEME_URL.'/icons/'.$icon['not_member']['image'].'" alt="'.$icon['not_member']['text'].'" title="'.$icon['not_member']['text'].'" />');
+				'info' => '<i class="fas '.$icon['member']['image'].'" data-toggle="tooltip" title="'.$icon['member']['text'].'"></i> -> <i class="fas '.$icon['not_member']['image'].'" data-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>');
 				
 		$user->readDataById($row['usr_id']);
 		
@@ -116,10 +122,7 @@ if ($getMode == 'preview')     //Default
 		$members[$row['kmd_value']]['count']++;
 	} 
 	
-	$headerMenu = $page->getMenu();
-	$headerMenu->addItem('menu_item_back', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', $gL10n->get('SYS_BACK'), 'back.png');
-	
-	$form = new HtmlForm('synchronize_preview_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php?mode=write', $page);
+	$form = new HtmlForm('synchronize_preview_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php', array('mode' => 'write')), $page);
 	
 	if (sizeof($members) > 0)
 	{
@@ -133,14 +136,14 @@ if ($getMode == 'preview')     //Default
 		$table->setColumnAlignByArray(array('left', 'center', 'center'));
 		$columnValues = array();
 		$columnValues[] = $gL10n->get('SYS_NAME');
-		$columnValues[] = '<img src="'.THEME_URL.'/icons/key.png" alt="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'" title="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'" />';
-		$columnValues[] = '<img src="'.THEME_URL.'/icons/info.png" alt="'.$gL10n->get('SYS_INFORMATIONS').'" title="'.$gL10n->get('SYS_INFORMATIONS').'" />';
+        $columnValues[] = '<i class="fas fa-key" data-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'"></i>';
+		$columnValues[] = '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>';
 		$table->addRowHeadingByArray($columnValues);
 		
 		foreach ($members as $memberId => $data)
 		{
 			$columnValues = array();
-			$columnValues[] = '<a href="'.safeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberId)).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
+			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberId)).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
 			$columnValues[] = $data['count'];
 			$columnValues[] = $data['info'];
 			$table->addRowByArray($columnValues);
@@ -150,7 +153,7 @@ if ($getMode == 'preview')     //Default
 
 		if (array_search(true, array_column($members, 'delete_marker')))
 		{
-			$form->addSubmitButton('btn_next_page', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL .'/icons/disk.png', 'class' => 'btn-primary'));
+            $form->addSubmitButton('btn_next_page', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' btn-primary'));
 		}
 		$form->addDescription('<br/>'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW'));
 		
@@ -170,14 +173,13 @@ elseif ($getMode == 'write')
 {
 	$page->addJavascript('
     	$("#menu_item_print_view").click(function() {
-            window.open("'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php?mode=print", "_blank");
+            window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php', array('mode' => 'print')).'", "_blank");
         });',
 			true
 			);
 
-	$headerMenu = $page->getMenu();
-	$headerMenu->addItem('menu_item_back', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', $gL10n->get('SYS_BACK'), 'back.png');
-	$headerMenu->addItem('menu_item_print_view', '#', $gL10n->get('LST_PRINT_PREVIEW'), 'print.png');
+	// links to print and exports
+	$page->addPageFunctionsMenuItem('menu_item_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
 	
 	$form = new HtmlForm('synchronize_saved_form', null, $page);
 	
@@ -186,20 +188,20 @@ elseif ($getMode == 'write')
 	$classTable  = 'table table-condensed';
 	$table = new HtmlTable('table_saved_synchronize', $page, $hoverRows, $datatable, $classTable);
 	$table->setColumnAlignByArray(array('left', 'center'));
-	$columnValues = array($gL10n->get('SYS_NAME'), '<img src="'.THEME_URL.'/icons/info.png" alt="'.$gL10n->get('SYS_INFORMATIONS').'" title="'.$gL10n->get('SYS_INFORMATIONS').'" />');
+    $columnValues = array($gL10n->get('SYS_NAME'), '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
 	$member = new TableMembers($gDb);
+	$errorMessage = '';
 	
 	foreach ($_SESSION['pKeyManager']['synchronize'] as $memberId => $data)
 	{
 		if ($data['delete_marker'] == true)
 		{
+		    $delete_marker = false;
 			$columnValues = array();
-			$columnValues[] = '<a href="'.safeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberId)).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
-			$columnValues[] = '<img src="'.THEME_URL.'/icons/'.$icon['not_member']['image'].'" alt="'.$icon['not_member']['text'].'" title="'.$icon['not_member']['text'].'" />';
-			$table->addRowByArray($columnValues);
-			
+			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberId)).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
+
 			$sql = 'SELECT mem_id, mem_rol_id, mem_usr_id, mem_begin, mem_end, mem_leader
               		  FROM '.TBL_MEMBERS.'
        		    INNER JOIN '.TBL_ROLES.'
@@ -217,15 +219,34 @@ elseif ($getMode == 'write')
 			
 			while ($row = $membersStatement->fetch())
 			{
-				// alle Rollen der aktuellen Organisation auf ungueltig setzen
-				$member->setArray($row);
-				$member->stopMembership($row['mem_rol_id'], $row['mem_usr_id']);
+			    $delete_marker = $member->readDataById($row['mem_id']);
+			    if ($delete_marker)
+			    {
+			        $delete_marker = $member->stopMembership();
+			    }
 			}
+			
+			if ($delete_marker)
+			{
+			    $columnValues[] = '<i class="fas '.$icon['not_member']['image'].'" data-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>';
+			}
+			else
+			{
+			    $columnValues[] = '<i class="fas '.$icon['error']['image'].'" data-toggle="tooltip" title="'.$icon['error']['text'].'"></i>';
+			    $errorMessage .= '<br/>-'.$data['last_name'].', '.$data['first_name'];
+			    $_SESSION['pKeyManager']['synchronize'][$memberId]['delete_marker'] = false;
+			}
+			
+			$table->addRowByArray($columnValues);
 		}
 	}
 	
 	$page->addHtml($table->show(false));
 	$form->addDescription('<strong>'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_SAVED').'</strong>');
+	if ($errorMessage != '')
+	{
+	    $form->addDescription($gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_ERROR', array('<i class="fas '.$icon['error']['image'].'" ></i>')).$errorMessage);
+	}
 	
 	//seltsamerweise wird in diesem Abschnitt nichts angezeigt wenn diese Anweisung fehlt
 	$form->addStaticControl('', '', '');
@@ -234,17 +255,17 @@ elseif ($getMode == 'write')
 }
 elseif ($getMode == 'print')
 {	
+    $gNavigation->clear();
+    
 	// create html page object without the custom theme files
 	$hoverRows = false;
 	$datatable = false;
 	$classTable  = 'table table-condensed table-striped';
-	$page->hideThemeHtml();
-	$page->hideMenu();
 	$page->setPrintMode();
 	$page->setHeadline($gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'));
 	$table = new HtmlTable('table_print_synchronize', $page, $hoverRows, $datatable, $classTable);
 	$table->setColumnAlignByArray(array('left', 'center'));
-	$columnValues = array($gL10n->get('SYS_NAME'),  '<img src="'.THEME_URL.'/icons/info.png" alt="'.$gL10n->get('SYS_INFORMATIONS').'" title="'.$gL10n->get('SYS_INFORMATIONS').'" />');
+	$columnValues = array($gL10n->get('SYS_NAME'),  '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
 	foreach ($_SESSION['pKeyManager']['synchronize'] as $member => $data)
@@ -253,7 +274,7 @@ elseif ($getMode == 'print')
 		{
 			$columnValues = array();
 			$columnValues[] = $data['last_name'].', '. $data['first_name'];
-			$columnValues[] = '<img src="'.THEME_URL.'/icons/'.$icon['not_member']['image'].'" alt="'.$icon['not_member']['text'].'" title="'.$icon['not_member']['text'].'" />';
+			$columnValues[] = '<i class="fas '.$icon['not_member']['image'].'" data-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>';
 			$table->addRowByArray($columnValues);
 		}
 	}

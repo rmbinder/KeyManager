@@ -27,6 +27,7 @@
     <string name="PLG_KEYMANAGER_KEY">Key</string>
     <string name="PLG_KEYMANAGER_KEY_COPY">Copy the key</string>
     <string name="PLG_KEYMANAGER_KEY_CREATE">Create a key</string>
+    <string name="PLG_KEYMANAGER_KEY_CREATE_DESC">Individual keys can be generated here.\n\nNote: In the "Change the key" view, you can use the "Copy the key" menu item to copy an existing key once or several times.</string>    
     <string name="PLG_KEYMANAGER_KEY_DELETE">Delete the key</string>
     <string name="PLG_KEYMANAGER_KEY_DELETE_DESC">Should this key be deleted?</string>
     <string name="PLG_KEYMANAGER_KEY_DELETED">Key deleted</string>
@@ -56,12 +57,12 @@
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Plug-in name</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">Ready data for printing ...</string>
-    <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>    
-    <string name="PLG_KEYMANAGER_SETTINGS">Settings</string> 
+    <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Display all keys</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Special case: current user or administrator</string>    
     <string name="PLG_KEYMANAGER_SYNCHRONIZE">Synchronize users with recipients</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">This allows users to be made without a key to a former user.\n\n A T T E N T I O N\n\n  This feature should only be used if KeyManager is operated in its own organization.</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_ERROR">A mistake happened! Users with #VAR1# could not be deleted.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">All users are recipients of a key, no reconciliation can be performed.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">This is just an overview of the comparison, nothing has been saved yet.\n\n Users can only be made to a former if the number of keys is 0 and they are not administrator or the current user.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">The listed users are now former.</string>

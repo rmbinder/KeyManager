@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Show history of key field changes
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -25,10 +25,10 @@ require_once(__DIR__ . '/classes/configtable.php');
 
 // calculate default date from which the key fields history should be shown
 $filterDateFrom = DateTime::createFromFormat('Y-m-d', DATE_NOW);
-$filterDateFrom->modify('-'.$gPreferences['members_days_field_history'].' day');
+$filterDateFrom->modify('-'.$gSettingsManager->getInt('members_days_field_history').' day');
 
 $getKeyId    = admFuncVariableIsValid($_GET, 'key_id',           'int');
-$getDateFrom = admFuncVariableIsValid($_GET, 'filter_date_from', 'date', array('defaultValue' => $filterDateFrom->format($gPreferences['system_date'])));
+$getDateFrom = admFuncVariableIsValid($_GET, 'filter_date_from', 'date', array('defaultValue' => $filterDateFrom->format($gSettingsManager->getString('system_date'))));
 $getDateTo   = admFuncVariableIsValid($_GET, 'filter_date_to',   'date', array('defaultValue' => DATE_NOW));
 
 $keys = new Keys($gDb, ORG_ID);
@@ -36,10 +36,10 @@ $keys->readKeyData($getKeyId, ORG_ID);
 
 $user = new User($gDb, $gProfileFields);
 
-$headline = $gL10n->get('MEM_CHANGE_HISTORY_OF', $keys->getValue('KEYNAME'));
+$headline = $gL10n->get('MEM_CHANGE_HISTORY_OF', array($keys->getValue('KEYNAME')));
 
 // if profile log is activated then the key field history will be shown otherwise show error
-if ($gPreferences['profile_log_edit_fields'] == 0)
+if (!$gSettingsManager->getBool('profile_log_edit_fields'))
 {
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     // => EXIT
@@ -54,10 +54,10 @@ $objDateFrom = DateTime::createFromFormat('Y-m-d', $getDateFrom);
 if ($objDateFrom === false)
 {
     // check if date has system format
-    $objDateFrom = DateTime::createFromFormat($gPreferences['system_date'], $getDateFrom);
+    $objDateFrom = \DateTime::createFromFormat($gSettingsManager->getString('system_date'), $getDateFrom);
     if($objDateFrom === false)
     {
-        $objDateFrom = DateTime::createFromFormat($gPreferences['system_date'], '1970-01-01');
+        $objDateFrom = \DateTime::createFromFormat($gSettingsManager->getString('system_date'), '1970-01-01');
     }
 }
 
@@ -65,10 +65,10 @@ $objDateTo = DateTime::createFromFormat('Y-m-d', $getDateTo);
 if ($objDateTo === false)
 {
     // check if date has system format
-    $objDateTo = DateTime::createFromFormat($gPreferences['system_date'], $getDateTo);
-    if ($objDateTo === false)
+    $objDateTo = \DateTime::createFromFormat($gSettingsManager->getString('system_date'), $getDateTo);
+    if($objDateTo === false)
     {
-        $objDateTo = DateTime::createFromFormat($gPreferences['system_date'], '1970-01-01');
+        $objDateTo = \DateTime::createFromFormat($gSettingsManager->getString('system_date'), '1970-01-01');
     }
 }
 
@@ -96,23 +96,20 @@ if ($fieldHistoryStatement->rowCount() === 0)
 {
     // message is shown, so delete this page from navigation stack
     $gNavigation->deleteLastUrl();
-    $gMessage->show($gL10n->get('MEM_NO_CHANGES_PROFIL', $keys->getValue('KEYNAME')));
+    $gMessage->setForwardUrl($gNavigation->getUrl(), 1000);
+    $gMessage->show($gL10n->get('MEM_NO_CHANGES_PROFIL', array($keys->getValue('KEYNAME'))));
     // => EXIT
 }
 
 // create html page object
-$page = new HtmlPage($headline);
+$page = new HtmlPage('plg-keymanager-keys-history', $headline);
 
-// add back link to module menu
-$profileFieldHistoryMenu = $page->getMenu();
-$profileFieldHistoryMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-
-// create filter menu with input elements for Startdate and Enddate
+// create filter menu with input elements for Startdate and Enddate                                                 //todo !!!!!!!!!!!!!!!!!!!!!!ohne Umweg �ber $form
 $FilterNavbar = new HtmlNavbar('menu_profile_field_history_filter', null, null, 'filter');
 $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', $page, array('type' => 'navbar', 'setFocus' => false));
 $form->addInput('filter_date_from', $gL10n->get('SYS_START'), $dateFromHtml, array('type' => 'date', 'maxLength' => 10));
 $form->addInput('filter_date_to', $gL10n->get('SYS_END'), $dateToHtml, array('type' => 'date', 'maxLength' => 10));
-$form->addInput('key_id', '', $getKeyId, array('property' => FIELD_HIDDEN));
+$form->addInput('key_id', '', $getKeyId, array('property' => HtmlForm::FIELD_HIDDEN));
 $form->addSubmitButton('btn_send', $gL10n->get('SYS_OK'));
 $FilterNavbar->addForm($form->show(false));
 $page->addHtml($FilterNavbar->show());
@@ -143,7 +140,7 @@ while ($row = $fieldHistoryStatement->fetch())
     	if ($keys->getPropertyById((int) $row['kml_kmf_id'], 'kmf_name_intern') === 'RECEIVER')
     	{
     		$user->readDataById((int) $kmlValueNew);
-    		$columnValues[] = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$kmlValueNew.'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
+    		$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $kmlValueNew)).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
     	}
     	else 
     	{
@@ -161,7 +158,7 @@ while ($row = $fieldHistoryStatement->fetch())
    	 	if ($keys->getPropertyById((int) $row['kml_kmf_id'], 'kmf_name_intern') === 'RECEIVER')
    	 	{
    	 		$user->readDataById((int) $kmlValueOld);
-   	 		$columnValues[] = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$kmlValueOld.'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
+   	 		$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $kmlValueOld)).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
    	 	}
    	 	else
    	 	{
@@ -174,8 +171,8 @@ while ($row = $fieldHistoryStatement->fetch())
     }
    
     $user->readDataById($row['kml_usr_id_create']);
-    $columnValues[] = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$row['kml_usr_id_create'].'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
-    $columnValues[] = $timestampCreate->format($gPreferences['system_date'].' '.$gPreferences['system_time']);
+    $columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $row['kml_usr_id_create'])).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
+    $columnValues[] = $timestampCreate->format($gSettingsManager->getString('system_date').' '.$gSettingsManager->getString('system_time'));
     $table->addRowByArray($columnValues);
 }
 

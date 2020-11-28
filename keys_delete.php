@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Delete a key or make a key to the former
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -51,15 +51,10 @@ switch ($getMode)
     	$headline = $gL10n->get('PLG_KEYMANAGER_KEY_DELETE');
     		
     	// create html page object
-    	$page = new HtmlPage($headline);
+    	$page = new HtmlPage('plg-keymanager-keys-delete', $headline);
     		
     	// add current url to navigation stack
     	$gNavigation->addUrl(CURRENT_URL, $headline);
-    		
-    	// create module menu with back link
-    	$organizationNewMenu = new HtmlNavbar('menu_key_delete', $headline, $page);
-    	$organizationNewMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-    	$page->addHtml($organizationNewMenu->show(false));
     		
     	$page->addHtml('<p class="lead">'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE_DESC').'</p>');
     		
@@ -91,14 +86,14 @@ switch ($getMode)
     			'kmf-'. $keys->getProperty($kmfNameIntern, 'kmf_id'),
     			convlanguagePKM($keys->getProperty($kmfNameIntern, 'kmf_name')),
     			$content,
-    			array('property' => FIELD_DISABLED)
+    			array('property' => HtmlForm::FIELD_DISABLED)
     		);
     	 }	
     	
-    	$form->addButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => THEME_URL .'/icons/delete.png', 'link' => ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php?key_id='.$getKeyId.'&mode=2', 'class' => 'btn-primary col-sm-offset-3'));
+    	$form->addButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'fa-trash-alt', 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php', array('key_id' => $getKeyId, 'mode' => 2)), 'class' => 'btn-primary offset-sm-3'));
     	if (!$getKeyFormer)
     	{
-    		$form->addButton('btn_former', $gL10n->get('PLG_KEYMANAGER_FORMER'), array('icon' => THEME_URL .'/icons/eye_gray.png', 'link' => ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php?key_id='.$getKeyId.'&mode=3', 'class' => 'btn-primary col-sm-offset-3'));
+    		$form->addButton('btn_former', $gL10n->get('PLG_KEYMANAGER_FORMER'), array('icon' => 'fa-eye-slash', 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php', array('key_id' => $getKeyId, 'mode' => 3)), 'class' => 'btn-primary offset-sm-3'));
     		$form->addCustomContent('', '<br />'.$gL10n->get('PLG_KEYMANAGER_KEY_MAKE_TO_FORMER'));
     	}
     	
@@ -124,7 +119,7 @@ switch ($getMode)
     	$gDb->query($sql);
     	
     	// go back to key view
-    	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 2000);
+    	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);
 		$gMessage->show($gL10n->get('PLG_KEYMANAGER_KEY_DELETED'));
 
     	break;
@@ -138,7 +133,7 @@ switch ($getMode)
     	$gDb->query($sql);
     		
     	// go back to key view
-    	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 2000);
+    	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);
     	$gMessage->show($gL10n->get('PLG_KEYMANAGER_KEY_MADE_TO_FORMER'));
     	break;
     	// => EXIT

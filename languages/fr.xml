@@ -27,10 +27,11 @@
     <string name="PLG_KEYMANAGER_KEY">Clé</string>
     <string name="PLG_KEYMANAGER_KEY_COPY">Copier la clé</string>
     <string name="PLG_KEYMANAGER_KEY_CREATE">Générer la clé</string>
+    <string name="PLG_KEYMANAGER_KEY_CREATE_DESC">Des clés individuelles peuvent être générées ici.\n\nRemarque: Dans la vue "Modifier la clé", vous pouvez utiliser l'élément de menu "Copier la clé" pour copier une ou plusieurs fois une clé existante.</string>    
     <string name="PLG_KEYMANAGER_KEY_DELETE">Supprimer la clé</string>
     <string name="PLG_KEYMANAGER_KEY_DELETE_DESC">Cette clé doit-elle être effacée ?</string>
     <string name="PLG_KEYMANAGER_KEY_DELETED">Clé effacée</string>
-    <string name="PLG_KEYMANAGER_KEY_EDIT">modifier la clé</string>
+    <string name="PLG_KEYMANAGER_KEY_EDIT">Modifier la clé</string>
     <string name="PLG_KEYMANAGER_KEY_MADE_TO_FORMER">Clé retirée</string>    
     <string name="PLG_KEYMANAGER_KEY_MAKE_TO_FORMER">Tu peux marquer la clé comme retirée. Cela présente l\'avantage que les données sont conservées et tu peux voir plus tard encore qui a emprunté cette clé. Si tu sélectionne Supprimer, les données sont irrévocablement supprimé de la base de données et il n\'est pas possible de consulter les données de cette clé ultérieurement.</string>
     <string name="PLG_KEYMANAGER_KEY_PRINT">Imprimer la clé</string>
@@ -56,12 +57,12 @@
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Nom du plug-in</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">Données préparées pour l\'impression...</string>
-    <string name="PLG_KEYMANAGER_RECEIVER">Destinataires</string>    
-    <string name="PLG_KEYMANAGER_SETTINGS">Configurations</string> 
+    <string name="PLG_KEYMANAGER_RECEIVER">Destinataires</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Afficher toutes les clés</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Cas particulier: utilisateur actuel ou administrateur</string>    
     <string name="PLG_KEYMANAGER_SYNCHRONIZE">Synchroniser les utilisateurs avec les destinataires</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">Cela permet aux utilisateurs d'être créés sans clé pour un ancien utilisateur.\n\n M I S E  E N  G A R D E\n\n Cette fonctionnalité ne doit être utilisée que si KeyManager est utilisé dans sa propre organisation.</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_ERROR">Une erreur s'est produite! Les utilisateurs avec #VAR1# n'ont pas pu être supprimés.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">Tous les utilisateurs sont les destinataires d'une clé, aucune réconciliation ne peut être effectuée.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">Ceci est juste un aperçu de la comparaison, rien n'a encore été enregistré.\n\n Les utilisateurs ne peuvent devenir des anciens que si le nombre de clés est 0 et qu'il ne s'agit ni de l'administrateur ni de l'utilisateur actuel.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">Les utilisateurs listés sont maintenant des anciens.</string>

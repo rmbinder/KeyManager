@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -133,60 +133,49 @@ class Keys
     			// if value is imagefile or imageurl then show image
     			if (strpos(admStrToLower($listValue), '.png') > 0 || strpos(admStrToLower($listValue), '.jpg') > 0)
     			{
-    				// if there is imagefile and text separated by | then explode them
-    				$listValues = explode('|', $listValue);
-    				if (count($listValues) === 1)
-    				{
-    					$listValueImage = $listValue;
-    					$listValueText  = $this->getValue('kmf_name');
-    				}
-    				else
-    				{
-    					$listValueImage = $listValues[0];
-    					$listValueText  = $listValues[1];
-    				}
-    							 
-    				// if text is a translation-id then translate it
-    				if (strpos($listValueText, '_') === 3)
-    				{
-    					$listValueText = $gL10n->get(admStrToUpper($listValueText));
-    				}
-    							 
-    				if ($format === 'text')
-    				{
-    					// if no image is wanted then return the text part or only the position of the entry
-    					if (count($listValues) === 1)
-    					{
-    						$listValue = $key + 1;
-    					}
-    					else
-    					{
-    						$listValue = $listValueText;
-    					}
-    				}
-    				else
-    				{
-    					try
-    					{	 
-    						$listValue = '<img class="admidio-icon-info" src="'.$listValueImage.'" title="'.$listValueText.'" alt="'.$listValueText.'" />';
-    					}
-    					catch (AdmException $e)
-    					{
-    						$e->showText();
-    						// => EXIT
-    					}
-    				}
-    			}
+                    // if value is imagefile or imageurl then show image
+                    if (Image::isFontAwesomeIcon($listValue)
+                    || StringUtils::strContains($listValue, '.png', false) || StringUtils::strContains($listValue, '.jpg', false)) // TODO: simplify check for images
+                    {
+                        // if there is imagefile and text separated by | then explode them
+                        if (StringUtils::strContains($listValue, '|'))
+                        {
+                            list($listValueImage, $listValueText) = explode('|', $listValue);
+                        }
+                        else
+                        {
+                            $listValueImage = $listValue;
+                            $listValueText  = $this->getValue('usf_name');
+                        }
+
+                        // if text is a translation-id then translate it
+                        $listValueText = Language::translateIfTranslationStrId($listValueText);
+
+                        if ($format === 'text')
+                        {
+                            // if no image is wanted then return the text part or only the position of the entry
+                            if (StringUtils::strContains($listValue, '|'))
+                            {
+                                $listValue = $listValueText;
+                            }
+                            else
+                            {
+                                $listValue = $key + 1;
+                            }
+                        }
+                        else
+                        {
+                            $listValue = Image::getIconHtml($listValueImage, $listValueText);
+                        }
+                    }
+                }    
     		}
     					 
-    		// if text is a translation-id then translate it
-    		if (strpos($listValue, '_') === 3)
-    		{
-    			$listValue = $gL10n->get(admStrToUpper($listValue));
-    		}
-    					 
-    		// save values in new array that starts with key = 1
-    		$arrListValuesWithKeys[++$key] = $listValue;
+            // if text is a translation-id then translate it
+            $listValue = Language::translateIfTranslationStrId($listValue);
+
+            // save values in new array that starts with key = 1
+            $arrListValuesWithKeys[++$key] = $listValue;
     	}
     	unset($listValue);
     	return $arrListValuesWithKeys;
@@ -223,7 +212,7 @@ class Keys
      */
     public function getHtmlValue($fieldNameIntern, $value, $value2 = null)
     {
-        global $gPreferences, $gL10n;
+        global $gSettingsManager;
 
         if (!array_key_exists($fieldNameIntern, $this->mKeyFields))
         {
@@ -242,21 +231,21 @@ class Keys
                 case 'CHECKBOX':
                     if ($value == 1)
                     {
-                        $htmlValue = '<img src="' . THEME_URL . '/icons/checkbox_checked.gif" alt="on" />';
+                        $htmlValue = '<i class="fas fa-check-square"></i>';
                     }
                     else
                     {
-                        $htmlValue = '<img src="' . THEME_URL . '/icons/checkbox.gif" alt="off" />';
+                        $htmlValue = '<i class="fas fa-square"></i>';
                     }
                     break;
                 case 'DATE':
                     if ($value !== '')
                     {
                         // date must be formated
-                        $date = DateTime::createFromFormat('Y-m-d', $value);
+                        $date = \DateTime::createFromFormat('Y-m-d', $value);
                         if ($date instanceof \DateTime)
                         {
-                            $htmlValue = $date->format($gPreferences['system_date']);
+                            $htmlValue = $date->format($gSettingsManager->getString('system_date'));
                         }
                     }
                     break;
@@ -271,14 +260,13 @@ class Keys
                     foreach ($arrListValues as $index => $listValue)
                     {
                         // if value is imagefile or imageurl then show image
-                        if ($kmfType === 'RADIO_BUTTON'
-                        && (strpos(admStrToLower($listValue), '.png') > 0 || strpos(admStrToLower($listValue), '.jpg') > 0))
+                        if ($usfType === 'RADIO_BUTTON' && (Image::isFontAwesomeIcon($listValue)
+                        || StringUtils::strContains($listValue, '.png', false) || StringUtils::strContains($listValue, '.jpg', false))) // TODO: simplify check for images
                         {
                             // if there is imagefile and text separated by | then explode them
-                            if (strpos($listValue, '|') > 0)
+                            if (StringUtils::strContains($listValue, '|'))
                             {
-                                $listValueImage = substr($listValue, 0, strpos($listValue, '|'));
-                                $listValueText  = substr($listValue, strpos($listValue, '|') + 1);
+                                list($listValueImage, $listValueText) = explode('|', $listValue);
                             }
                             else
                             {
@@ -287,31 +275,15 @@ class Keys
                             }
 
                             // if text is a translation-id then translate it
-                            if (strpos($listValueText, '_') === 3)
-                            {
-                                $listValueText = $gL10n->get(admStrToUpper($listValueText));
-                            }
+                            $listValueText = Language::translateIfTranslationStrId($listValueText);
 
-                            try
-                            {
-								if (admStrIsValidFileName($listValueImage, true))
-                                {
-                                    $listValue = '<img class="admidio-icon-info" src="' . THEME_URL . '/icons/' . $listValueImage . '" title="' . $listValueText . '" alt="' . $listValueText . '" />';
-                                }
-                            }
-                            catch (AdmException $e)
-                            {
-                                $e->showText();
-                                // => EXIT
-                            }
+                            // get html snippet with image tag
+                            $listValue = Image::getIconHtml($listValueImage, $listValueText);
                         }
 
                         // if text is a translation-id then translate it
-                        if (strpos($listValue, '_') === 3)
-                        {
-                            $listValue = $gL10n->get(admStrToUpper($listValue));
-                        }
-
+                        $listValue = Language::translateIfTranslationStrId($listValue);
+                        
                         // save values in new array that starts with key = 1
                         $arrListValuesWithKeys[++$index] = $listValue;
                     }
@@ -330,7 +302,7 @@ class Keys
         {
             if ($this->mKeyFields[$fieldNameIntern]->getValue('kmf_type') === 'CHECKBOX')
             {
-                $value = '<img src="' . THEME_URL . '/icons/checkbox.gif" alt="off" />';
+                $value = '<i class="fas fa-square"></i>';
             }
         }
 

@@ -3,15 +3,15 @@
  ***********************************************************************************************
  * KeyManager
  *
- * Version 1.1.3
+ * Version 2.0.0-Beta1
  *
  * KeyManager is an Admidio plugin for managing building and room keys.
  * 
  * Author: rmb
  *
- * Compatible with Admidio version 3.3
+ * Compatible with Admidio version 4
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -20,12 +20,12 @@
 /******************************************************************************
  * Parameters:
  *
- * mode:            Output(html, print, csv-ms, csv-oo, pdf, pdfl)
- * full_screen:     false - (Default) show sidebar, head and page bottom of html page
- *                  true  - Only show the list without any other html unnecessary elements
- * filter_string    general filter string
- * filter_keyname   filter ony for keyname
- * show_all         show all keys (also made to the former)
+ * mode              : Output(html, print, csv-ms, csv-oo, pdf, pdfl)
+ * export_and_filter : 0 - (Default) No filter and export menu
+ *                     1 - Filter and export menu is enabled
+ * filter_string     : general filter string
+ * filter_keyname    : filter ony for keyname
+ * show_all          : show all keys (also made to the former)
  *
  *****************************************************************************/
 
@@ -41,12 +41,6 @@ $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FO
 if (!isUserAuthorized($scriptName))
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
-
-$fullScreen_DefaultValue = false;
-if (!isset($_GET['full_screen']) && isset($_SESSION['pKeyManager']['full_screen']))
-{
-	$fullScreen_DefaultValue = $_SESSION['pKeyManager']['full_screen'];
 }
 
 $filterString_DefaultValue = '';
@@ -67,24 +61,16 @@ if (!isset($_GET['filter_receiver']) && isset($_SESSION['pKeyManager']['filter_r
 	$filterReceiver_DefaultValue = $_SESSION['pKeyManager']['filter_receiver'];
 }
 
-$showAll_DefaultValue = false;
-if (!isset($_GET['show_all']) && isset($_SESSION['pKeyManager']['show_all']))
-{
-	$showAll_DefaultValue = $_SESSION['pKeyManager']['show_all'];
-}
+$getMode            = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
+$getFilterString    = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => $filterString_DefaultValue));
+$getFilterKeyName   = admFuncVariableIsValid($_GET, 'filter_keyname',  'string', array('defaultValue' => $filterKeyName_DefaultValue));
+$getFilterReceiver  = admFuncVariableIsValid($_GET, 'filter_receiver', 'int', array('defaultValue' => $filterReceiver_DefaultValue));
+$getShowAll         = admFuncVariableIsValid($_GET, 'show_all',        'bool', array('defaultValue' => false));
+$getExportAndFilter = admFuncVariableIsValid($_GET, 'export_and_filter', 'bool', array('defaultValue' => false));
 
-$getMode           = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
-$getFullScreen     = admFuncVariableIsValid($_GET, 'full_screen',     'bool', array('defaultValue' => $fullScreen_DefaultValue));
-$getFilterString   = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => $filterString_DefaultValue));
-$getFilterKeyName  = admFuncVariableIsValid($_GET, 'filter_keyname',  'string', array('defaultValue' => $filterKeyName_DefaultValue));
-$getFilterReceiver = admFuncVariableIsValid($_GET, 'filter_receiver', 'int', array('defaultValue' => $filterReceiver_DefaultValue));
-$getShowAll        = admFuncVariableIsValid($_GET, 'show_all',        'bool', array('defaultValue' => $showAll_DefaultValue));
-
-$_SESSION['pKeyManager']['full_screen'] = $getFullScreen;
 $_SESSION['pKeyManager']['filter_string'] = $getFilterString;
 $_SESSION['pKeyManager']['filter_keyname'] = $getFilterKeyName;
 $_SESSION['pKeyManager']['filter_receiver'] = $getFilterReceiver;
-$_SESSION['pKeyManager']['show_all'] = $getShowAll;
 
 $pPreferences = new ConfigTablePKM();
 if ($pPreferences->checkForUpdate())
@@ -102,7 +88,7 @@ $valueQuotes = '';
 $charset     = '';
 $classTable  = '';
 $orientation = '';
-$filename    = $g_organization.'-'.$gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
+$filename    = umlautePFF($g_organization.'-'.$gL10n->get('PLG_KEYMANAGER_KEYMANAGER'));
 
 switch ($getMode)
 {
@@ -156,9 +142,9 @@ $title = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 $headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 
 // if html mode and last url was not a list view then save this url to navigation stack
-if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false)
+if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false)             
 {
-    $gNavigation->addUrl(CURRENT_URL);
+    $gNavigation->addStartUrl(CURRENT_URL, $headline);
 }
 
 if ($getMode != 'csv')
@@ -169,9 +155,7 @@ if ($getMode != 'csv')
     if ($getMode == 'print')
     {
         // create html page object without the custom theme files
-        $page = new HtmlPage();
-        $page->hideThemeHtml();
-        $page->hideMenu();
+        $page = new HtmlPage('plg-keymanager-main-print');
         $page->setPrintMode();
         $page->setTitle($title);
         $page->setHeadline($headline);
@@ -201,7 +185,7 @@ if ($getMode != 'csv')
         $pdf->setFooterMargin(0);
 
         // headline for PDF
-        $pdf->setHeaderData('', '', $headline, '');
+        $pdf->setHeaderData('', 0, $headline, '');
 
         // set font
         $pdf->SetFont('times', '', 10);
@@ -215,132 +199,164 @@ if ($getMode != 'csv')
     }
     elseif ($getMode == 'html')
     {
-        $datatable = true;
+         if ($getExportAndFilter)
+        {
+            $datatable = false;
+        }
+        else
+        {
+            $datatable = true;
+        }
         $hoverRows = true;
 
-        // create html page object
-        $page = new HtmlPage();
-
-        $inputFilterStringLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/list.png"
-            alt="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" title="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" />';
-        $selectBoxKeyNameLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/key.png"
-            alt="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" />';
-        $selectBoxReceiverLabel = '<img class="admidio-icon-info" src="'. THEME_URL . '/icons/profile.png"
-            alt="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" title="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" />';
+        $inputFilterStringLabel = '<i class="fas fa-search" alt="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" title="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'"></i>';
+        $selectBoxKeyNameLabel ='<i class="fas fa-key" alt="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'"></i>';
+        $selectBoxReceiverLabel = '<i class="fas fa-user" alt="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" title="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'"></i>';
         
-        if ($getFullScreen)
-        {
-            $page->hideThemeHtml();
-            $inputFilterStringLabel = $gL10n->get('PLG_KEYMANAGER_GENERAL');
-            $selectBoxKeyNameLabel = $gL10n->get('PLG_KEYMANAGER_KEYNAME');
-            $selectBoxReceiverLabel = $gL10n->get('PLG_KEYMANAGER_RECEIVER');
-        }
-
+        // create html page object
+        $page = new HtmlPage('plg-keymanager-main-html');
         $page->setTitle($title);
         $page->setHeadline($headline);
 
-        // create filter menu
-        $filterNavbar = new HtmlNavbar('menu_list_filter', null, null, 'filter');
-        $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', $page, array('type' => 'navbar', 'setFocus' => false));
-        $form->addInput('filter_string', $inputFilterStringLabel, $getFilterString);
-        // read all keynames
-        $sql = 'SELECT DISTINCT kmd_value, kmd_value
-                           FROM '.TBL_KEYMANAGER_DATA.'
-                     INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
-                             ON kmf_id = kmd_kmf_id
-                          WHERE kmf_name_intern = \'KEYNAME\' 
-                       ORDER BY kmd_value ASC';
-        $form->addSelectBoxFromSql('filter_keyname', $selectBoxKeyNameLabel, $gDb, $sql, array('defaultValue' => $getFilterKeyName , 'showContextDependentFirstEntry' => true));
-        // read all receiver
-        $sql = 'SELECT DISTINCT kmd_value, CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value)
-                           FROM '.TBL_KEYMANAGER_DATA.'
-                     INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
-                             ON kmf_id = kmd_kmf_id
-                      LEFT JOIN '. TBL_USER_DATA. ' as last_name
-                             ON last_name.usd_usr_id = kmd_value
-                            AND last_name.usd_usf_id = '. $gProfileFields->getProperty('LAST_NAME', 'usf_id'). '
-                      LEFT JOIN '. TBL_USER_DATA. ' as first_name
-                             ON first_name.usd_usr_id = kmd_value
-                            AND first_name.usd_usf_id = '. $gProfileFields->getProperty('FIRST_NAME', 'usf_id'). '
-                          WHERE kmf_name_intern = \'RECEIVER\'
-                       ORDER BY CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value) ASC';
-        $form->addSelectBoxFromSql('filter_receiver',$selectBoxReceiverLabel, $gDb, $sql, array('defaultValue' => $getFilterReceiver , 'showContextDependentFirstEntry' => true));
-        $form->addInput('show_all', '', $getShowAll, array('property' => FIELD_HIDDEN));
-        $form->addInput('full_screen', '', $getFullScreen, array('property' => FIELD_HIDDEN));      
-        $form->addSubmitButton('btn_send', $gL10n->get('SYS_OK'));
-        $filterNavbar->addForm($form->show(false));
-        $page->addHtml($filterNavbar->show());
-   
-        $page->addHtml('<h5>'.$htmlSubHeadline.'</h5>');
         $page->addJavascript('
-            $("#export_list_to").change(function() {
-                if ($(this).val().length > 1) {
-                    var result = $(this).val();
-                    $(this).prop("selectedIndex", 0);
-                    self.location.href = "'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?" +
-                        "mode=" + result + "&filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'";
-                }
+            $("#filter_keyname").change(function () {
+              
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                        'mode'              => 'html',
+                        'filter_string'     => $getFilterString,
+                        'filter_receiver'   => $getFilterReceiver,
+                        'export_and_filter' => $getExportAndFilter,
+                        'show_all'          => $getShowAll
+                    )) . '&filter_keyname=" + $(this).val();
+                
+            });
+            $("#filter_receiver").change(function () {
+           
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                        'mode'              => 'html',
+                        'filter_string'     => $getFilterString,
+                        'filter_keyname'    => $getFilterKeyName,
+                        'export_and_filter' => $getExportAndFilter,
+                        'show_all'          => $getShowAll
+                    )) . '&filter_receiver=" + $(this).val();
+       
+            });
+            $("#menu_item_lists_print_view").click(function() {
+                window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    'filter_string'     => $getFilterString, 
+                    'filter_keyname'    => $getFilterKeyName, 
+                    'filter_receiver'   => $getFilterReceiver,
+                    'export_and_filter' => $getExportAndFilter, 
+                    'show_all'          => $getShowAll,  
+                    'mode'              => 'print'
+                )) . '", "_blank");
+            });
+            $("#export_and_filter").change(function() {
+                $("#navbar_birthdaylist_form").submit();
+            });
+            $("#show_all").change(function() {
+                $("#navbar_birthdaylist_form").submit();
             });
 
-            $("#menu_item_print_view").click(function() {
-                window.open("'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&filter_keyname='.$getFilterKeyName.'&filter_receiver='.$getFilterReceiver.'&show_all='.$getShowAll.'&mode=print", "_blank");
-            });',
+            $("#filter_string").change(function() {
+                $("#navbar_birthdaylist_form").submit();
+            });
+            ',
             true
         );
 
-        // get module menu
-        $listsMenu = $page->getMenu();
-        
-        $listsMenu->addItem('menu_item_back', $gHomepage, $gL10n->get('SYS_BACK'), 'back.png');
-
-        if ($getFullScreen)
+        if ($getExportAndFilter)
         {
-            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=false',
-                $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
+            // links to print and exports
+            $page->addPageFunctionsMenuItem('menu_item_lists_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
+        
+            $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'fa-file-download');
+            $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL'),
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    'filter_string'     => $getFilterString,
+                    'filter_keyname'    => $getFilterKeyName,
+                    'filter_receiver'   => $getFilterReceiver,
+                    'export_and_filter' => $getExportAndFilter,
+                    'show_all'          => $getShowAll,
+                    'mode'              => 'csv-ms')),
+                'fa-file-excel', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_pdf', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    'filter_string'     => $getFilterString,
+                    'filter_keyname'    => $getFilterKeyName,
+                    'filter_receiver'   => $getFilterReceiver,
+                    'export_and_filter' => $getExportAndFilter,
+                    'show_all'          => $getShowAll,
+                    'mode'              => 'pdf')),
+                'fa-file-pdf', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_pdfl', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    'filter_string'     => $getFilterString,
+                    'filter_keyname'    => $getFilterKeyName,
+                    'filter_receiver'   => $getFilterReceiver,
+                    'export_and_filter' => $getExportAndFilter,
+                    'show_all'          => $getShowAll,
+                    'mode'              => 'pdfl')),
+                'fa-file-pdf', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_csv', $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    'filter_string'     => $getFilterString,
+                    'filter_keyname'    => $getFilterKeyName,
+                    'filter_receiver'   => $getFilterReceiver,
+                    'export_and_filter' => $getExportAndFilter,
+                    'show_all'          => $getShowAll,
+                    'mode'              => 'csv-oo')),
+                'fa-file-csv', 'menu_item_lists_export');
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;show_all='.$getShowAll.'&amp;mode=html&amp;full_screen=true',
-                $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
+            // if filter is not enabled, reset filterstring
+            $getFilterString = '';
         }
-
-        if ($getShowAll == true)
-        {
-        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=0',
-        			$gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), 'checkbox_checked.gif');
-        }
-        else
-        {
-        	$listsMenu->addItem('show_all', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php?filter_string='.$getFilterString.'&amp;filter_keyname='.$getFilterKeyName.'&amp;filter_receiver='.$getFilterReceiver.'&amp;mode=html&amp;full_screen='.$getFullScreen.'&amp;show_all=1',
-        			$gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), 'checkbox.gif');
-        }
-        
-        $listsMenu->addItem('menu_item_extras', null, $gL10n->get('SYS_MORE_FEATURES'), null, 'left');   //keys_edit_new.php?key_id='.$key['kmk_id'].
-        
-        // link to print overlay and exports
-        $listsMenu->addItem('menu_item_print_view', '#', $gL10n->get('LST_PRINT_PREVIEW'), 'print.png', 'left', 'menu_item_extras');
         
         if ($gCurrentUser->isAdministrator())
-        {
-        	$listsMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id=0',
-        			$gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'add.png', 'left', 'menu_item_extras');
-        	$listsMenu->addItem('menu_prefs', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php',
-        			$gL10n->get('PLG_KEYMANAGER_SETTINGS'), 'options.png', 'left', 'menu_item_extras');
+		{
+    		$page->addPageFunctionsMenuItem('menu_preferences', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'fa-cog');
+		} 
+        
+		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
+        
+		if ($getExportAndFilter)
+		{  
+            $form->addInput('filter_string', $inputFilterStringLabel, $getFilterString);
+        
+            // read all keynames
+            $sql = 'SELECT DISTINCT kmd_value, kmd_value
+                               FROM '.TBL_KEYMANAGER_DATA.'
+                         INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
+                                 ON kmf_id = kmd_kmf_id
+                              WHERE kmf_name_intern = \'KEYNAME\' 
+                           ORDER BY kmd_value ASC';
+            $form->addSelectBoxFromSql('filter_keyname', $selectBoxKeyNameLabel, $gDb, $sql, array('defaultValue' => $getFilterKeyName , 'showContextDependentFirstEntry' => true));
+        
+            // read all receiver
+            $sql = 'SELECT DISTINCT kmd_value, CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value)
+                               FROM '.TBL_KEYMANAGER_DATA.'
+                         INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
+                                 ON kmf_id = kmd_kmf_id
+                          LEFT JOIN '. TBL_USER_DATA. ' as last_name
+                                 ON last_name.usd_usr_id = kmd_value
+                                AND last_name.usd_usf_id = '. $gProfileFields->getProperty('LAST_NAME', 'usf_id'). '
+                          LEFT JOIN '. TBL_USER_DATA. ' as first_name
+                                 ON first_name.usd_usr_id = kmd_value
+                                AND first_name.usd_usf_id = '. $gProfileFields->getProperty('FIRST_NAME', 'usf_id'). '
+                              WHERE kmf_name_intern = \'RECEIVER\'
+                           ORDER BY CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value) ASC';
+            $form->addSelectBoxFromSql('filter_receiver',$selectBoxReceiverLabel, $gDb, $sql, array('defaultValue' => $getFilterReceiver , 'showContextDependentFirstEntry' => true));
         }
-
-        $form = new HtmlForm('navbar_export_to_form', '', $page, array('type' => 'navbar', 'setFocus' => false));
-        $selectBoxEntries = array(
-            ''       => $gL10n->get('LST_EXPORT_TO').' ...',
-            'csv-ms' => $gL10n->get('LST_MICROSOFT_EXCEL').' ('.$gL10n->get('SYS_ISO_8859_1').')',
-            'pdf'    => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
-            'pdfl'   => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
-            'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')'
-        );
-        $form->addSelectBox('export_list_to', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
-        $listsMenu->addForm($form->show(false));
+ 
+        $form->addCheckbox('show_all', $gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), $getShowAll);                            //toDo!!!!!!!!!
+        $form->addCheckbox('export_and_filter', $gL10n->get('PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER'), $getExportAndFilter);
+        
+        $page->addHtml($form->show());        
 
         $table = new HtmlTable('adm_keys_table', $page, $hoverRows, $datatable, $classTable);
-        $table->setDatatablesRowsPerPage($gPreferences['lists_members_per_page']);
+        $table->setDatatablesRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
     }
     else
     {
@@ -417,6 +433,7 @@ if ($getMode == 'html')    //change/delete/print button only in html-view
 {
 	$columnAlign[]  = 'center';
 	$columnValues[] = '&nbsp;';
+
 	$table->disableDatatablesColumnsSort(array(count($columnValues)));
 }
 
@@ -568,23 +585,21 @@ foreach ($keys->keys as $key)
    		$columnNumber++;
     }
     
-    if ($getMode == 'html')    //Change/Delete/Print button only in html view
+    if ($getMode == 'html')    //Delete/Print button only in html view
     {
     	$tempValue = '';
     	
-    	$tempValue .='<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_edit_new.php?key_id='.$key['kmk_id'].'">';
-    	$tempValue .='<img src="'.THEME_PATH.'/icons/edit.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_EDIT').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_EDIT').'"/>';
-    	$tempValue .='</a>&nbsp;&nbsp;';
     	if ($pPreferences->isPffInst())
     	{
-    		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_export_to_pff.php?key_id='.$key['kmk_id'].'">';
-    		$tempValue .='<img src="'.THEME_PATH.'/icons/print.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'" /></a>';
-    		$tempValue .='</a>&nbsp;&nbsp;';
+    		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_export_to_pff.php', array('key_id' => $key['kmk_id'])). '">
+    	                       <i class="fas fa-print" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'"></i>
+    	                   </a>';
     	}
     	if ($gCurrentUser->isAdministrator())
     	{
-    		$tempValue .= '<a class="iconLink" href="'.ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php?key_id='.$key['kmk_id'].'&key_former='.$key['kmk_former'].'">';
-    		$tempValue .='<img src="'.THEME_PATH.'/icons/delete.png" alt="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'" /></a>';
+    		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php', array('key_id' => $key['kmk_id'], 'key_former' => $key['kmk_former'])). '">
+    	                       <i class="fas fa-minus-circle" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'"></i>
+    	                   </a>';
     	}
     	
     	$columnValues[] = $tempValue;
@@ -610,10 +625,10 @@ foreach ($keys->keys as $key)
 if ($getMode == 'csv' || $getMode == 'pdf')
 {
     // file name in the current directory...
-    $filename .= '.'.$getMode;
+    $filename = FileSystemUtils::getSanitizedPathEntry($filename) . '.' . $getMode;
     
     // for IE the filename must have special chars in hexadecimal
-    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)               //toDo notwendig???????
     {
         $filename = urlencode($filename);
     }
@@ -642,24 +657,41 @@ if ($getMode == 'csv')
 // send the new PDF to the User
 elseif ($getMode == 'pdf')
 {
-	// output the HTML content
-	$pdf->writeHTML($table->getHtmlTable(), true, false, true, false, '');
-	
-	//Save PDF to file
-	$pdf->Output(ADMIDIO_PATH . FOLDER_DATA . '/'.$filename, 'F');
-	
-	//Redirect
-	header('Content-Type: application/pdf');
-	
-	readfile(ADMIDIO_PATH . FOLDER_DATA . '/'.$filename);
-	ignore_user_abort(true);
-	unlink(ADMIDIO_PATH . FOLDER_DATA . '/'.$filename);
-}
-elseif ($getMode == 'html' || $getMode == 'print')
-{
-    // add table list to the page
-    $page->addHtml($table->show());
+   // output the HTML content
+    $pdf->writeHTML($table->getHtmlTable(), true, false, true);
 
-    // show complete html page
+    $file = ADMIDIO_PATH . FOLDER_DATA . '/' . $filename;
+
+    // Save PDF to file
+    $pdf->Output($file, 'F');
+
+    // Redirect
+    header('Content-Type: application/pdf');
+
+    readfile($file);
+    ignore_user_abort(true);
+
+    try
+    {
+        FileSystemUtils::deleteFileIfExists($file);
+    }
+    catch (\RuntimeException $exception)
+    {
+        $gLogger->error('Could not delete file!', array('filePath' => $file));
+    }    
+    
+}
+elseif ($getMode == 'html' && $getExportAndFilter)
+{ 
+    $page->addHtml('<div style="width:100%; height: 500px; overflow:auto; border:20px;">');
+    $page->addHtml($table->show(false));
+    $page->addHtml('</div><br/>');
+   
+    $page->show();
+}
+elseif (($getMode == 'html' && !$getExportAndFilter) || $getMode == 'print')
+{
+    $page->addHtml($table->show(false));
+    
     $page->show();
 }

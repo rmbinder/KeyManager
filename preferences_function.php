@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Verarbeiten der Einstellungen des Admidio-Plugins KeyManager
  * 
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -72,23 +72,18 @@ case 2:
 	$headline = $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION');
 	 
 	    // create html page object
-    $page = new HtmlPage($headline);
+    $page = new HtmlPage('plg-keymanager-deinstallation', $headline);
     
     // add current url to navigation stack
     $gNavigation->addUrl(CURRENT_URL, $headline);
     
-    // create module menu with back link
-    $organizationNewMenu = new HtmlNavbar('menu_deinstallation', $headline, $page);
-    $organizationNewMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-    $page->addHtml($organizationNewMenu->show(false));
-    
     $page->addHtml('<p class="lead">'.$gL10n->get('PLG_KEYMANAGER_DEINSTALLATION_FORM_DESC').'</p>');
 
     // show form
-    $form = new HtmlForm('deinstallation_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php?mode=3', $page);
+    $form = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 3)), $page);
     $radioButtonEntries = array('0' => $gL10n->get('PLG_KEYMANAGER_DEINST_ACTORGONLY'), '1' => $gL10n->get('PLG_KEYMANAGER_DEINST_ALLORG') );
     $form->addRadioButton('deinst_org_select',$gL10n->get('PLG_KEYMANAGER_ORG_CHOICE'), $radioButtonEntries);    
-    $form->addSubmitButton('btn_deinstall', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => THEME_URL .'/icons/delete.png', 'class' => 'col-sm-offset-3'));
+    $form->addSubmitButton('btn_deinstall', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'fa-trash-alt', 'class' => 'offset-sm-3'));
     
     // add form to html page and show page
     $page->addHtml($form->show(false));
@@ -97,7 +92,7 @@ case 2:
     
 case 3:
     
-	$gNavigation->addUrl(CURRENT_URL);
+	$gNavigation->clear();
 	$gMessage->setForwardUrl($gHomepage);		
 
 	$resMes = $gL10n->get('PLG_KEYMANAGER_DEINST_STARTMESSAGE');

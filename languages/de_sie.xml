@@ -27,6 +27,7 @@
     <string name="PLG_KEYMANAGER_KEY">Schlüssel</string>
     <string name="PLG_KEYMANAGER_KEY_COPY">Schlüssel kopieren</string>
     <string name="PLG_KEYMANAGER_KEY_CREATE">Schlüssel erzeugen</string>
+    <string name="PLG_KEYMANAGER_KEY_CREATE_DESC">Hier können einzelne Schlüssel erzeugt werden.\n\nHinweis: In der Ansicht "Schlüssel ändern" ist es über den Menüpunkt "Schlüssel kopieren" möglich, einen vorhandenen Schlüssel einfach oder mehrfach zu kopieren.</string>    
     <string name="PLG_KEYMANAGER_KEY_DELETE">Schlüssel löschen</string>
     <string name="PLG_KEYMANAGER_KEY_DELETE_DESC">Soll dieser Schlüssel gelöscht werden?</string>
     <string name="PLG_KEYMANAGER_KEY_DELETED">Schlüssel gelöscht</string>
@@ -56,12 +57,12 @@
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Name des Plugins</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">bereite Daten für Druck vor...</string>
-    <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>    
-    <string name="PLG_KEYMANAGER_SETTINGS">Einstellungen</string> 
+    <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Alle Schlüssel anzeigen</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Sonderfall: Aktueller Benutzer oder Administrator</string>    
     <string name="PLG_KEYMANAGER_SYNCHRONIZE">Benutzer mit Empfänger abgleichen</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">Hierüber können Benutzer ohne Schlüssel zu Ehemaligen gemacht werden.\n\n V O R S I C H T\n\n Diese Funktion sollte nur verwendet werden, wenn KeyManager in einer eigenen Organisation betrieben wird.</string>    
+    <string name="PLG_KEYMANAGER_SYNCHRONIZE_ERROR">Es ist ein Fehler passiert! Benutzer mit #VAR1# konnten nicht gelöscht werden.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">Alle Benutzer sind Empfänger eines Schlüssels, es kann kein Abgleich durchgeführt werden.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">Dies ist nur eine Übersicht des Abgleichs, es wurde noch nichts gespeichert.\n\n Benutzer können nur zu Ehemaligen gemacht werden, wenn die Anzahl der Schlüssel 0 beträgt und sie nicht Administrator oder der aktuelle Benutzer sind.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">Die aufgelisteten Benutzer sind jetzt Ehemalige.</string>

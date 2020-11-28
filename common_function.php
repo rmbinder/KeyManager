@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Common functions for the Admidio plugin KeyManager
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -170,46 +170,6 @@ function getNewNameIntern($name, $index)
 	return $newNameIntern;
 }
 
-
-/**
- * das Feld wird um eine Position in der Reihenfolge verschoben
- * @param string $mode
- */
-function moveSequence($mode)
-{
-	global $gDb, $keyField;
-
-	$mode = admStrToUpper($mode);
-	$kmfSequence = (int) $keyField->getValue('kmf_sequence');
-
-	// die Sequenz wird um eine Nummer gesenkt und wird somit in der Liste weiter nach oben geschoben
-	if ($mode === 'UP')
-	{
-		$sql = 'UPDATE '.TBL_KEYMANAGER_FIELDS.'
-                   SET kmf_sequence = '.$kmfSequence.'
-                 WHERE kmf_sequence = '.$kmfSequence.'-1
-                   AND ( kmf_org_id = '.ORG_ID.'
-                    OR kmf_org_id IS NULL ) ';
-		$gDb->query($sql );
-		--$kmfSequence;
-	}
-	// die Sequenz wird um eine Nummer erhoeht und wird somit in der Liste weiter nach unten geschoben
-	elseif ($mode === 'DOWN')
-	{
-		$sql = 'UPDATE '.TBL_KEYMANAGER_FIELDS.'
-                   SET kmf_sequence = '.$kmfSequence.'
-                 WHERE kmf_sequence = '.$kmfSequence.'+1
-                   AND ( kmf_org_id = '.ORG_ID.'
-                    OR kmf_org_id IS NULL ) ';
-		$gDb->query($sql );
-		++$kmfSequence;
-	}
-	
-	$keyField->setValue('kmf_sequence', $kmfSequence);
-	$keyField->save();
-}
-
-
 /**
  * Funktion liest die hoechste Sequenzzahl aus der db,
  * inkrementiert und gibt den neuen Wert zurueck
@@ -257,3 +217,29 @@ function umlautePff($tmptext)
 	return $tmptext;
 }
 
+/**
+ * @param string $group
+ * @param string $id
+ * @param string $title
+ * @param string $icon
+ * @param string $body
+ * @return string
+ */
+function getPreferencePanel($group, $id, $title, $icon, $body)
+{
+    $html = '
+        <div class="card" id="panel_' . $id . '">
+            <div class="card-header">
+                <a type="button" data-toggle="collapse" data-target="#collapse_' . $id . '">
+                    <i class="' . $icon . ' fa-fw"></i>' . $title . '
+                </a>
+            </div>
+            <div id="collapse_' . $id . '" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_preferences">
+                <div class="card-body">
+                    ' . $body . '
+                </div>
+            </div>
+        </div>
+    ';
+    return $html;
+}

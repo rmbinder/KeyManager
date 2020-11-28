@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Prepare print data for plugin FormFiller 
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -39,7 +39,7 @@ $keys->readKeyData($getKeyId, ORG_ID);
 $headline = $gL10n->get('PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT');
     		
 // create html page object
-$page = new HtmlPage($headline);
+$page = new HtmlPage('plg-keymanager-keys-export-to-pff', $headline);
     		
 // add current url to navigation stack
 $gNavigation->addUrl(CURRENT_URL, $headline);
@@ -86,10 +86,10 @@ foreach($keys->mKeyFields as $keyField)
     	'kmf-'. $kmfNameIntern,
     	convlanguagePKM($keys->getProperty($kmfNameIntern, 'kmf_name')),
     	$content,
-    	array(  'property' => FIELD_HIDDEN)
+    	array(  'property' => HtmlForm::FIELD_HIDDEN)
     );
 }
-$form->addInput('form_id', '', $pPreferences->config['Optionen']['interface_pff'], array(  'property' => FIELD_HIDDEN));
+$form->addInput('form_id', '', $pPreferences->config['Optionen']['interface_pff'], array(  'property' => HtmlForm::FIELD_HIDDEN));
 
 // add form to html page and show page
 $page->addHtml($form->show(false));

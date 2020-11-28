@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Class manages the configuration table
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see http://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -654,7 +654,7 @@ class ConfigTablePKM
 			}
 			else 
 			{
-				$result .= $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE', aray($table_name)) ;
+				$result .= $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE', array($table_name)) ;
 			}
 		}
 		

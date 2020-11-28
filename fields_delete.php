@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Delete a key field
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -44,7 +44,7 @@ switch ($getMode)
     	$headline = $gL10n->get('PLG_KEYMANAGER_KEYFIELD_DELETE');
     		
     	// create html page object
-    	$page = new HtmlPage($headline);
+    	$page = new HtmlPage('plg-keymanager-fields-delete', $headline);
     	
     	$page->addJavascript('
     	function setValueList() {
@@ -65,15 +65,10 @@ switch ($getMode)
     	// add current url to navigation stack
     	$gNavigation->addUrl(CURRENT_URL, $headline);
     		
-    	// create module menu with back link
-    	$organizationNewMenu = new HtmlNavbar('menu_keyfield_delete', $headline, $page);
-    	$organizationNewMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-    	$page->addHtml($organizationNewMenu->show(false));
-    		
     	$page->addHtml('<p class="lead">'.$gL10n->get('PLG_KEYMANAGER_KEYFIELD_DELETE_DESC').'</p>');
     		
     	// show form
-    	$form = new HtmlForm('keyfield_delete_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php?kmf_id='.$getKmfId.'&mode=2', $page);
+    	$form = new HtmlForm('keyfield_delete_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $getKmfId, 'mode' => 2)), $page);
     	
     	$form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
     			array('maxLength' => 100, 'property' => FIELD_DISABLED));
@@ -105,9 +100,8 @@ switch ($getMode)
     			$keyField->getValue('kmf_description'), 3,
     			array( 'property' => FIELD_DISABLED));
     	
-    	$form->addSubmitButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => THEME_URL .'/icons/delete.png', 'class' => 'col-sm-offset-3'));
+        $form->addSubmitButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'fa-trash-alt', 'class' => ' offset-sm-3'));
     		
-    	// add form to html page and show page
     	$page->addHtml($form->show(false));
     	$page->show();
     	break;
@@ -129,7 +123,7 @@ switch ($getMode)
     	$gDb->query($sql);
     	
     	// go back to key view
-    	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 2000);
+    	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);
     	$gMessage->show($gL10n->get('PLG_KEYMANAGER_KEYFIELD_DELETED'));
 
     	break;

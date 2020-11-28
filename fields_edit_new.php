@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Create and edit key fields
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -68,7 +68,7 @@ if (isset($_SESSION['fields_request']))
 }
 
 // create html page object
-$page = new HtmlPage($headline);
+$page = new HtmlPage('plg-keymanager-fields-edit-new', $headline);
 
 $page->addJavascript('
     function setValueList() {
@@ -86,30 +86,25 @@ $page->addJavascript('
     true
 );
 
-// add back link to module menu
-$profileFieldsEditMenu = $page->getMenu();
-$profileFieldsEditMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-
 // show form
-$form = new HtmlForm('key_fields_edit_form',
-                     ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_function.php?kmf_id='.$getKmfId.'&amp;mode=1', $page);
+$form = new HtmlForm('key_fields_edit_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_function.php', array('kmf_id' => $getKmfId, 'mode' => 1)), $page);
 
 if ($keyField->getValue('kmf_system') == 1)
 {
     $form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
-                    array('maxLength' => 100, 'property' => FIELD_DISABLED));
+                    array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED));
 }
 else
 {
     $form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
-                    array('maxLength' => 100, 'property' => FIELD_REQUIRED));
+                    array('maxLength' => 100, 'property' => HtmlForm::FIELD_REQUIRED));
 }
 
 // show internal field name for information
 if ($getKmfId > 0)
 {
     $form->addInput('kmf_name_intern', $gL10n->get('SYS_INTERNAL_NAME'), $keyField->getValue('kmf_name_intern'),
-                    array('maxLength' => 100, 'property' => FIELD_DISABLED, 'helpTextIdLabel' => 'SYS_INTERNAL_NAME_DESC'));
+                    array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED, 'helpTextIdLabel' => 'SYS_INTERNAL_NAME_DESC'));
 }
 
 $keyFieldText = array(
@@ -128,28 +123,26 @@ if ($keyField->getValue('kmf_system') == 1)
 {
     //bei Systemfeldern darf der Datentyp nicht mehr veraendert werden
     $form->addInput('kmf_type', $gL10n->get('ORG_DATATYPE'), $keyFieldText[$keyField->getValue('kmf_type')],
-              array('maxLength' => 30, 'property' => FIELD_DISABLED));
+              array('maxLength' => 30, 'property' => HtmlForm::FIELD_DISABLED));
 }
 else
 {
     // fuer jeden Feldtypen einen Eintrag in der Combobox anlegen
     $form->addSelectBox('kmf_type', $gL10n->get('ORG_DATATYPE'), $keyFieldText,
-                  array('property' => FIELD_REQUIRED, 'defaultValue' => $keyField->getValue('kmf_type')));
+                  array('property' => HtmlForm::FIELD_REQUIRED, 'defaultValue' => $keyField->getValue('kmf_type')));
 }
-$form->addMultilineTextInput('kmf_value_list', $gL10n->get('ORG_VALUE_LIST'),
-		 $keyField->getValue('kmf_value_list', 'database'), 6,
-                       array('property' => FIELD_REQUIRED, 'helpTextIdLabel' => 'ORG_VALUE_LIST_DESC'));
+$form->addMultilineTextInput('kmf_value_list', $gL10n->get('ORG_VALUE_LIST'), $keyField->getValue('kmf_value_list', 'database'), 6,
+                       array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextIdLabel' => 'ORG_VALUE_LIST_DESC'));
 
 if ($keyField->getValue('kmf_system') != 1)
 {
 	$form->addCheckbox('kmf_mandatory', $gL10n->get('ORG_FIELD_REQUIRED'), (bool) $keyField->getValue('kmf_mandatory'),
-			     array('property' => FIELD_DEFAULT,  'icon' => 'asterisk_yellow.png'));
+	    array('property' => HtmlForm::FIELD_DEFAULT,  'icon' => 'fa-asterisk'));
 }
 
-$form->addMultilineTextInput('kmf_description', $gL10n->get('SYS_DESCRIPTION'),
-	     $keyField->getValue('kmf_description'), 3);
+$form->addMultilineTextInput('kmf_description', $gL10n->get('SYS_DESCRIPTION'), $keyField->getValue('kmf_description'), 3);
 
-$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL.'/icons/disk.png'));
+$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));
 $form->addHtml(admFuncShowCreateChangeInfoById(
     (int) $keyField->getValue('kmf_usr_id_create'), $keyField->getValue('kmf_timestamp_create'),
     (int) $keyField->getValue('kmf_usr_id_change'), $keyField->getValue('kmf_timestamp_change')          

@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Save key data
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -111,7 +111,7 @@ if ($gNavigation->count() > 2)                               // only in key copy
 	$gNavigation->deleteLastUrl();
 }
 	
-$gMessage->setForwardUrl($gNavigation->getUrl(), 2000);
+$gMessage->setForwardUrl($gNavigation->getUrl(), 500);
 $gMessage->show($gL10n->get('SYS_SAVE_DATA'));
 
 

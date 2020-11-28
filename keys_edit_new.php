@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Create or edit a key profile
  *
- * @copyright 2004-2018 The Admidio Team
+ * @copyright 2004-2020 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -50,55 +50,38 @@ else
 $gNavigation->addUrl(CURRENT_URL, $headline);
 
 // create html page object
-$page = new HtmlPage($headline);
-$page->enableModal();
+$page = new HtmlPage('plg-keymanager-keys-edit-new', $headline);
 $page->addJavascriptFile('adm_program/libs/zxcvbn/dist/zxcvbn.js');
-
-// add back link to module menu
-$keyEditMenu = $page->getMenu();
-$keyEditMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
 
 // don´t show menu items (copy/print...) if a new key is created
 if ($getKeyId != 0)
 {
 	// show link to view profile field change history
-	if ($gPreferences['profile_log_edit_fields'] == 1)
+    if ($gSettingsManager->getBool('profile_log_edit_fields')  )
 	{
-		$keyEditMenu->addItem('menu_item_change_history', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php?key_id='.$getKeyId,
-			$gL10n->get('MEM_CHANGE_HISTORY'), 'clock.png');
-	}
-
-	$keyEditMenu->addItem('menu_item_extras', null, $gL10n->get('SYS_MORE_FEATURES'), null, 'left');  
+        $page->addPageFunctionsMenuItem('menu_item_change_history', $gL10n->get('MEM_CHANGE_HISTORY'),
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', array('key_id' => $getKeyId)), 'fa-history');
+	} 
 
 	if ($gCurrentUser->isAdministrator())
 	{
-		$keyEditMenu->addItem('menu_create_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id=0',
-			$gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'add.png', 'left', 'menu_item_extras');
-		$keyEditMenu->addItem('menu_copy_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id='.$getKeyId.'&copy=1',
-			$gL10n->get('PLG_KEYMANAGER_KEY_COPY'), 'add.png', 'left', 'menu_item_extras');
-		$keyEditMenu->addItem('menu_delete_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php?key_id='.$getKeyId,
-			$gL10n->get('PLG_KEYMANAGER_KEY_DELETE'), 'delete.png', 'left', 'menu_item_extras');
-	}
-
-	if ($pPreferences->isPffInst())
-	{
-		$keyEditMenu->addItem('menu_print_key', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_export_to_pff.php?key_id='.$getKeyId,
-			$gL10n->get('PLG_KEYMANAGER_KEY_PRINT'), 'print.png', 'left', 'menu_item_extras');
+        $page->addPageFunctionsMenuItem('menu_copy_key', $gL10n->get('PLG_KEYMANAGER_KEY_COPY'),
+            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $getKeyId, 'copy' => 1)), 'fa-clone');                            
 	}
 }
 
 // create html form
-$form = new HtmlForm('edit_key_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_save.php?key_id='.$getKeyId, $page);
+$form = new HtmlForm('edit_key_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_save.php', array('key_id' => $getKeyId)), $page);
 
 foreach ($keys->mKeyFields as $keyField)
 {
 	if (!$gCurrentUser->isAdministrator())
 	{
-		$fieldProperty = FIELD_DISABLED;
+		$fieldProperty = HtmlForm::FIELD_DISABLED;
 	}
 	else 
 	{
-		$fieldProperty = FIELD_DEFAULT;
+		$fieldProperty = HtmlForm::FIELD_DEFAULT;
 	}
 	
     // add key fields to form
@@ -113,13 +96,13 @@ foreach ($keys->mKeyFields as $keyField)
         // Es scheint, als wird im Script zu spaet auf das eingestellte Datumsformat initialisiert.
         // Mit folgendem Workaround funktioniert es:
         // Input-Feld vom Typ "date" mit Property "HIDDEN"
-        $form->addInput('dummy','dummy', 'dummy', array('type' => 'date', 'property' => FIELD_HIDDEN) );
+        $form->addInput('dummy','dummy', 'dummy', array('type' => 'date', 'property' => HtmlForm::FIELD_HIDDEN) );
     }
 
     if ($keys->getProperty($kmfNameIntern, 'kmf_mandatory') == 1 && $gCurrentUser->isAdministrator())
     {
         // set mandatory field
-        $fieldProperty = FIELD_REQUIRED;
+        $fieldProperty = HtmlForm::FIELD_REQUIRED;
     }
 
     // code for different field types
@@ -293,7 +276,7 @@ if ($getCopy)
 	$form->addLine();
 }
 
-$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL.'/icons/disk.png'));
+$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));
 
 $infoKey = new TableAccess($gDb, TBL_KEYMANAGER_KEYS, 'kmk', (int) $getKeyId);
 
