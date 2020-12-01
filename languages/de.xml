@@ -18,6 +18,7 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
+    <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Export und Filter</string>
     <string name="PLG_KEYMANAGER_FIELD">Feld einer lfd. Nr.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Hier kann ein Feld einer laufenden Nummer ausgewählt werden. Bei einer Auswahl wird die aktuelle Nummer ausgelesen und entsprechend der angegebenen Anzahl erhöht.\n\nHINWEIS: FormFiller kann nur erkennen, ob ein Datenfeld vom Typ "Zahl" ist. Ob in diesem Datenfeld eine laufende Nummer gespeichert ist, kann nicht erkannt werden.</string>
     <string name="PLG_KEYMANAGER_FORMER">Aussondern</string>

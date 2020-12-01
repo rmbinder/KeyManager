@@ -21,11 +21,15 @@
  * Parameters:
  *
  * mode              : Output(html, print, csv-ms, csv-oo, pdf, pdfl)
+ * filter_string     : general filter string
+ * filter_keyname    : filter for keyname
+ * filter_receiver   : filter for receiver
+ * show_all          : 0 - (Default) show active keys only
+ *                     1 - show all keys (also made to the former)
  * export_and_filter : 0 - (Default) No filter and export menu
  *                     1 - Filter and export menu is enabled
- * filter_string     : general filter string
- * filter_keyname    : filter ony for keyname
- * show_all          : show all keys (also made to the former)
+ * same_side         : 0 - (Default) side was called by another side
+ *                     1 - internal call of the side
  *
  *****************************************************************************/
 
@@ -43,34 +47,51 @@ if (!isUserAuthorized($scriptName))
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
-$filterString_DefaultValue = '';
-if (!isset($_GET['filter_string']) && isset($_SESSION['pKeyManager']['filter_string']))
+if (!isset($_SESSION['pKeyManager']['filter_string']))
 {
-	$filterString_DefaultValue = $_SESSION['pKeyManager']['filter_string'];
+    $_SESSION['pKeyManager']['filter_string'] = '';
+}
+if (!isset($_SESSION['pKeyManager']['filter_keyname']))
+{
+    $_SESSION['pKeyManager']['filter_keyname'] = '';
+}
+if (!isset($_SESSION['pKeyManager']['filter_receiver']))
+{
+    $_SESSION['pKeyManager']['filter_receiver'] = 0;
+}
+if (!isset($_SESSION['pKeyManager']['show_all']))
+{
+    $_SESSION['pKeyManager']['show_all'] = false;
+}
+if (!isset($_SESSION['pKeyManager']['export_and_filter']))
+{
+    $_SESSION['pKeyManager']['export_and_filter'] = false;
 }
 
-$filterKeyName_DefaultValue = '';
-if (!isset($_GET['filter_keyname']) && isset($_SESSION['pKeyManager']['filter_keyname']))
-{
-	$filterKeyName_DefaultValue = $_SESSION['pKeyManager']['filter_keyname'];
-}
-
-$filterReceiver_DefaultValue = 0;
-if (!isset($_GET['filter_receiver']) && isset($_SESSION['pKeyManager']['filter_receiver']))
-{
-	$filterReceiver_DefaultValue = $_SESSION['pKeyManager']['filter_receiver'];
-}
-
-$getMode            = admFuncVariableIsValid($_GET, 'mode',            'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
-$getFilterString    = admFuncVariableIsValid($_GET, 'filter_string',   'string', array('defaultValue' => $filterString_DefaultValue));
-$getFilterKeyName   = admFuncVariableIsValid($_GET, 'filter_keyname',  'string', array('defaultValue' => $filterKeyName_DefaultValue));
-$getFilterReceiver  = admFuncVariableIsValid($_GET, 'filter_receiver', 'int', array('defaultValue' => $filterReceiver_DefaultValue));
-$getShowAll         = admFuncVariableIsValid($_GET, 'show_all',        'bool', array('defaultValue' => false));
+$getMode            = admFuncVariableIsValid($_GET, 'mode',              'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
+$getFilterString    = admFuncVariableIsValid($_GET, 'filter_string',     'string');
+$getFilterKeyName   = admFuncVariableIsValid($_GET, 'filter_keyname',    'string');
+$getFilterReceiver  = admFuncVariableIsValid($_GET, 'filter_receiver',   'int');
+$getShowAll         = admFuncVariableIsValid($_GET, 'show_all',          'bool', array('defaultValue' => false));
 $getExportAndFilter = admFuncVariableIsValid($_GET, 'export_and_filter', 'bool', array('defaultValue' => false));
+$getSameSide        = admFuncVariableIsValid($_GET, 'same_side',         'bool', array('defaultValue' => false));
 
-$_SESSION['pKeyManager']['filter_string'] = $getFilterString;
-$_SESSION['pKeyManager']['filter_keyname'] = $getFilterKeyName;
-$_SESSION['pKeyManager']['filter_receiver'] = $getFilterReceiver;
+if ($getSameSide)
+{
+    $_SESSION['pKeyManager']['filter_string'] = $getFilterString;
+    $_SESSION['pKeyManager']['filter_keyname'] = $getFilterKeyName;
+    $_SESSION['pKeyManager']['filter_receiver'] = $getFilterReceiver;
+    $_SESSION['pKeyManager']['show_all'] = $getShowAll;
+    $_SESSION['pKeyManager']['export_and_filter'] = $getExportAndFilter;
+}
+else
+{
+    $getFilterString = $_SESSION['pKeyManager']['filter_string'];
+    $getFilterKeyName = $_SESSION['pKeyManager']['filter_keyname'];
+    $getFilterReceiver = $_SESSION['pKeyManager']['filter_receiver'];
+    $getShowAll = $_SESSION['pKeyManager']['show_all'];
+    $getExportAndFilter = $_SESSION['pKeyManager']['export_and_filter'];
+}
 
 $pPreferences = new ConfigTablePKM();
 if ($pPreferences->checkForUpdate())
@@ -226,6 +247,7 @@ if ($getMode != 'csv')
                         'filter_string'     => $getFilterString,
                         'filter_receiver'   => $getFilterReceiver,
                         'export_and_filter' => $getExportAndFilter,
+                        'same_side'         => true,
                         'show_all'          => $getShowAll
                     )) . '&filter_keyname=" + $(this).val();
                 
@@ -237,6 +259,7 @@ if ($getMode != 'csv')
                         'filter_string'     => $getFilterString,
                         'filter_keyname'    => $getFilterKeyName,
                         'export_and_filter' => $getExportAndFilter,
+                        'same_side'         => true,
                         'show_all'          => $getShowAll
                     )) . '&filter_receiver=" + $(this).val();
        
@@ -246,7 +269,7 @@ if ($getMode != 'csv')
                     'filter_string'     => $getFilterString, 
                     'filter_keyname'    => $getFilterKeyName, 
                     'filter_receiver'   => $getFilterReceiver,
-                    'export_and_filter' => $getExportAndFilter, 
+                    'export_and_filter' => $getExportAndFilter,                   
                     'show_all'          => $getShowAll,  
                     'mode'              => 'print'
                 )) . '", "_blank");
@@ -308,11 +331,6 @@ if ($getMode != 'csv')
                     'mode'              => 'csv-oo')),
                 'fa-file-csv', 'menu_item_lists_export');
         }
-        else
-        {
-            // if filter is not enabled, reset filterstring
-            $getFilterString = '';
-        }
         
         if ($gCurrentUser->isAdministrator())
 		{
@@ -349,9 +367,16 @@ if ($getMode != 'csv')
                            ORDER BY CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value) ASC';
             $form->addSelectBoxFromSql('filter_receiver',$selectBoxReceiverLabel, $gDb, $sql, array('defaultValue' => $getFilterReceiver , 'showContextDependentFirstEntry' => true));
         }
+        else
+        {
+            $form->addInput('filter_string', '', $getFilterString, array('property' => HtmlForm::FIELD_HIDDEN));
+            $form->addInput('filter_keyname', '', $getFilterKeyName, array('property' => HtmlForm::FIELD_HIDDEN));
+            $form->addInput('filter_receiver', '', $getFilterReceiver, array('property' => HtmlForm::FIELD_HIDDEN));          
+        }
  
-        $form->addCheckbox('show_all', $gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), $getShowAll);                            //toDo!!!!!!!!!
-        $form->addCheckbox('export_and_filter', $gL10n->get('PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER'), $getExportAndFilter);
+        $form->addCheckbox('show_all', $gL10n->get('PLG_KEYMANAGER_SHOW_ALL_KEYS'), $getShowAll);                           
+        $form->addCheckbox('export_and_filter', $gL10n->get('PLG_KEYMANAGER_EXPORT_AND_FILTER'), $getExportAndFilter);
+        $form->addInput('same_side', '', '1', array('property' => HtmlForm::FIELD_HIDDEN));
         
         $page->addHtml($form->show());        
 
@@ -484,8 +509,9 @@ foreach ($keys->keys as $key)
     {
         $kmfNameIntern = $keyField->getValue('kmf_name_intern');
         
-        if (($getFilterKeyName <> '' && $kmfNameIntern == 'KEYNAME' && $getFilterKeyName !=  $keys->getValue($kmfNameIntern, 'database'))
-        	|| ($getFilterReceiver <> 0 && $kmfNameIntern == 'RECEIVER' && $getFilterReceiver !=  $keys->getValue($kmfNameIntern)))
+        if ($getExportAndFilter 
+            && (($getFilterKeyName <> '' && $kmfNameIntern == 'KEYNAME' && $getFilterKeyName !=  $keys->getValue($kmfNameIntern, 'database'))
+        	   || ($getFilterReceiver <> 0 && $kmfNameIntern == 'RECEIVER' && $getFilterReceiver !=  $keys->getValue($kmfNameIntern))))
         {
         	continue 2;
         }
@@ -606,7 +632,7 @@ foreach ($keys->keys as $key)
     }
     
     //pruefung auf filterstring
-    if ($getFilterString == '' || ($getFilterString <> '' && (stristr(implode('',$columnValues), $getFilterString  ) || stristr($tmp_csv, $getFilterString))))
+    if ($getFilterString == '' || ($getExportAndFilter && ($getFilterString <> '' && (stristr(implode('',$columnValues), $getFilterString  ) || stristr($tmp_csv, $getFilterString)))))
     {
     	if ($getMode == 'csv')
     	{

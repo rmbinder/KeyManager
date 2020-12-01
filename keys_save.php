@@ -111,7 +111,7 @@ if ($gNavigation->count() > 2)                               // only in key copy
 	$gNavigation->deleteLastUrl();
 }
 	
-$gMessage->setForwardUrl($gNavigation->getUrl(), 500);
+$gMessage->setForwardUrl($gNavigation->getUrl(), 1000);
 $gMessage->show($gL10n->get('SYS_SAVE_DATA'));
 
 
