@@ -86,10 +86,10 @@ class ConfigTablePKM
 		
 		$sql = 'SELECT COUNT(*) AS COUNT
             		       FROM '.$this->table_name.'
-            		      WHERE plp_name = \'PFF__Plugininformationen__version\'
-            		        AND ( plp_org_id = '.ORG_ID.'
+            		      WHERE plp_name = ?
+            		        AND ( plp_org_id = ?
             	    	     OR plp_org_id IS NULL ) ';
-		$statement = $gDb->query($sql);
+		$statement = $gDb->queryPrepared($sql, array('PFF__Plugininformationen__version', ORG_ID));
 		
 		if((int) $statement->fetchColumn() === 1  && $this->pffDir != false)
 		{
@@ -288,7 +288,7 @@ class ConfigTablePKM
 		
 		// pruefen, ob es die Tabelle bereits gibt
 		$sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
-   	 	$statement = $gDb->query($sql);
+   	 	$statement = $gDb->queryPrepared($sql);
     
     	// Tabelle anlegen, wenn es sie noch nicht gibt
     	if (!$statement->rowCount())
@@ -304,7 +304,7 @@ class ConfigTablePKM
          		auto_increment = 1
           		default character set = utf8
          		collate = utf8_unicode_ci';
-    		$gDb->query($sql);
+    		$gDb->queryPrepared($sql);
     	} 
     
 		$this->read();
@@ -349,9 +349,10 @@ class ConfigTablePKM
         	{
         		$plp_name = self::$shortcut.'__'.$section.'__'.$key;
 				$sql = 'DELETE FROM '.$this->table_name.'
-        				WHERE plp_name = \''.$plp_name.'\' 
-        				AND plp_org_id = '.ORG_ID.' ';
-				$gDb->query($sql);
+        				      WHERE plp_name = ? 
+        				        AND plp_org_id = ? ';
+				$gDb->queryPrepared($sql, array($plp_name, ORG_ID));
+                
 				unset($this->config[$section][$key]);
         	}
 			// leere Abschnitte (=leere Arrays) loeschen
@@ -387,10 +388,10 @@ class ConfigTablePKM
           
             	$sql = ' SELECT plp_id 
             			   FROM '.$this->table_name.' 
-            			  WHERE plp_name = \''.$plp_name.'\' 
-            			    AND ( plp_org_id = '.ORG_ID.'
+            			  WHERE plp_name = ? 
+            			    AND ( plp_org_id = ?
                  		     OR plp_org_id IS NULL ) ';
-            	$statement = $gDb->query($sql);
+            	$statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
             	$row = $statement->fetchObject();
 
             	// Gibt es den Datensatz bereits?
@@ -398,17 +399,16 @@ class ConfigTablePKM
             	if (isset($row->plp_id) AND strlen($row->plp_id) > 0)
             	{
                 	$sql = 'UPDATE '.$this->table_name.' 
-                			   SET plp_value = \''.$value.'\' 
-                			 WHERE plp_id = '.$row->plp_id;   
-                    
-                	$gDb->query($sql);           
+                			   SET plp_value = ?
+                			 WHERE plp_id = ? ';   
+                    $gDb->queryPrepared($sql, array($value, $row->plp_id));           
             	}
             	// wenn nicht: INSERT eines neuen Datensatzes 
             	else
             	{
   					$sql = 'INSERT INTO '.$this->table_name.' (plp_org_id, plp_name, plp_value) 
-  							VALUES (\''.ORG_ID.'\' ,\''.self::$shortcut.'__'.$section.'__'.$key.'\' ,\''.$value.'\')'; 
-            		$gDb->query($sql); 
+  							VALUES (? , ? , ?)  -- ORG_ID, self::$shortcut.\'__\'.$section.\'__\'.$key, $value '; 
+            		$gDb->queryPrepared($sql, array(ORG_ID, self::$shortcut.'__'.$section.'__'.$key, $value));
             	}   
         	} 
     	}
@@ -424,10 +424,10 @@ class ConfigTablePKM
      
 		$sql = 'SELECT plp_id, plp_name, plp_value
              	  FROM '.$this->table_name.'
-             	 WHERE plp_name LIKE \''.self::$shortcut.'__%\'
-             	   AND ( plp_org_id = '.ORG_ID.'
-                 	OR plp_org_id IS NULL ) ';
-		$statement = $gDb->query($sql);
+             	 WHERE plp_name LIKE ?
+             	   AND ( plp_org_id = ?
+                    OR plp_org_id IS NULL ) ';
+		$statement = $gDb->queryPrepared($sql, array(self::$shortcut.'__%', ORG_ID)); 
 	
 		while ($row = $statement->fetch())
 		{
@@ -447,7 +447,7 @@ class ConfigTablePKM
 	}
 
 	/**
-	 * Liest die Konfigurationsdaten aus der Datenbank
+	 * Liest die Konfigurationsdaten des Plugins FormFiller (PFF) aus der Datenbank
 	 * @return void
 	 */
 	public function readPff()
@@ -456,10 +456,10 @@ class ConfigTablePKM
 		 
 		$sql = ' SELECT plp_id, plp_name, plp_value
              	   FROM '.$this->table_name.'
-             	  WHERE plp_name LIKE \'PFF__%\'
-             	    AND ( plp_org_id = '.ORG_ID.'
+             	  WHERE plp_name LIKE ?
+             	    AND ( plp_org_id = ?
                  	 OR plp_org_id IS NULL ) ';
-		$statement = $gDb->query($sql);
+		$statement = $gDb->queryPrepared($sql, array('PFF__%', ORG_ID)); 
 	
 		while ($row = $statement->fetch())
 		{
@@ -500,7 +500,7 @@ class ConfigTablePKM
  	
 	 	// pruefen, ob es die Tabelle ueberhaupt gibt
 		$sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
-   	 	$tableExistStatement = $gDb->query($sql);
+   	 	$tableExistStatement = $gDb->queryPrepared($sql);
     
     	if ($tableExistStatement->rowCount())
     	{
@@ -508,10 +508,10 @@ class ConfigTablePKM
           
     		$sql = 'SELECT plp_value 
             		  FROM '.$this->table_name.' 
-            		 WHERE plp_name = \''.$plp_name.'\' 
-            		   AND ( plp_org_id = '.ORG_ID.'
+            		 WHERE plp_name = ? 
+            		   AND ( plp_org_id = ?
             	    	OR plp_org_id IS NULL ) ';
-    		$statement = $gDb->query($sql);
+    		$statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: version)
@@ -524,10 +524,10 @@ class ConfigTablePKM
           
     		$sql = 'SELECT plp_value 
             		  FROM '.$this->table_name.' 
-            		 WHERE plp_name = \''.$plp_name.'\' 
-            		   AND ( plp_org_id = '.ORG_ID.'
+            		 WHERE plp_name = ?
+            		   AND ( plp_org_id = ?
                  		OR plp_org_id IS NULL ) ';
-    		$statement = $gDb->query($sql);
+            $statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: stand)
@@ -563,19 +563,19 @@ class ConfigTablePKM
 		}
 
 		$sql = 'DELETE FROM '.$this->table_name.'
-        			  WHERE plp_name LIKE \''.self::$shortcut.'__%\'
+        			  WHERE plp_name LIKE ?
                       '. $sqlWhereCondition ;
-		$result_data = $gDb->query($sql);
+		$result_data = $gDb->queryPrepared($sql, array(self::$shortcut.'__%'));	
 		$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($this->table_name)) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($this->table_name)));
 		
 		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
 		$sql = 'SELECT * FROM '.$this->table_name.' ';
-		$statement = $gDb->query($sql);
+		$statement = $gDb->queryPrepared($sql);
 
     	if ($statement->rowCount() == 0)
     	{
         	$sql = 'DROP TABLE '.$this->table_name.' ';
-        	$result_db = $gDb->query($sql);
+        	$result_db = $gDb->queryPrepared($sql);
         	$result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', array($this->table_name )) : $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', array($this->table_name)));
         }
         else
@@ -602,31 +602,31 @@ class ConfigTablePKM
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
                           WHERE kmd_kmk_id IN 
               	        (SELECT kmk_id 
-					       FROM '.TBL_KEYMANAGER_KEYS.'
-                	      WHERE kmk_org_id = \''.ORG_ID.'\' )';
+					       FROM ?
+                	      WHERE kmk_org_id = ? )';
 	
-			$result_data = $gDb->query($sql);
+			$result_data = $gDb->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, ORG_ID));	
 			$result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_data' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_data' )));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
                           WHERE kml_kmk_id IN 
 				        (SELECT kmk_id 
-					       FROM '.TBL_KEYMANAGER_KEYS.'
-                          WHERE kmk_org_id = \''.ORG_ID.'\' )';
+					       FROM ?
+                          WHERE kmk_org_id = ? )';
 
-			$result_log = $gDb->query($sql);
+			$result_log = $gDb->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, ORG_ID));	
 			$result .= ($result_log ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_log' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_log')));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
-	        	          WHERE kmk_org_id = \''.ORG_ID.'\' ';
+	        	          WHERE kmk_org_id = ? ';
 
-			$result_keys = $gDb->query($sql);
+			$result_keys = $gDb->queryPrepared($sql, array(ORG_ID));
 			$result .= ($result_keys ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_keys' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_keys')));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_FIELDS.'
-                          WHERE kmf_org_id = \''.ORG_ID.'\' ';
+                          WHERE kmf_org_id = ? ';
 			
-			$result_fields = $gDb->query($sql);
+			$result_fields = $gDb->queryPrepared($sql, array(ORG_ID));
 			$result .= ($result_fields ? $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_fields' )) : $gL10n->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_fields')));
 		}
 		
@@ -644,12 +644,12 @@ class ConfigTablePKM
 			// wenn in der Tabelle keine Eintraege mehr sind, dann kann sie geloescht werden
 			// oder wenn 'Daten in allen Orgs loeschen' gewaehlt wurde
 			$sql = 'SELECT * FROM '.$table_name.' ';
-			$statement = $gDb->query($sql);
+			$statement = $gDb->queryPrepared($sql);
 				
 			if ($statement->rowCount() == 0 || $deinst_org_select == 1)
 			{
 				$sql = 'DROP TABLE '.$table_name.' ';
-				$result_db = $gDb->query($sql);
+				$result_db = $gDb->queryPrepared($sql);
 				$result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', array($table_name )) : $gL10n->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', array($table_name)));
 			}
 			else 

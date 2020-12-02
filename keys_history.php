@@ -87,10 +87,11 @@ $dateToHtml     = $objDateTo->format($gPreferences['system_date']);
 // create select statement with all necessary data
 $sql = 'SELECT kml_kmk_id, kml_kmf_id,  kml_usr_id_create, kml_timestamp_create, kml_value_old, kml_value_new
           FROM '.TBL_KEYMANAGER_LOG.'
-         WHERE kml_timestamp_create BETWEEN \''.$dateFromIntern.' 00:00:00\' AND \''.$dateToIntern.' 23:59:59\' 
-           AND kml_kmk_id = '.$getKeyId.'
+         WHERE kml_timestamp_create BETWEEN ? AND ? 
+           AND kml_kmk_id = ?
       ORDER BY kml_timestamp_create DESC';
-$fieldHistoryStatement = $gDb->query($sql);
+      
+$fieldHistoryStatement = $gDb->queryPrepared($sql, array($dateFromIntern.' 00:00:00', $dateToIntern.' 23:59:59', $getKeyId));
 
 if ($fieldHistoryStatement->rowCount() === 0)
 {

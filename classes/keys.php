@@ -450,8 +450,8 @@ class Keys
                       FROM '.TBL_KEYMANAGER_DATA.'
                 INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
                         ON kmf_id = kmd_kmf_id
-                     WHERE kmd_kmk_id = '.$keyId.' ';
-    		$keyDataStatement = $this->mDb->query($sql);
+                     WHERE kmd_kmk_id = ? ';
+    		$keyDataStatement = $this->mDb->queryPrepared($sql, array($keyId));
     
     		while ($row = $keyDataStatement->fetch())
     		{
@@ -523,8 +523,8 @@ class Keys
     	$sql = 'SELECT *
                   FROM '.TBL_KEYMANAGER_FIELDS.'
                  WHERE kmf_org_id IS NULL
-                    OR kmf_org_id = '.$organizationId.' ';
-    	$statement = $this->mDb->query($sql);
+                    OR kmf_org_id = ? ';
+    	$statement = $this->mDb->queryPrepared($sql, array($organizationId));
 
     	while ($row = $statement->fetch())
     	{
@@ -561,9 +561,9 @@ class Keys
           	         INNER JOIN '.TBL_KEYMANAGER_DATA.'
                              ON kmd_kmk_id = kmk_id
                           WHERE kmk_org_id IS NULL
-                             OR kmk_org_id = '.$organizationId.'
+                             OR kmk_org_id = ?
                              '.$sqlWhereCondition.' ';
-    	$statement = $this->mDb->query($sql);
+    	$statement = $this->mDb->queryPrepared($sql, array($organizationId));
 
     	while ($row = $statement->fetch())
     	{
@@ -657,7 +657,7 @@ class Keys
              LEFT JOIN '.TBL_KEYMANAGER_DATA.'
                     ON kmd_kmk_id = kmk_id
                  WHERE kmd_kmk_id is NULL ';
-    	$statement = $this->mDb->query($sql);
+    	$statement = $this->mDb->queryPrepared($sql);
    
     	while ($row = $statement->fetch())
     	{

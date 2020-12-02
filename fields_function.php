@@ -86,11 +86,11 @@ if($getMode === 1)
         // Schauen, ob das Feld bereits existiert
         $sql = 'SELECT COUNT(*) AS count
                   FROM '.TBL_KEYMANAGER_FIELDS.'
-                 WHERE kmf_name   = \''.$_POST['kmf_name'].'\'
-				   AND ( kmf_org_id = '. ORG_ID. '
+                 WHERE kmf_name   = ? -- $_POST[\'kmf_name\']
+				   AND ( kmf_org_id = ? -- ORG_ID
                     OR kmf_org_id IS NULL )
-                   AND kmf_id    <> '.$getKmfId ;
-        $statement = $gDb->query($sql);
+                   AND kmf_id    <> ? -- $getKmfId ';
+        $statement = $gDb->queryPrepared($sql, array($_POST['kmf_name'], ORG_ID, $getKmfId));
         
         if ((int) $statement->fetchColumn() > 0)
         {

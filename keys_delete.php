@@ -105,18 +105,18 @@ switch ($getMode)
     case 2:
     		
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
-        	          WHERE kml_kmk_id = '.$getKeyId.' ';
-    	$gDb->query($sql);
+        	          WHERE kml_kmk_id = ? ';
+    	$gDb->queryPrepared($sql, array($getKeyId));
     	
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
-        		      WHERE kmd_kmk_id = '.$getKeyId.' ';
-    	$gDb->query($sql);
+        		      WHERE kmd_kmk_id = ? ';
+    	$gDb->queryPrepared($sql, array($getKeyId));
     
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
-        		      WHERE kmk_id = '.$getKeyId.'
-    			        AND ( kmk_org_id = '.ORG_ID.'
+        		      WHERE kmk_id = ? -- $getKeyId
+    			        AND ( kmk_org_id = ? -- ORG_ID
                          OR kmk_org_id IS NULL ) ';
-    	$gDb->query($sql);
+    	$gDb->queryPrepared($sql, array($getKeyId, ORG_ID));
     	
     	// go back to key view
     	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);
@@ -129,8 +129,8 @@ switch ($getMode)
     	
     	$sql = 'UPDATE '.TBL_KEYMANAGER_KEYS.'
                    SET kmk_former = 1
-                 WHERE kmk_id = '.$getKeyId;
-    	$gDb->query($sql);
+                 WHERE kmk_id = ? ';
+    	$gDb->queryPrepared($sql, array($getKeyId));
     		
     	// go back to key view
     	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);

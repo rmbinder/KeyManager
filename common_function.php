@@ -49,13 +49,13 @@ function getRole_IDPKM($role_name)
 	
     $sql    = 'SELECT rol_id
                  FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-                WHERE rol_name   = \''.$role_name.'\'
+                WHERE rol_name   = ? -- $role_name
                   AND rol_valid  = 1 
                   AND rol_cat_id = cat_id
-                  AND ( cat_org_id = '.ORG_ID.'
+                  AND ( cat_org_id = ? -- ORG_ID
                    OR cat_org_id IS NULL ) ';
                       
-    $statement = $gDb->query($sql);
+    $statement = $gDb->queryPrepared($sql, array($role_name, ORG_ID));
     $row = $statement->fetchObject();
 
    // fuer den seltenen Fall, dass waehrend des Betriebes die Sprache umgeschaltet wird:  $row->rol_id pruefen
@@ -158,8 +158,8 @@ function getNewNameIntern($name, $index)
 
 	$sql = 'SELECT kmf_id
               FROM '.TBL_KEYMANAGER_FIELDS.'
-             WHERE kmf_name_intern = \''.$newNameIntern.'\' ';
-	$userFieldsStatement = $gDb->query($sql);
+             WHERE kmf_name_intern = ? ';
+	$userFieldsStatement = $gDb->queryPrepared($sql, array($newNameIntern));
 
 	if ($userFieldsStatement->rowCount() > 0)
 	{
@@ -182,9 +182,9 @@ function genNewSequence()
 
 	$sql =  'SELECT max(kmf_sequence) as max_sequence
                    FROM '.TBL_KEYMANAGER_FIELDS.' 
-                  WHERE ( kmf_org_id = '.ORG_ID.'
+                  WHERE ( kmf_org_id = ?
                      OR kmf_org_id IS NULL ) ';
-	$statement = $gDb->query($sql);
+	$statement = $gDb->queryPrepared($sql, array(ORG_ID));
 	$row = $statement->fetch();
 
 	return $row['max_sequence'] + 1;

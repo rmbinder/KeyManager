@@ -109,18 +109,18 @@ switch ($getMode)
     case 2:
     	
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
-        		      WHERE kml_kmf_id = '.$getKmfId.' ';
-    	$gDb->query($sql);
+        		      WHERE kml_kmf_id = ? ';
+    	$gDb->queryPrepared($sql, array($getKmfId));
     	
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
-        		      WHERE kmd_kmf_id = '.$getKmfId.' ';
-    	$gDb->query($sql);
+        		      WHERE kmd_kmf_id = ? ';
+    	$gDb->queryPrepared($sql, array($getKmfId));
     	
     	$sql = 'DELETE FROM '.TBL_KEYMANAGER_FIELDS.'
-        		 WHERE kmf_id = '.$getKmfId.'
-    			   AND ( kmf_org_id = '.ORG_ID.'
+        		 WHERE kmf_id = ?
+    			   AND ( kmf_org_id = ?
                     OR kmf_org_id IS NULL ) ';
-    	$gDb->query($sql);
+    	$gDb->queryPrepared($sql, array($getKmfId, ORG_ID));
     	
     	// go back to key view
     	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);

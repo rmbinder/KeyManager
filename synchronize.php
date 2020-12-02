@@ -109,11 +109,11 @@ if ($getMode == 'preview')     //Default
                 ON first_name.usd_usr_id = kmd_value
                AND first_name.usd_usf_id = ? -- $gProfileFields->getProperty(\'FIRST_NAME\', \'usf_id\')
              WHERE kmf_name_intern = \'RECEIVER\'
-               AND ( kmf_org_id = '.ORG_ID.'
+               AND ( kmf_org_id = ? -- ORG_ID
               	OR kmf_org_id IS NULL )
           ORDER BY last_name.usd_value, first_name.usd_value ASC';
 	
-	$receiverStatement =  $gDb->queryPrepared($sql, array($gProfileFields->getProperty('LAST_NAME', 'usf_id'), $gProfileFields->getProperty('FIRST_NAME', 'usf_id')));
+	$receiverStatement =  $gDb->queryPrepared($sql, array($gProfileFields->getProperty('LAST_NAME', 'usf_id'), $gProfileFields->getProperty('FIRST_NAME', 'usf_id'), ORG_ID));
 	
 	while ($row = $receiverStatement->fetch())
 	{
@@ -209,13 +209,13 @@ elseif ($getMode == 'write')
                 INNER JOIN '.TBL_CATEGORIES.'
                         ON cat_id = rol_cat_id
                      WHERE rol_valid  = 1
-                       AND ( cat_org_id = '.ORG_ID.'
+                       AND ( cat_org_id = ? -- ORG_ID
                         OR cat_org_id IS NULL )
                        AND mem_begin <= ? -- DATE_NOW
                        AND mem_end    > ? -- DATE_NOW
-                       AND mem_usr_id = ? -- $memberId';
+                       AND mem_usr_id = ? -- $memberId ';
 			
-			$membersStatement = $gDb->queryPrepared($sql, array(DATE_NOW, DATE_NOW, $memberId));
+			$membersStatement = $gDb->queryPrepared($sql, array(ORG_ID, DATE_NOW, DATE_NOW, $memberId));
 			
 			while ($row = $membersStatement->fetch())
 			{
