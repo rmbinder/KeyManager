@@ -50,6 +50,7 @@ $page->addJavascript('
         var actRowCount = 0;
         var actSequence = 0;
         var secondSequence = 0;
+        $(".admidio-icon-link .fas").tooltip("hide");
 
         // erst einmal aktuelle Sequenz und vorherigen/naechsten Knoten ermitteln
         for (var i = 0; i < childs.length; i++) {
@@ -113,19 +114,26 @@ $kmfSystem   = '';
 
 foreach ($keys->mKeyFields as $keyField)
 {	
+    $kmfId = (int) $keyField->getValue('kmf_id');
+ 
     // cut long text strings and provide tooltip
-    if (strlen($keyField->getValue('kmf_description')) > 60)
+    if($keyField->getValue('kmf_description') === '')
     {
-        $description = substr($keyField->getValue('kmf_description', 'database'), 0, 60).'
-            <a class="openPopup" href="javascript:void(0);" <span data-html="true" data-toggle="tooltip" data-original-title="'.str_replace('"', '\'', $keyField->getValue('kmf_description')).'">[..]</span></a>';
-    }
-    elseif ($keyField->getValue('kmf_description') === '')
-    {
-        $description = '&nbsp;';
+        $fieldDescription = '&nbsp;';
     }
     else
     {
-        $description = $keyField->getValue('kmf_description');
+        $fieldDescription = $keyField->getValue('kmf_description', 'database');
+
+        if(strlen($fieldDescription) > 60)
+        {
+            // read first 60 chars of text, then search for last space and cut the text there. After that add a "more" link
+            $textPrev = substr($fieldDescription, 0, 60);
+            $maxPosPrev = strrpos($textPrev, ' ');
+            $fieldDescription = substr($textPrev, 0, $maxPosPrev).
+                ' <span class="collapse" id="viewdetails'.$kmfId.'">'.substr($fieldDescription, $maxPosPrev).'.
+                </span> <a class="admidio-icon-link" data-toggle="collapse" data-target="#viewdetails'.$kmfId.'"><i class="fas fa-angle-double-right" data-toggle="tooltip" title="'.$gL10n->get('SYS_MORE').'"></i></a>';
+        }
     }
 
     if ($keyField->getValue('kmf_mandatory') == 1)
@@ -155,23 +163,23 @@ foreach ($keys->mKeyFields as $keyField)
     }
     else
     {
-    	$kmfSystem .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $keyField->getValue('kmf_id'))).'">
+    	$kmfSystem .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $kmfId)).'">
                 <i class="fas fa-trash-alt" data-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE').'"></i></a>';
     }
 
     // create array with all column values
     $columnValues = array(
-        '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php', array('kmf_id' => $keyField->getValue('kmf_id'))).'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a> ',
-        '<a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.TableUserField::MOVE_UP.'\', '.$keyField->getValue('kmf_id').')">
+        '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php', array('kmf_id' => $kmfId)).'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a> ',
+        '<a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.TableUserField::MOVE_UP.'\', '.$kmfId.')">
             <i class="fas fa-chevron-circle-up" data-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_UP', array('MEM_PROFILE_FIELD')) . '"></i></a>
-        <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.TableUserField::MOVE_DOWN.'\', '.$keyField->getValue('kmf_id').')">
+        <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.TableUserField::MOVE_DOWN.'\', '.$kmfId.')">
             <i class="fas fa-chevron-circle-down" data-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_DOWN', array('MEM_PROFILE_FIELD')) . '"></i></a>',     
-        $description,
+        $fieldDescription,
         $mandatory,
     	$keyFieldText[$keyField->getValue('kmf_type')],
         $kmfSystem
     );
-    $table->addRowByArray($columnValues, 'row_kmf_'.$keyField->getValue('kmf_id'));
+    $table->addRowByArray($columnValues, 'row_kmf_'.$kmfId);
 }
 
 $page->addHtml($table->show());

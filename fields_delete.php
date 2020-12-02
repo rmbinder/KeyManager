@@ -71,11 +71,11 @@ switch ($getMode)
     	$form = new HtmlForm('keyfield_delete_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $getKmfId, 'mode' => 2)), $page);
     	
     	$form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
-    			array('maxLength' => 100, 'property' => FIELD_DISABLED));
+    			array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED));
     	
     	// show internal field name for information
     	$form->addInput('kmf_name_intern', $gL10n->get('SYS_INTERNAL_NAME'), $keyField->getValue('kmf_name_intern'),
-    			array('maxLength' => 100, 'property' => FIELD_DISABLED));
+    			array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED));
     	
     	$keyFieldText = array(
     			'CHECKBOX'     => $gL10n->get('SYS_CHECKBOX'),
@@ -90,15 +90,15 @@ switch ($getMode)
     	asort($keyFieldText);
     
     	$form->addInput('kmf_type', $gL10n->get('ORG_DATATYPE'), $keyFieldText[$keyField->getValue('kmf_type')],
-    				array('maxLength' => 30, 'property' => FIELD_DISABLED));
+    				array('maxLength' => 30, 'property' => HtmlForm::FIELD_DISABLED));
     	
     	$form->addMultilineTextInput('kmf_value_list', $gL10n->get('ORG_VALUE_LIST'),
     			$keyField->getValue('kmf_value_list', 'database'), 6,
-    			array('property' => FIELD_DISABLED));
+    			array('property' => HtmlForm::FIELD_DISABLED));
     	
     	$form->addMultilineTextInput('kmf_description', $gL10n->get('SYS_DESCRIPTION'),
     			$keyField->getValue('kmf_description'), 3,
-    			array( 'property' => FIELD_DISABLED));
+    			array( 'property' => HtmlForm::FIELD_DISABLED));
     	
         $form->addSubmitButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'fa-trash-alt', 'class' => ' offset-sm-3'));
     		
