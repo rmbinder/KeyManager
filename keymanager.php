@@ -537,7 +537,7 @@ foreach ($keys->keys as $key)
         	$user->readDataById($content);
           	if ($getMode == 'html')
           	{
-          		$content = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$content.'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';	
+          		$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $content)).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';	
           	}
           	else
           	{
@@ -547,7 +547,7 @@ foreach ($keys->keys as $key)
           
 		if ($kmfNameIntern == 'KEYNAME' && $getMode == 'html')
         {
-          	$content = '<a href="'.ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php?key_id='.$key['kmk_id'].'">'.$content.'</a>';
+          	$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $key['kmk_id'])).'">'.$content.'</a>';
         }
           
         if ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'CHECKBOX')
