@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Prepare print data for plugin FormFiller 
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -35,24 +35,11 @@ if (substr_count($gNavigation->getUrl(), 'keys_export_to_pff') === 1)
     
 $keys = new Keys($gDb, ORG_ID);
 $keys->readKeyData($getKeyId, ORG_ID);
-    		
-$headline = $gL10n->get('PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT');
-    		
-// create html page object
-$page = new HtmlPage('plg-keymanager-keys-export-to-pff', $headline);
-    		
+
 // add current url to navigation stack
 $gNavigation->addUrl(CURRENT_URL, $headline);
-    		
-$page->addJavascript('
-	$(document).ready(function() {
-    	$("#export_to_pff_form").submit();
-    });',
-    true
-);
-    	
-// show form
-$form = new HtmlForm('export_to_pff_form', ADMIDIO_URL . FOLDER_PLUGINS .'/'.$pPreferences->pffDir().'/createpdf.php', $page, array('type' => 'filter'));
+
+$pkmArray = array();
     	
 foreach($keys->mKeyFields as $keyField)
 {    		
@@ -81,18 +68,12 @@ foreach($keys->mKeyFields as $keyField)
     		$content = $gL10n->get('SYS_NO');
     	}
     }
-    		
-    $form->addInput(
-    	'kmf-'. $kmfNameIntern,
-    	convlanguagePKM($keys->getProperty($kmfNameIntern, 'kmf_name')),
-    	$content,
-    	array(  'property' => HtmlForm::FIELD_HIDDEN)
-    );
+    
+    $pkmArray['kmf-'. $kmfNameIntern] = $content;
 }
-$form->addInput('form_id', '', $pPreferences->config['Optionen']['interface_pff'], array(  'property' => HtmlForm::FIELD_HIDDEN));
 
-// add form to html page and show page
-$page->addHtml($form->show(false));
-$page->show();
+$pkmArray['form_id'] = $pPreferences->config['Optionen']['interface_pff'];
+
+admRedirect(SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.$pPreferences->pffDir().'/createpdf.php', $pkmArray));
     		
     		

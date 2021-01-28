@@ -57,7 +57,6 @@
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plugininformationen</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Name des Plugins</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
-    <string name="PLG_KEYMANAGER_PREPARE_DATA_FOR_PRINT">bereite Daten für Druck vor...</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Alle Schlüssel anzeigen</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Sonderfall: Aktueller Benutzer oder Administrator</string>    
