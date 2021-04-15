@@ -321,7 +321,7 @@ class Keys
      */
     public function getValue($fieldNameIntern, $format = '')
     {
-        global $gL10n, $gPreferences, $gSettingsManager;
+        global $gL10n, $gSettingsManager;
 
         $value = '';
 
@@ -585,7 +585,7 @@ class Keys
      */
     public function setValue($fieldNameIntern, $newValue, $checkValue = true)
     {
-        global $gCurrentUser, $gPreferences, $gSettingsManager;
+        global $gCurrentUser, $gSettingsManager;
     
     	$kmfId = $this->mKeyFields[$fieldNameIntern]->getValue('kmf_id');
     	
@@ -629,7 +629,7 @@ class Keys
     	
     	$returnCode = $this->mKeyData[$kmfId]->setValue('kmd_value', $newValue);
     			
-    	if ($returnCode && (int) $gPreferences['profile_log_edit_fields'] === 1)
+        if ($returnCode && $gSettingsManager->getBool('profile_log_edit_fields'))
     	{
     		$logEntry = new TableAccess($this->mDb, TBL_KEYMANAGER_LOG, 'kml');
     		$logEntry->setValue('kml_kmk_id', $this->mKeyId);
