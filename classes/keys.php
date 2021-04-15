@@ -321,7 +321,7 @@ class Keys
      */
     public function getValue($fieldNameIntern, $format = '')
     {
-        global $gL10n, $gPreferences;
+        global $gL10n, $gPreferences, $gSettingsManager;
 
         $value = '';
 
@@ -352,7 +352,7 @@ class Keys
                         // if no format or html is set then show date format from Admidio settings
                         if ($format === '' || $format === 'html')
                         {
-                            $value = $date->format($gPreferences['system_date']);
+                            $value = $date->format($gSettingsManager->getString('system_date'));
                         }
                         else
                         {
@@ -585,7 +585,7 @@ class Keys
      */
     public function setValue($fieldNameIntern, $newValue, $checkValue = true)
     {
-    	global $gCurrentUser, $gPreferences;
+        global $gCurrentUser, $gPreferences, $gSettingsManager;
     
     	$kmfId = $this->mKeyFields[$fieldNameIntern]->getValue('kmf_id');
     	
@@ -604,12 +604,12 @@ class Keys
     	// format of date will be local but database has stored Y-m-d format must be changed for compare
     	if($this->mKeyFields[$fieldNameIntern]->getValue('kmf_type') === 'DATE')
     	{
-    		$date = DateTime::createFromFormat($gPreferences['system_date'], $newValue);
+    	   $date = \DateTime::createFromFormat($gSettingsManager->getString('system_date'), $newValue);
     
-    		if($date !== false)
-    		{
-    			$newValue = $date->format('Y-m-d');
-    		}
+           if($date !== false)
+    	   {
+    	       $newValue = $date->format('Y-m-d');
+    	   }
     	}
     
     	// only to a update if value has changed

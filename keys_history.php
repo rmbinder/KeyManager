@@ -80,9 +80,9 @@ if ($objDateFrom > $objDateTo)
 }
 
 $dateFromIntern = $objDateFrom->format('Y-m-d');
-$dateFromHtml   = $objDateFrom->format($gPreferences['system_date']);
+$dateFromHtml   = $objDateFrom->format($gSettingsManager->getString('system_date'));
 $dateToIntern   = $objDateTo->format('Y-m-d');
-$dateToHtml     = $objDateTo->format($gPreferences['system_date']);
+$dateToHtml     = $objDateTo->format($gSettingsManager->getString('system_date'));
 
 // create select statement with all necessary data
 $sql = 'SELECT kml_kmk_id, kml_kmf_id,  kml_usr_id_create, kml_timestamp_create, kml_value_old, kml_value_new
