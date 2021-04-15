@@ -37,7 +37,7 @@ $keys = new Keys($gDb, ORG_ID);
 $keys->readKeyData($getKeyId, ORG_ID);
 
 // add current url to navigation stack
-$gNavigation->addUrl(CURRENT_URL, $headline);
+$gNavigation->addUrl(CURRENT_URL);
 
 $pkmArray = array();
     	
