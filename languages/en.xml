@@ -20,7 +20,7 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Allows the documentation of the plugin can be opened (An existing Internet connection is required because the data is located on admidio.org).</string>
     <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Export and filter</string>
     <string name="PLG_KEYMANAGER_FIELD">Field of a running no.</string>
-    <string name="PLG_KEYMANAGER_FIELD_DESC">Here a field of a consecutive number can be selected. In a selection, the current number is read out and increased according to the specified number.\n\nNOTE: FormFiller can only tell if a data field is of type "number". Whether a serial number is stored in this data field can not be recognized.</string>
+    <string name="PLG_KEYMANAGER_FIELD_DESC">Here a field of a consecutive number can be selected. In a selection, the current number is read out and increased according to the specified number.\n\nNOTE: KeyManager can only tell if a data field is of type "number". Whether a serial number is stored in this data field can not be recognized.</string>
     <string name="PLG_KEYMANAGER_FORMER">Make to former</string>    
     <string name="PLG_KEYMANAGER_GENERAL">general</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface to the plugin formfiller</string>
