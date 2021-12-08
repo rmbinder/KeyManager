@@ -141,7 +141,7 @@ while ($row = $fieldHistoryStatement->fetch())
     	if ($keys->getPropertyById((int) $row['kml_kmf_id'], 'kmf_name_intern') === 'RECEIVER')
     	{
     		$user->readDataById((int) $kmlValueNew);
-    		$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $kmlValueNew)).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
+    		$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
     	}
     	else 
     	{
@@ -159,7 +159,7 @@ while ($row = $fieldHistoryStatement->fetch())
    	 	if ($keys->getPropertyById((int) $row['kml_kmf_id'], 'kmf_name_intern') === 'RECEIVER')
    	 	{
    	 		$user->readDataById((int) $kmlValueOld);
-   	 		$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $kmlValueOld)).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
+   	 		$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
    	 	}
    	 	else
    	 	{
@@ -172,7 +172,7 @@ while ($row = $fieldHistoryStatement->fetch())
     }
    
     $user->readDataById($row['kml_usr_id_create']);
-    $columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $row['kml_usr_id_create'])).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
+    $columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';
     $columnValues[] = $timestampCreate->format($gSettingsManager->getString('system_date').' '.$gSettingsManager->getString('system_time'));
     $table->addRowByArray($columnValues);
 }

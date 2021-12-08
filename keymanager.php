@@ -537,7 +537,7 @@ foreach ($keys->keys as $key)
         	$user->readDataById($content);
           	if ($getMode == 'html')
           	{
-          		$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $content)).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';	
+          		$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$user->getValue('LAST_NAME').', '.$user->getValue('FIRST_NAME').'</a>';	
           	}
           	else
           	{

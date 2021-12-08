@@ -35,6 +35,8 @@ $getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
 
+$user = new User($gDb, $gProfileFields);
+
 $icon = array();
 $icon['member'] = array('image' => 'fa-user', 'text' => $gL10n->get('SYS_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
 $icon['not_member'] = array('image' => 'fa-user-slash', 'text' => $gL10n->get('SYS_NOT_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
@@ -54,8 +56,6 @@ $page = new HtmlPage('plg-keymanager-synchronize', $headline);
 if ($getMode == 'preview')     //Default
 {
 	$members = array();
-	
-	$user = new User($gDb, $gProfileFields);
 	
 	// read in all members
 	$sql = 'SELECT usr_id, last_name.usd_value AS last_name, first_name.usd_value AS first_name
@@ -142,8 +142,10 @@ if ($getMode == 'preview')     //Default
 		
 		foreach ($members as $memberId => $data)
 		{
+            $user->readDataById($memberId);
+        
 			$columnValues = array();
-			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberId)).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
+			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
 			$columnValues[] = $data['count'];
 			$columnValues[] = $data['info'];
 			$table->addRowByArray($columnValues);
@@ -198,9 +200,11 @@ elseif ($getMode == 'write')
 	{
 		if ($data['delete_marker'] == true)
 		{
-		    $delete_marker = false;
+            $user->readDataById($memberId);
+		    
+            $delete_marker = false;
 			$columnValues = array();
-			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberId)).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
+			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
 
 			$sql = 'SELECT mem_id, mem_rol_id, mem_usr_id, mem_begin, mem_end, mem_leader
               		  FROM '.TBL_MEMBERS.'
