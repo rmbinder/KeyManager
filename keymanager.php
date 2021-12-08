@@ -3,13 +3,15 @@
  ***********************************************************************************************
  * KeyManager
  *
- * Version 2.0.1
+ * Version 2.1.0
  *
  * KeyManager is an Admidio plugin for managing building and room keys.
  * 
+ * Note: KeyManager uses the external class XLSXWriter (https://github.com/mk-j/PHP_XLSXWriter)
+ * 
  * Author: rmb
  *
- * Compatible with Admidio version 4
+ * Compatible with Admidio version 4.1
  *
  * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
@@ -20,7 +22,7 @@
 /******************************************************************************
  * Parameters:
  *
- * mode              : Output(html, print, csv-ms, csv-oo, pdf, pdfl)
+ * mode              : Output(html, print, csv-ms, csv-oo, pdf, pdfl, xlsx)
  * filter_string     : general filter string
  * filter_keyname    : filter for keyname
  * filter_receiver   : filter for receiver
@@ -68,7 +70,7 @@ if (!isset($_SESSION['pKeyManager']['export_and_filter']))
     $_SESSION['pKeyManager']['export_and_filter'] = false;
 }
 
-$getMode            = admFuncVariableIsValid($_GET, 'mode',              'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl')));
+$getMode            = admFuncVariableIsValid($_GET, 'mode',              'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl', 'xlsx')));
 $getFilterString    = admFuncVariableIsValid($_GET, 'filter_string',     'string');
 $getFilterKeyName   = admFuncVariableIsValid($_GET, 'filter_keyname',    'string');
 $getFilterReceiver  = admFuncVariableIsValid($_GET, 'filter_receiver',   'int');
@@ -141,6 +143,10 @@ switch ($getMode)
     case 'print':
         $classTable  = 'table table-condensed table-striped';
         break;
+    case 'xlsx':
+	    include_once(__DIR__ . '/vendor/PHP_XLSXWriter/xlsxwriter.class.php');
+	    $getMode     = 'xlsx';
+	    break;
     default:
         break;
 }
@@ -150,7 +156,9 @@ switch ($getMode)
 // Maybe there are hidden fields.
 $arrValidColumns = array();
 
-$csvStr = ''; // CSV file as string
+$csvStr = '';                   // CSV file as string
+$header = array();              //'xlsx'
+$rows   = array();              //'xlsx'
 
 $keys = new Keys($gDb, ORG_ID);
 $keys->showFormerKeys($getShowAll);
@@ -168,7 +176,7 @@ if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === f
     $gNavigation->addStartUrl(CURRENT_URL, $headline);
 }
 
-if ($getMode != 'csv')
+if ($getMode != 'csv' && $getMode != 'xlsx' )
 {
     $datatable = false;
     $hoverRows = false;
@@ -293,7 +301,16 @@ if ($getMode != 'csv')
             $page->addPageFunctionsMenuItem('menu_item_lists_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
         
             $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'fa-file-download');
-            $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL'),
+            $page->addPageFunctionsMenuItem('menu_item_lists_xlsx', $gL10n->get('SYS_MICROSOFT_EXCEL').' (XLSX)',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    'filter_string'     => $getFilterString,
+                    'filter_keyname'    => $getFilterKeyName,
+                    'filter_receiver'   => $getFilterReceiver,
+                    'export_and_filter' => $getExportAndFilter,
+                    'show_all'          => $getShowAll,
+                    'mode'              => 'xlsx')),
+                'fa-file-excel', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL').' (CSV)',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
                     'filter_string'     => $getFilterString,
                     'filter_keyname'    => $getFilterKeyName,
@@ -437,9 +454,19 @@ foreach ($keys->mKeyFields as $keyField)
         $arrValidColumns[] = $gL10n->get('SYS_ABR_NO');
     }
     
+    if ($getMode == 'xlsx' && $columnNumber === 1)
+    {
+        // add serial
+        $header[$gL10n->get('SYS_ABR_NO')] = 'string';
+    }
+    
     if ($getMode == 'csv')
     {
         $csvStr .= $separator.$valueQuotes.$columnHeader.$valueQuotes;
+    }
+    elseif ($getMode == 'xlsx')
+    {
+        $header[$columnHeader] = 'string';
     }
     elseif ($getMode == 'pdf')
     {
@@ -485,6 +512,10 @@ elseif ($getMode == 'pdf')
         $table->addColumn($arrValidColumns[$column], array('style' => 'text-align: '.$columnAlign[$column].';font-size:14;background-color:#C7C7C7;'), 'th');
     }
 }
+elseif ($getMode == 'xlsx')
+{
+    // nothing to do
+}
 else
 {
     $table->addTableBody();
@@ -517,7 +548,7 @@ foreach ($keys->keys as $key)
 
         if ($columnNumber === 1)
         {
-            if (in_array($getMode, array('html', 'print', 'pdf'), true))
+            if (in_array($getMode, array('html', 'print', 'pdf', 'xlsx'), true))
             {
                 // add serial
                 $columnValues[] = $listRowNumber;
@@ -637,6 +668,10 @@ foreach ($keys->keys as $key)
     	{
         	$csvStr .= $tmp_csv. "\n";
     	}
+        elseif($getMode == 'xlsx')
+    	{
+        	$rows[] = $columnValues;
+    	}
     	else
     	{
         	$table->addRowByArray($columnValues, null, array('nobr' => 'true'));
@@ -647,7 +682,7 @@ foreach ($keys->keys as $key)
 }  // End-While (end found key)
 
 // Settings for export file
-if ($getMode == 'csv' || $getMode == 'pdf')
+if ($getMode == 'csv' || $getMode == 'pdf' || $getMode == 'xlsx')
 {
     // file name in the current directory...
     $filename = FileSystemUtils::getSanitizedPathEntry($filename) . '.' . $getMode;
@@ -705,6 +740,24 @@ elseif ($getMode == 'pdf')
         $gLogger->error('Could not delete file!', array('filePath' => $file));
     }    
     
+}
+elseif ($getMode == 'xlsx')
+{
+    header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header('Content-Transfer-Encoding: binary');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    
+    $writer = new XLSXWriter();
+    $writer->setAuthor($gCurrentUser->getValue('FIRST_NAME').' '.$gCurrentUser->getValue('LAST_NAME'));
+    $writer->setTitle($filename);
+    $writer->setSubject($gL10n->get('PLG_KEYMANAGER_KEYLIST'));
+    $writer->setCompany($gCurrentOrganization->getValue('org_longname'));
+    $writer->setKeywords(array($gL10n->get('PLG_KEYMANAGER_NAME_OF_PLUGIN'), $gL10n->get('PLG_KEYMANAGER_KEY')));
+    $writer->setDescription($gL10n->get('PLG_KEYMANAGER_CREATED_WITH'));
+    $writer->writeSheet($rows,'', $header);
+    $writer->writeToStdOut();
 }
 elseif ($getMode == 'html' && $getExportAndFilter)
 { 

@@ -2,6 +2,7 @@
 <resources>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Konfiguration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Einstellungen für das Kopieren eines Schlüssels:</string>
+    <string name="PLG_KEYMANAGER_CREATED_WITH">erstellt mit dem Plugin KeyManager der Online-Mitgliederverwaltung Admidio</string> 
     <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Nur Daten der aktuellen Organisation löschen.</string>
     <string name="PLG_KEYMANAGER_DEINST_ALLORG">Daten in allen Organisationen löschen.</string>
     <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- Die Tabelle #VAR1_BOLD# konnte nicht gelöscht werden, da sich darin noch Daten einer weiteren Organisation oder eines anderen Plugins befinden.\n</string> 
@@ -44,6 +45,7 @@
     <string name="PLG_KEYMANAGER_KEYFIELDS">Schlüsselfelder</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE">Schlüsselfelder pflegen</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">In der Schlüsselfeldpflege können Schlüsselfelder angelegt und bearbeitet werden.</string>
+    <string name="PLG_KEYMANAGER_KEYLIST">Schlüsselliste</string>
     <string name="PLG_KEYMANAGER_KEYMANAGER">Schlüsselverwalter</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Schlüsselname</string>
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string>        

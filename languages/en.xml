@@ -2,6 +2,7 @@
 <resources>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Settings for copying a key:</string>
+    <string name="PLG_KEYMANAGER_CREATED_WITH">created with the Plugin KeyManager of the online member administration Admidio</string> 
     <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Delete only data of the current organization.</string>
     <string name="PLG_KEYMANAGER_DEINST_ALLORG">Delete data in all organizations.</string>
     <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- The table #VAR1_BOLD# could not be deleted because it still contains data from another organization or another plug-in.\n</string> 
@@ -44,6 +45,7 @@
     <string name="PLG_KEYMANAGER_KEYFIELDS">Key fields</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE">Maintain key fields</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Key fields can be created and edited in key field maintenance.</string>
+    <string name="PLG_KEYMANAGER_KEYLIST">Key list</string>
     <string name="PLG_KEYMANAGER_KEYMANAGER">KeyManager</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Name of the key</string>
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>    

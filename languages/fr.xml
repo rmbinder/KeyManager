@@ -2,6 +2,7 @@
 <resources>     
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Paramètres de copie d'une clé:</string>
+    <string name="PLG_KEYMANAGER_CREATED_WITH">créé avec le Plugin KeyManager de l'administration des membres en ligne Admidio</string> 
     <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Supprimer uniquement les données de l\'organisation actuelle.</string>
     <string name="PLG_KEYMANAGER_DEINST_ALLORG">Supprimer les données de toutes les organisations.</string>
     <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- La table #VAR1_BOLD# n\'a pas pu être supprimé parce qu\'il contient encore des données d\'une autre organisation ou d\'un autre plugin. \n</string> 
@@ -44,6 +45,7 @@
     <string name="PLG_KEYMANAGER_KEYFIELDS">Champ clés</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE">Gérer les champs clés</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Les champs clés peuvent être créées et traitées dans la gestion des champs clés.</string>
+    <string name="PLG_KEYMANAGER_KEYLIST">Liste des clés</string>
     <string name="PLG_KEYMANAGER_KEYMANAGER">Administrateur clé</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Nom clé</string>
     <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Le contrôle d\'autorisation du plug-in a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string>    
