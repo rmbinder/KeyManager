@@ -36,7 +36,7 @@ $keys->readKeyData($getKeyId, ORG_ID);
 
 $user = new User($gDb, $gProfileFields);
 
-$headline = $gL10n->get('MEM_CHANGE_HISTORY_OF', array($keys->getValue('KEYNAME')));
+$headline = $gL10n->get('SYS_CHANGE_HISTORY_OF', array($keys->getValue('KEYNAME')));
 
 // if profile log is activated then the key field history will be shown otherwise show error
 if (!$gSettingsManager->getBool('profile_log_edit_fields'))
@@ -98,7 +98,7 @@ if ($fieldHistoryStatement->rowCount() === 0)
     // message is shown, so delete this page from navigation stack
     $gNavigation->deleteLastUrl();
     $gMessage->setForwardUrl($gNavigation->getUrl(), 1000);
-    $gMessage->show($gL10n->get('MEM_NO_CHANGES_PROFIL', array($keys->getValue('KEYNAME'))));
+    $gMessage->show($gL10n->get('SYS_NO_CHANGES_LOGGED_PROFIL', array($keys->getValue('KEYNAME'))));
     // => EXIT
 }
 

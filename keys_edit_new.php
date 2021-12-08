@@ -59,7 +59,7 @@ if ($getKeyId != 0)
 	// show link to view profile field change history
     if ($gSettingsManager->getBool('profile_log_edit_fields')  )
 	{
-        $page->addPageFunctionsMenuItem('menu_item_change_history', $gL10n->get('MEM_CHANGE_HISTORY'),
+        $page->addPageFunctionsMenuItem('menu_item_change_history', $gL10n->get('SYS_CHANGE_HISTORY'),
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', array('key_id' => $getKeyId)), 'fa-history');
 	} 
 
