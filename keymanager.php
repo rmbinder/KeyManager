@@ -364,7 +364,9 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                                FROM '.TBL_KEYMANAGER_DATA.'
                          INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
                                  ON kmf_id = kmd_kmf_id
-                              WHERE kmf_name_intern = \'KEYNAME\' 
+                              WHERE (  kmf_org_id  = '. $gCurrentOrgId .'
+                                 OR kmf_org_id IS NULL ) 
+                                AND kmf_name_intern = \'KEYNAME\' 
                            ORDER BY kmd_value ASC';
             $form->addSelectBoxFromSql('filter_keyname', $selectBoxKeyNameLabel, $gDb, $sql, array('defaultValue' => $getFilterKeyName , 'showContextDependentFirstEntry' => true));
         
@@ -379,7 +381,9 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                           LEFT JOIN '. TBL_USER_DATA. ' as first_name
                                  ON first_name.usd_usr_id = kmd_value
                                 AND first_name.usd_usf_id = '. $gProfileFields->getProperty('FIRST_NAME', 'usf_id'). '
-                              WHERE kmf_name_intern = \'RECEIVER\'
+                              WHERE ( kmf_org_id  = '. $gCurrentOrgId .'
+                                 OR kmf_org_id IS NULL )
+                                AND kmf_name_intern = \'RECEIVER\'
                            ORDER BY CONCAT_WS(\', \', last_name.usd_value, first_name.usd_value) ASC';
             $form->addSelectBoxFromSql('filter_receiver',$selectBoxReceiverLabel, $gDb, $sql, array('defaultValue' => $getFilterReceiver , 'showContextDependentFirstEntry' => true));
         }
