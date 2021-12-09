@@ -160,9 +160,9 @@ $csvStr = '';                   // CSV file as string
 $header = array();              //'xlsx'
 $rows   = array();              //'xlsx'
 
-$keys = new Keys($gDb, ORG_ID);
+$keys = new Keys($gDb, $gCurrentOrgId);
 $keys->showFormerKeys($getShowAll);
-$keys->readKeys(ORG_ID);
+$keys->readKeys($gCurrentOrgId);
 
 $user = new User($gDb, $gProfileFields);
 
@@ -527,7 +527,7 @@ foreach ($keys->keys as $key)
 {
 	$tmp_csv = '';
 	
-	$keys->readKeyData($key['kmk_id'], ORG_ID);
+	$keys->readKeyData($key['kmk_id'], $gCurrentOrgId);
 
     $columnValues = array();
     $content = '';

@@ -84,7 +84,6 @@ class Keys
      */
     public function getProperty($fieldNameIntern, $column, $format = '')
     {
-    	global $gL10n;
     	$value = '';
         if (array_key_exists($fieldNameIntern, $this->mKeyFields))
         {
@@ -118,8 +117,6 @@ class Keys
      */
     protected function getListValue($fieldNameIntern, $value , $format)
     {
-    	global $gL10n;
-
     	$arrListValuesWithKeys = array(); // array with list values and keys that represents the internal value
     				 
     	// first replace windows new line with unix new line and then create an array
@@ -212,8 +209,6 @@ class Keys
      */
     public function getHtmlValue($fieldNameIntern, $value, $value2 = null)
     {
-        global $gSettingsManager;
-
         if (!array_key_exists($fieldNameIntern, $this->mKeyFields))
         {
             return $value;
@@ -245,7 +240,7 @@ class Keys
                         $date = \DateTime::createFromFormat('Y-m-d', $value);
                         if ($date instanceof \DateTime)
                         {
-                            $htmlValue = $date->format($gSettingsManager->getString('system_date'));
+                            $htmlValue = $date->format($GLOBALS['gSettingsManager']->getString('system_date'));
                         }
                     }
                     break;
@@ -321,8 +316,6 @@ class Keys
      */
     public function getValue($fieldNameIntern, $format = '')
     {
-        global $gL10n, $gSettingsManager;
-
         $value = '';
 
         // exists a key field with that name ?
@@ -352,7 +345,7 @@ class Keys
                         // if no format or html is set then show date format from Admidio settings
                         if ($format === '' || $format === 'html')
                         {
-                            $value = $date->format($gSettingsManager->getString('system_date'));
+                            $value = $date->format($GLOBALS['gSettingsManager']->getString('system_date'));
                         }
                         else
                         {
@@ -585,8 +578,6 @@ class Keys
      */
     public function setValue($fieldNameIntern, $newValue, $checkValue = true)
     {
-        global $gCurrentUser, $gSettingsManager;
-    
     	$kmfId = $this->mKeyFields[$fieldNameIntern]->getValue('kmf_id');
     	
     	if (!array_key_exists($kmfId, $this->mKeyData) )
@@ -604,7 +595,7 @@ class Keys
     	// format of date will be local but database has stored Y-m-d format must be changed for compare
     	if($this->mKeyFields[$fieldNameIntern]->getValue('kmf_type') === 'DATE')
     	{
-    	   $date = \DateTime::createFromFormat($gSettingsManager->getString('system_date'), $newValue);
+    	   $date = \DateTime::createFromFormat($GLOBALS['gSettingsManager']->getString('system_date'), $newValue);
     
            if($date !== false)
     	   {
@@ -629,7 +620,7 @@ class Keys
     	
     	$returnCode = $this->mKeyData[$kmfId]->setValue('kmd_value', $newValue);
     			
-        if ($returnCode && $gSettingsManager->getBool('profile_log_edit_fields'))
+        if ($returnCode && $GLOBALS['gSettingsManager']->getBool('profile_log_edit_fields'))
     	{
     		$logEntry = new TableAccess($this->mDb, TBL_KEYMANAGER_LOG, 'kml');
     		$logEntry->setValue('kml_kmk_id', $this->mKeyId);
@@ -669,14 +660,14 @@ class Keys
     	if ($this->newKey)
     	{
     		$newKey = new TableAccess($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk');
-    		$newKey->setValue('kmk_org_id', ORG_ID);
+    		$newKey->setValue('kmk_org_id', $GLOBALS['gCurrentOrgId']);
     		$newKey->setValue('kmk_former', 0);
     		$newKey->save();
     	
     		$this->mKeyId = $newKey->getValue('kmk_id');
     		
     		// update key table
-    		$this->readKeys(ORG_ID);
+    		$this->readKeys($GLOBALS['gCurrentOrgId']);
     		
     		return $this->mKeyId;
     	}

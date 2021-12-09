@@ -29,8 +29,8 @@ $getCopy  = admFuncVariableIsValid($_GET, 'copy',   'bool');
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
 
-$keys = new Keys($gDb, ORG_ID);
-$keys->readKeyData($getKeyId, ORG_ID);
+$keys = new Keys($gDb, $gCurrentOrgId);
+$keys->readKeyData($getKeyId, $gCurrentOrgId);
 
 // set headline of the script
 if ($getCopy)
@@ -186,7 +186,7 @@ foreach ($keys->mKeyFields as $keyField)
                     AND mem_end    > \''.DATE_NOW.'\'
                     AND rol_valid  = 1
                     AND rol_cat_id = cat_id
-                    AND ( cat_org_id = '. ORG_ID. '
+                    AND ( cat_org_id = '.$gCurrentOrgId. '
                      OR cat_org_id IS NULL )) ';
             	
 			$sql = 'SELECT usr_id, CONCAT(last_name.usd_value, \', \', first_name.usd_value,  IFNULL(CONCAT(\', \', postcode.usd_value),\'\'), IFNULL(CONCAT(\' \', city.usd_value),\'\'), IFNULL(CONCAT(\', \', street.usd_value),\'\')  ) as name
@@ -270,7 +270,7 @@ if ($getCopy)
 	$sql = 'SELECT kmf_id, kmf_name
               FROM '.TBL_KEYMANAGER_FIELDS.'
              WHERE kmf_type = \'NUMBER\'
-               AND ( kmf_org_id = '.ORG_ID.'
+               AND ( kmf_org_id = '.$gCurrentOrgId.'
                 OR kmf_org_id IS NULL )';
 	$form->addSelectBoxFromSql('copy_field', $gL10n->get('PLG_KEYMANAGER_FIELD'), $gDb, $sql, array('multiselect' => false, 'helpTextIdInline' => 'PLG_KEYMANAGER_FIELD_DESC'));
 	$form->addLine();

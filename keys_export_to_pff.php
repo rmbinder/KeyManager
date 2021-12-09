@@ -33,8 +33,8 @@ if (substr_count($gNavigation->getUrl(), 'keys_export_to_pff') === 1)
 	// => EXIT
 }
     
-$keys = new Keys($gDb, ORG_ID);
-$keys->readKeyData($getKeyId, ORG_ID);
+$keys = new Keys($gDb, $gCurrentOrgId);
+$keys->readKeyData($getKeyId, $gCurrentOrgId);
 
 // add current url to navigation stack
 $gNavigation->addUrl(CURRENT_URL);

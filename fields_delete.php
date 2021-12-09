@@ -120,7 +120,7 @@ switch ($getMode)
         		 WHERE kmf_id = ?
     			   AND ( kmf_org_id = ?
                     OR kmf_org_id IS NULL ) ';
-    	$gDb->queryPrepared($sql, array($getKmfId, ORG_ID));
+    	$gDb->queryPrepared($sql, array($getKmfId, $gCurrentOrgId));
     	
     	// go back to key view
     	$gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 1000);

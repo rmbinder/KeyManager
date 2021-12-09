@@ -52,7 +52,7 @@ if ($getKmfId > 0)
 
     // Pruefung, ob das Feld zur aktuellen Organisation gehoert
     if ($keyField->getValue('kmf_org_id') > 0
-    && (int) $keyField->getValue('kmf_org_id') !== (int) ORG_ID)
+    && (int) $keyField->getValue('kmf_org_id') !== (int) $gCurrentOrgId)
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
         // => EXIT

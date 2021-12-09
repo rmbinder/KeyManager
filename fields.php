@@ -32,7 +32,7 @@ $gNavigation->addUrl(CURRENT_URL, $headline);
 
 unset($_SESSION['fields_request']);
 
-$keys = new Keys($gDb, ORG_ID);
+$keys = new Keys($gDb, $gCurrentOrgId);
 
 // create html page object
 $page = new HtmlPage('plg-keymanager-fields', $headline);

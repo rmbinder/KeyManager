@@ -28,7 +28,7 @@ $getKeyId       = admFuncVariableIsValid($_GET, 'key_id',  'int');
 $postCopyNumber = admFuncVariableIsValid($_POST, 'copy_number', 'numeric', array('defaultValue' => 1));
 $postCopyField  = admFuncVariableIsValid($_POST, 'copy_field',  'int');
 
-$keys = new Keys($gDb, ORG_ID);
+$keys = new Keys($gDb, $gCurrentOrgId);
 
 $startIdx = 1;
 if ($postCopyField > 0)												// a field for a current number was selected	
@@ -44,7 +44,7 @@ for ($i = $startIdx; $i < $stopIdx; ++$i)
 {
 	$_POST['kmf-'. $postCopyField] = $i;
 
-	$keys->readKeyData($getKeyId, ORG_ID);
+	$keys->readKeyData($getKeyId, $gCurrentOrgId);
 	
 	if ($getKeyId == 0)
 	{

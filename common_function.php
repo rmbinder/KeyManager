@@ -17,10 +17,6 @@ if(!defined('PLUGIN_FOLDER'))
 {
 	define('PLUGIN_FOLDER', '/'.substr(__DIR__,strrpos(__DIR__,DIRECTORY_SEPARATOR)+1));
 }
-if(!defined('ORG_ID'))
-{
-	define('ORG_ID', (int) $gCurrentOrganization->getValue('org_id'));
-}
 if (!defined('TBL_KEYMANAGER_FIELDS'))
 {
 	define('TBL_KEYMANAGER_FIELDS',  $g_tbl_praefix . '_keymanager_fields');
@@ -45,17 +41,15 @@ if (!defined('TBL_KEYMANAGER_LOG'))
  */
 function getRole_IDPKM($role_name)
 {
-    global $gDb;
-	
     $sql    = 'SELECT rol_id
                  FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
                 WHERE rol_name   = ? -- $role_name
                   AND rol_valid  = 1 
                   AND rol_cat_id = cat_id
-                  AND ( cat_org_id = ? -- ORG_ID
+                  AND ( cat_org_id = ? -- $GLOBALS[\'gCurrentOrgId\']
                    OR cat_org_id IS NULL ) ';
                       
-    $statement = $gDb->queryPrepared($sql, array($role_name, ORG_ID));
+    $statement = $GLOBALS['gDb']->queryPrepared($sql, array($role_name, $GLOBALS['gCurrentOrgId']));
     $row = $statement->fetchObject();
 
    // fuer den seltenen Fall, dass waehrend des Betriebes die Sprache umgeschaltet wird:  $row->rol_id pruefen
@@ -71,7 +65,7 @@ function getRole_IDPKM($role_name)
  */
 function isUserAuthorized($scriptName)
 {
-	global $gDb, $gCurrentUser, $gMessage, $gL10n;
+	global $gMessage;
 	
 	$userIsAuthorized = false;
 	$menId = 0;
@@ -80,11 +74,11 @@ function isUserAuthorized($scriptName)
               FROM '.TBL_MENU.'
              WHERE men_url = ? -- $scriptName ';
 	
-	$menuStatement = $gDb->queryPrepared($sql, array($scriptName));
+	$menuStatement = $GLOBALS['gDb']->queryPrepared($sql, array($scriptName));
 	
 	if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
 	{
-		$gMessage->show($gL10n->get('PLG_KEYMANAGER_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
+		$gMessage->show($GLOBALS['gL10n']->get('PLG_KEYMANAGER_MENU_URL_ERROR', array($scriptName)), $GLOBALS['gL10n']->get('SYS_ERROR'));
 	}
 	else
 	{
@@ -101,17 +95,17 @@ function isUserAuthorized($scriptName)
              WHERE men_id = ? -- $menId
           ORDER BY men_men_id_parent DESC, men_order';
 	
-	$menuStatement = $gDb->queryPrepared($sql, array($menId));
+	$menuStatement = $GLOBALS['gDb']->queryPrepared($sql, array($menId));
 	while ($row = $menuStatement->fetch())
 	{
 		if ((int) $row['men_com_id'] === 0 || Component::isVisible($row['com_name_intern']))
 		{
 			// Read current roles rights of the menu
-			$displayMenu = new RolesRights($gDb, 'menu_view', $row['men_id']);
+			$displayMenu = new RolesRights($GLOBALS['gDb'], 'menu_view', $row['men_id']);
 			$rolesDisplayRight = $displayMenu->getRolesIds();
 			
 			// check for right to show the menu
-			if (count($rolesDisplayRight) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
+			if (count($rolesDisplayRight) === 0 || $displayMenu->hasRight($GLOBALS['gCurrentUser']->getRoleMemberships()))
 			{
 				$userIsAuthorized = true;
 			}
@@ -131,9 +125,7 @@ function isUserAuthorized($scriptName)
  */
 function convlanguagePKM($field_name)
 {
-	global $gL10n;
-
-	return (((substr($field_name,3,1)) == '_') ? $gL10n->get($field_name) : $field_name);
+	return (((substr($field_name,3,1)) == '_') ? $GLOBALS['gL10n']->get($field_name) : $field_name);
 }
 
 
@@ -146,8 +138,6 @@ function convlanguagePKM($field_name)
  */
 function getNewNameIntern($name, $index)
 {
-	global $gDb;
-	
 	$name = umlautePff($name);
 	$newNameIntern = strtoupper(str_replace(' ', '_', $name));
 
@@ -159,7 +149,7 @@ function getNewNameIntern($name, $index)
 	$sql = 'SELECT kmf_id
               FROM '.TBL_KEYMANAGER_FIELDS.'
              WHERE kmf_name_intern = ? ';
-	$userFieldsStatement = $gDb->queryPrepared($sql, array($newNameIntern));
+	$userFieldsStatement = $GLOBALS['gDb']->queryPrepared($sql, array($newNameIntern));
 
 	if ($userFieldsStatement->rowCount() > 0)
 	{
@@ -178,13 +168,11 @@ function getNewNameIntern($name, $index)
  */
 function genNewSequence()
 {
-	global $gDb;
-
 	$sql =  'SELECT max(kmf_sequence) as max_sequence
                    FROM '.TBL_KEYMANAGER_FIELDS.' 
                   WHERE ( kmf_org_id = ?
                      OR kmf_org_id IS NULL ) ';
-	$statement = $gDb->queryPrepared($sql, array(ORG_ID));
+	$statement = $GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId']));
 	$row = $statement->fetch();
 
 	return $row['max_sequence'] + 1;

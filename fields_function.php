@@ -47,7 +47,7 @@ if ($getKmfId > 0)
 
     // check if key field belongs to actual organization
     if ($keyField->getValue('kmf_org_id') > 0
-    && (int) $keyField->getValue('kmf_org_id') !== (int) ORG_ID)
+    && (int) $keyField->getValue('kmf_org_id') !== (int) $gCurrentOrgId)
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
         // => EXIT
@@ -87,10 +87,10 @@ if($getMode === 1)
         $sql = 'SELECT COUNT(*) AS count
                   FROM '.TBL_KEYMANAGER_FIELDS.'
                  WHERE kmf_name   = ? -- $_POST[\'kmf_name\']
-				   AND ( kmf_org_id = ? -- ORG_ID
+				   AND ( kmf_org_id = ? -- $gCurrentOrgId
                     OR kmf_org_id IS NULL )
                    AND kmf_id    <> ? -- $getKmfId ';
-        $statement = $gDb->queryPrepared($sql, array($_POST['kmf_name'], ORG_ID, $getKmfId));
+        $statement = $gDb->queryPrepared($sql, array($_POST['kmf_name'], $gCurrentOrgId, $getKmfId));
         
         if ((int) $statement->fetchColumn() > 0)
         {
@@ -124,7 +124,7 @@ if($getMode === 1)
         $e->showHtml();
     }
     
-    $keyField->setValue('kmf_org_id', (int) ORG_ID);
+    $keyField->setValue('kmf_org_id', (int) $gCurrentOrgId);
     
     if ($keyField->isNewRecord())
     {
@@ -164,7 +164,7 @@ elseif($getMode === 4)
     $sql = 'UPDATE '.TBL_KEYMANAGER_FIELDS.'
                SET kmf_sequence = ? -- $kmf_sequence
              WHERE kmf_sequence = ? -- $kmf_sequence -/+ 1
-               AND ( kmf_org_id = ? --  ORG_ID
+               AND ( kmf_org_id = ? -- $gCurrentOrgId
                 OR kmf_org_id IS NULL ) ';
     
     // field will get one number lower and therefore move a position up in the list
@@ -179,7 +179,7 @@ elseif($getMode === 4)
     }
     
     // update the existing entry with the sequence of the field that should get the new sequence
-    $gDb->queryPrepared($sql, array($kmfSequence, $newSequence, ORG_ID));
+    $gDb->queryPrepared($sql, array($kmfSequence, $newSequence, $gCurrentOrgId));
     
     $keyField->setValue('kmf_sequence', $newSequence);
     $keyField->save();
