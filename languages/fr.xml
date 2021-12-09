@@ -25,7 +25,7 @@
     <string name="PLG_KEYMANAGER_FORMER">Retirer</string>
     <string name="PLG_KEYMANAGER_GENERAL">Généralement</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface avec le Plug-in FormFiller</string>
-    <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Ici, il est possible de sélectionner une configuration FormFiller avec le plug-in FormFiller installé. Cela pourrait être utilisé pour créer un document pour la remise ou le transfert de clés. KeyManager fournit les valeurs, FormFiller les positions pour l\'impression.</string>
+    <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Ici, il est possible de sélectionner une configuration FormFiller avec le plug-in FormFiller installé. Un récépissé de remise de clé ou un récépissé de remise de clé peut être créé sur cette base. KeyManager fournit les valeurs, FormFiller les positions pour l\'impression.</string>
     <string name="PLG_KEYMANAGER_KEY">Clé</string>
     <string name="PLG_KEYMANAGER_KEY_COPY">Copier la clé</string>
     <string name="PLG_KEYMANAGER_KEY_CREATE">Générer la clé</string>
@@ -54,7 +54,8 @@
     <string name="PLG_KEYMANAGER_NUMBER">Nombre</string>
     <string name="PLG_KEYMANAGER_NUMBER_DESC">Nombre de clés à ajouter</string>    
     <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Nombre de clés</string>    
-    <string name="PLG_KEYMANAGER_ORG_CHOICE">Choix de l\'organisation</string>    
+    <string name="PLG_KEYMANAGER_ORG_CHOICE">Choix de l\'organisation</string>
+    <string name="PLG_KEYMANAGER_PFF_CONFIG_NOT_FOUND">Impossible d'imprimer avec FormFiller. La configuration FormFiller enregistrée n'existe pas.</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">État</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Informations sur le plug-in</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Nom du plug-in</string>

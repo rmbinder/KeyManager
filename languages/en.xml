@@ -25,7 +25,7 @@
     <string name="PLG_KEYMANAGER_FORMER">Make to former</string>    
     <string name="PLG_KEYMANAGER_GENERAL">general</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface to the plugin formfiller</string>
-    <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Here you have the possibility to select a FormFiller configuration if the Plugin FormFiller is installed. This could be used to create a key issue or key transfer document. KeyManager supplies the values, FormFiller the positions for the print.</string>
+    <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Here you have the possibility to select a FormFiller configuration if the Plugin FormFiller is installed. This can be used to create a key issue or key transfer document. KeyManager supplies the values, FormFiller the positions for the print.</string>
     <string name="PLG_KEYMANAGER_KEY">Key</string>
     <string name="PLG_KEYMANAGER_KEY_COPY">Copy the key</string>
     <string name="PLG_KEYMANAGER_KEY_CREATE">Create a key</string>
@@ -54,7 +54,8 @@
     <string name="PLG_KEYMANAGER_NUMBER">Number</string>
     <string name="PLG_KEYMANAGER_NUMBER_DESC">Number of keys to be added</string>    
     <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Number of keys</string>
-    <string name="PLG_KEYMANAGER_ORG_CHOICE">Organizational choice</string>    
+    <string name="PLG_KEYMANAGER_ORG_CHOICE">Organizational choice</string>
+    <string name="PLG_KEYMANAGER_PFF_CONFIG_NOT_FOUND">Cannot print using FormFiller. The saved FormFiller configuration does not exist.</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">Situation</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plug-in informations</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Plug-in name</string>

@@ -25,7 +25,7 @@
     <string name="PLG_KEYMANAGER_FORMER">Aussondern</string>    
     <string name="PLG_KEYMANAGER_GENERAL">allgemein</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface zum Plugin FormFiller</string>
-    <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Hier besteht die Möglichkeit, bei installiertem Plugin FormFiller, eine FormFiller-Konfiguration auszuwählen. Anhand dieser könnte ein Schlüsselausgabe- oder Schlüsselübergabebeleg erstellt werden. KeyManager liefert hierbei die Werte, FormFiller die Positionen für den Druck.</string>
+    <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Hier besteht die Möglichkeit, bei installiertem Plugin FormFiller, eine FormFiller-Konfiguration auszuwählen. Anhand dieser kann ein Schlüsselausgabe- oder Schlüsselübergabebeleg erstellt werden. KeyManager liefert hierbei die Werte, FormFiller die Positionen für den Druck.</string>
     <string name="PLG_KEYMANAGER_KEY">Schlüssel</string>
     <string name="PLG_KEYMANAGER_KEY_COPY">Schlüssel kopieren</string>
     <string name="PLG_KEYMANAGER_KEY_CREATE">Schlüssel erzeugen</string>
@@ -54,7 +54,8 @@
     <string name="PLG_KEYMANAGER_NUMBER">Anzahl</string>
     <string name="PLG_KEYMANAGER_NUMBER_DESC">Anzahl der anzufügenden Schlüssel</string>    
     <string name="PLG_KEYMANAGER_NUMBER_OF_KEYS">Anzahl der Schlüssel</string>
-    <string name="PLG_KEYMANAGER_ORG_CHOICE">Organisationswahl</string>    
+    <string name="PLG_KEYMANAGER_ORG_CHOICE">Organisationswahl</string>
+    <string name="PLG_KEYMANAGER_PFF_CONFIG_NOT_FOUND">Druck über FormFiller nicht möglich. Die gespeicherte FormFiller-Konfiguration ist nicht vorhanden.</string>    
     <string name="PLG_KEYMANAGER_PLUGIN_DATE">Stand</string>
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plugininformationen</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Name des Plugins</string>
