@@ -86,7 +86,7 @@ class ConfigTablePKM
 	    $sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
 	    $statement = $GLOBALS['gDb']->queryPrepared($sql);
 	    
-	    if ((int) $statement->fetchColumn() === 1)
+	    if ($statement->rowCount() !== 0)  
 	    {
 	        $sql = 'SELECT COUNT(*) AS COUNT
             		       FROM '.$this->table_name.'
