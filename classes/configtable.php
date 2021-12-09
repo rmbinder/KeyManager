@@ -82,21 +82,32 @@ class ConfigTablePKM
 	 */
 	protected function checkPffInst()
 	{
-		$sql = 'SELECT COUNT(*) AS COUNT
+	    // pruefen, ob die Konfigurationstabelle vorhanden ist
+	    $sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
+	    $statement = $GLOBALS['gDb']->queryPrepared($sql);
+	    
+	    if ((int) $statement->fetchColumn() === 1)
+	    {
+	        $sql = 'SELECT COUNT(*) AS COUNT
             		       FROM '.$this->table_name.'
             		      WHERE plp_name = ?
             		        AND ( plp_org_id = ?
             	    	     OR plp_org_id IS NULL ) ';
-		$statement = $GLOBALS['gDb']->queryPrepared($sql, array('PFF__Plugininformationen__version', $GLOBALS['gCurrentOrgId']));
-		
-		if((int) $statement->fetchColumn() === 1  && $this->pffDir != false)
-		{
-			$this->isPffInst = true;
-		}
-		else 
-		{
-			$this->isPffInst = false;
-		}
+	        $statement = $GLOBALS['gDb']->queryPrepared($sql, array('PFF__Plugininformationen__version', $GLOBALS['gCurrentOrgId']));
+	        
+	        if((int) $statement->fetchColumn() === 1  && $this->pffDir !== false)
+	        {
+	            $this->isPffInst = true;
+	        }
+	        else
+	        {
+	            $this->isPffInst = false;
+	        }
+	    }
+	    else
+	    {
+	        $this->isPffInst = false;
+	    }
 	}
 	
 	/**
@@ -185,7 +196,7 @@ class ConfigTablePKM
 	  			kmf_usr_id_change int(10) unsigned DEFAULT NULL,
 	  			kmf_timestamp_change timestamp NULL DEFAULT NULL,
 	  			PRIMARY KEY (kmf_id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
-			$GLOBALS['gDb']->query($sql);
+			    $GLOBALS['gDb']->query($sql);
 		}
 		
 		$sql = 'SHOW TABLES LIKE \''.TBL_KEYMANAGER_DATA.'\' ';
@@ -200,7 +211,7 @@ class ConfigTablePKM
 				 kmd_kmk_id int(10) unsigned  NOT NULL,
 	  			 kmd_value varchar(4000),
 	  			 PRIMARY KEY (kmd_id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
-			$GLOBALS['gDb']->query($sql);
+			     $GLOBALS['gDb']->query($sql);
 		}
 		
 		$sql = 'SHOW TABLES LIKE \''.TBL_KEYMANAGER_KEYS.'\' ';
@@ -218,7 +229,7 @@ class ConfigTablePKM
 	  			kmk_usr_id_change int(10) unsigned DEFAULT NULL,
 	  			kmk_timestamp_change timestamp NULL DEFAULT NULL,
 	  			PRIMARY KEY (kmk_id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
-			$GLOBALS['gDb']->query($sql);
+			    $GLOBALS['gDb']->query($sql);
 		}
 		
 		$sql = 'SHOW TABLES LIKE \''.TBL_KEYMANAGER_LOG.'\' ';
@@ -237,7 +248,7 @@ class ConfigTablePKM
 	  			kml_timestamp_create timestamp NULL DEFAULT CURRENT_TIMESTAMP,	
 	  			kml_comment varchar(255) NULL,	
 	  			PRIMARY KEY (kml_id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
-			$GLOBALS['gDb']->query($sql);
+			    $GLOBALS['gDb']->query($sql);
 		}
 		
 		$sql = 'SELECT *
@@ -302,7 +313,7 @@ class ConfigTablePKM
          		auto_increment = 1
           		default character set = utf8
          		collate = utf8_unicode_ci';
-    		$GLOBALS['gDb']->queryPrepared($sql);
+    		    $GLOBALS['gDb']->queryPrepared($sql);
     	} 
     
 		$this->read();
