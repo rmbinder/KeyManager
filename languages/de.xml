@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>   
+<resources>
+    <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
+    <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>   
     <string name="PLG_KEYMANAGER_CONFIGURATION">Konfiguration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Einstellungen für das Kopieren eines Schlüssels:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">erstellt mit dem Plugin KeyManager der Online-Mitgliederverwaltung Admidio</string> 

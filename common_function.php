@@ -39,21 +39,31 @@ if (!defined('TBL_KEYMANAGER_LOG'))
  * @param   string  $role_name Name der zu pruefenden Rolle
  * @return  int     rol_id  Rol_id der Rolle; 0, wenn nicht gefunden
  */
-function getRole_IDPKM($role_name)
+function getRoleId($role_name)
 {
-    $sql    = 'SELECT rol_id
-                 FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-                WHERE rol_name   = ? -- $role_name
-                  AND rol_valid  = 1 
-                  AND rol_cat_id = cat_id
-                  AND ( cat_org_id = ? -- $GLOBALS[\'gCurrentOrgId\']
-                   OR cat_org_id IS NULL ) ';
-                      
-    $statement = $GLOBALS['gDb']->queryPrepared($sql, array($role_name, $GLOBALS['gCurrentOrgId']));
-    $row = $statement->fetchObject();
+    $sql = 'SELECT rol_id
+              FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
+             WHERE rol_name  = ? -- $role_name
+               AND rol_valid  = 1
+               AND rol_cat_id = cat_id
+               AND ( cat_org_id = ? -- $$GLOBALS[\'gCurrentOrgId\']
+                OR cat_org_id IS NULL ) ';
 
-   // fuer den seltenen Fall, dass waehrend des Betriebes die Sprache umgeschaltet wird:  $row->rol_id pruefen
-    return (isset($row->rol_id) ?  $row->rol_id : 0);
+    $queryParams = array(
+	   $role_name,
+       $GLOBALS['gCurrentOrgId']);
+       
+    $statement = $GLOBALS['gDb']->queryPrepared($sql, $queryParams);
+                    
+    $row = $statement->fetchObject();
+    if(isset($row->rol_id) && strlen($row->rol_id) > 0)
+    {
+        return $row->rol_id;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 /**
@@ -112,6 +122,36 @@ function isUserAuthorized($scriptName)
 		}
 	}
 	return $userIsAuthorized;
+}
+
+
+/**
+ * Funktion prueft, ob der Nutzer berechtigt ist, das Modul Preferences aufzurufen.
+ * @param   none
+ * @return  bool    true, wenn der User berechtigt ist
+ */
+function isUserAuthorizedForPreferences()
+{
+    global $pPreferences;
+    
+    $userIsAuthorized = false;
+    
+    if ($GLOBALS['gCurrentUser']->isAdministrator())                   // Mitglieder der Rolle Administrator dürfen "Preferences" immer aufrufen
+    {
+        $userIsAuthorized = true;
+    }
+    else
+    {
+        foreach ($pPreferences->config['access']['preferences'] as $roleId)
+        {
+            if ($GLOBALS['gCurrentUser']->isMemberOfRole((int) $roleId))
+            {
+                $userIsAuthorized = true;
+                continue;
+            }
+        }
+    }
+    return $userIsAuthorized;
 }
 
 

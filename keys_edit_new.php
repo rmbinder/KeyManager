@@ -63,7 +63,7 @@ if ($getKeyId != 0)
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', array('key_id' => $getKeyId)), 'fa-history');
 	} 
 
-	if ($gCurrentUser->isAdministrator())
+	if (isUserAuthorizedForPreferences())
 	{
         $page->addPageFunctionsMenuItem('menu_copy_key', $gL10n->get('PLG_KEYMANAGER_KEY_COPY'),
             SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $getKeyId, 'copy' => 1)), 'fa-clone');                            
@@ -75,7 +75,7 @@ $form = new HtmlForm('edit_key_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLD
 
 foreach ($keys->mKeyFields as $keyField)
 {
-	if (!$gCurrentUser->isAdministrator())
+	if (!isUserAuthorizedForPreferences())
 	{
 		$fieldProperty = HtmlForm::FIELD_DISABLED;
 	}
@@ -99,7 +99,7 @@ foreach ($keys->mKeyFields as $keyField)
         $form->addInput('dummy','dummy', 'dummy', array('type' => 'date', 'property' => HtmlForm::FIELD_HIDDEN) );
     }
 
-    if ($keys->getProperty($kmfNameIntern, 'kmf_mandatory') == 1 && $gCurrentUser->isAdministrator())
+    if ($keys->getProperty($kmfNameIntern, 'kmf_mandatory') == 1 && isUserAuthorizedForPreferences())
     {
         // set mandatory field
         $fieldProperty = HtmlForm::FIELD_REQUIRED;

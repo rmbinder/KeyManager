@@ -20,17 +20,17 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
-// only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
-{
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
-
 // Initialize and check the parameters
 $getKmfId = admFuncVariableIsValid($_GET, 'kmf_id', 'int');
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
+
+// only authorized user are allowed to start this module
+if (!isUserAuthorizedForPreferences())
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
 
 // set headline of the script
 if ($getKmfId > 0)

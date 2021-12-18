@@ -29,15 +29,15 @@ $getKmfId    = admFuncVariableIsValid($_GET, 'kmf_id',   'int');
 $getMode     = admFuncVariableIsValid($_GET, 'mode',     'int',    array('requireValue' => true));
 $getSequence = admFuncVariableIsValid($_GET, 'sequence', 'string', array('validValues' => array(TableUserField::MOVE_UP, TableUserField::MOVE_DOWN)));
 
+$pPreferences = new ConfigTablePKM();
+$pPreferences->read();
+
 // only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
+if (!isUserAuthorizedForPreferences())
 {
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     // => EXIT
 }
-
-$pPreferences = new ConfigTablePKM();
-$pPreferences->read();
 
 $keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
 

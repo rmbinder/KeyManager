@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>     
+<resources>
+    <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
+    <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>     
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Paramètres de copie d'une clé:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">créé avec le Plugin KeyManager de l'administration des membres en ligne Admidio</string> 

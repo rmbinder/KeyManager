@@ -23,17 +23,17 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
-// only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
-{
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
-
 $getMode  = admFuncVariableIsValid($_GET, 'mode',   'numeric', array('defaultValue' => 1));
 $getKmfId = admFuncVariableIsValid($_GET, 'kmf_id', 'int');
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
+
+// only authorized user are allowed to start this module
+if (!isUserAuthorizedForPreferences())
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
 
 $keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf', $getKmfId );
 

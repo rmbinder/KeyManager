@@ -348,7 +348,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                 'fa-file-csv', 'menu_item_lists_export');
         }
         
-        if ($gCurrentUser->isAdministrator())
+        if (isUserAuthorizedForPreferences())
 		{
     		$page->addPageFunctionsMenuItem('menu_preferences', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'fa-cog');
 		} 
@@ -655,7 +655,7 @@ foreach ($keys->keys as $key)
     	                       <i class="fas fa-print" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'"></i>
     	                   </a>';
     	}
-    	if ($gCurrentUser->isAdministrator())
+    	if (isUserAuthorizedForPreferences())
     	{
     		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php', array('key_id' => $key['kmk_id'], 'key_former' => $key['kmk_former'])). '">
     	                       <i class="fas fa-minus-circle" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'"></i>

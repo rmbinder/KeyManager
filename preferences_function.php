@@ -23,14 +23,14 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
+$pPreferences = new ConfigTablePKM();
+$pPreferences->read();
+
 // only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
+if (!isUserAuthorizedForPreferences())
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
-
-$pPreferences = new ConfigTablePKM();
-$pPreferences->read();
 
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'numeric', array('defaultValue' => 1));
@@ -52,7 +52,12 @@ case 1:
        		case 'interface_pff':
  	        	$pPreferences->config['Optionen']['interface_pff'] = $_POST['interface_pff'];	
             	break;  
-            
+
+            case 'access_preferences':
+                unset($pPreferences->config['access']);
+                $pPreferences->config['access']['preferences'] = isset($_POST['access_preferences']) ? array_unique(array_merge($_POST['access_preferences'], $pPreferences->config_default['access']['preferences'])) : $pPreferences->config_default['access']['preferences'];
+                break;            
+
         	default:
            		$gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));
     	}

@@ -13,14 +13,14 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
+$pPreferences = new ConfigTablePKM();
+$pPreferences->read();
+
 // only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
+if (!isUserAuthorizedForPreferences())
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
-
-$pPreferences = new ConfigTablePKM();
-$pPreferences->read();
 
 //read formfiller configuration if plugin formfiller is installed
 if ($pPreferences->isPffInst())
@@ -130,7 +130,22 @@ if ($pPreferences->isPffInst())
  
     $page->addHtml(getPreferencePanel('preferences', 'interface_pff', $gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF'), 'fas fa-file-pdf', $formInterfacePFF->show()));
 }                      
+  
+// PANEL: ACCESS_PREFERENCES
                     
+$formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));
+
+$sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
+          FROM '.TBL_CATEGORIES.' AS cat, '.TBL_ROLES.' AS rol
+         WHERE cat.cat_id = rol.rol_cat_id
+           AND ( cat.cat_org_id = '.$gCurrentOrgId.'
+            OR cat.cat_org_id IS NULL )
+      ORDER BY cat_sequence, rol.rol_name ASC';
+$formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextIdInline' => 'PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC', 'multiselect' => true, 'property' => HtmlForm::FIELD_REQUIRED));
+$formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+
+$page->addHtml(getPreferencePanel('preferences', 'access_preferences', $gL10n->get('PLG_KEYMANAGER_ACCESS_PREFERENCES'), 'fas fa-key', $formAccessPreferences->show()));
+                  
 // PANEL: PLUGIN INFORMATIONS
 
 $formPluginInformations = new HtmlForm('plugin_informations_preferences_form', null, $page, array('class' => 'form-preferences'));                   

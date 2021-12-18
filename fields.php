@@ -15,15 +15,15 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 require_once(__DIR__ . '/classes/keys.php');
 
+$pPreferences = new ConfigTablePKM();
+$pPreferences->read();
+
 // only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
+if (!isUserAuthorizedForPreferences())
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     // => EXIT
 }
-
-$pPreferences = new ConfigTablePKM();
-$pPreferences->read();
 
 // set module headline
 $headline = $gL10n->get('PLG_KEYMANAGER_KEYFIELDS');
