@@ -60,7 +60,7 @@ for ($i = $startIdx; $i < $stopIdx; ++$i)
    	 	{
         	if ((strlen($_POST[$postId]) === 0 && $keyField->getValue('kmf_mandatory') == 1))
         	{
-            	$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', convlanguagePKM($keyField->getValue('kmf_name'))));
+            	$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array(convlanguagePKM($keyField->getValue('kmf_name')))));
             	// => EXIT
         	}
 

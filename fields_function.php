@@ -64,20 +64,20 @@ if($getMode === 1)
     // (bei Systemfeldern duerfen diese Felder nicht veraendert werden)
     if ($keyField->getValue('kmf_system') == 0 && $_POST['kmf_name'] === '')
     {
-        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_NAME')));
+        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('SYS_NAME'))));
         // => EXIT
     }
     
     if ($keyField->getValue('kmf_system') == 0 && $_POST['kmf_type'] === '')
     {
-        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('ORG_DATATYPE')));
+        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('ORG_DATATYPE'))));
         // => EXIT
     }
     
     if (($_POST['kmf_type'] === 'DROPDOWN' || $_POST['kmf_type'] === 'RADIO_BUTTON')
         && $_POST['kmf_value_list'] === '')
     {
-        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('ORG_VALUE_LIST')));
+        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('ORG_VALUE_LIST'))));
         // => EXIT
     }
     
