@@ -156,9 +156,10 @@ switch ($getMode)
 // Maybe there are hidden fields.
 $arrValidColumns = array();
 
-$csvStr = '';                   // CSV file as string
-$header = array();              //'xlsx'
-$rows   = array();              //'xlsx'
+$csvStr         = '';                   // CSV file as string
+$header         = array();              //'xlsx'
+$rows           = array();              //'xlsx'
+$strikethroughs = array();              //'xlsx'
 
 $keys = new Keys($gDb, $gCurrentOrgId);
 $keys->showFormerKeys($getShowAll);
@@ -538,6 +539,11 @@ foreach ($keys->keys as $key)
     $htmlValue = '';
     $kmfNameIntern = '';
     $columnNumber = 1;
+    $strikethrough = false;
+    if ($key['kmk_former'])
+    {
+        $strikethrough = true;
+    }
 
     foreach($keys->mKeyFields as $keyField)
     {
@@ -633,7 +639,7 @@ foreach ($keys->keys as $key)
         // create output in html layout
         else
         {
-        	if (!$key['kmk_former'])
+        	if (!$key['kmk_former'] || $getMode == 'xlsx')
             {
             	$columnValues[] = $content;
             }
@@ -675,6 +681,7 @@ foreach ($keys->keys as $key)
         elseif($getMode == 'xlsx')
     	{
         	$rows[] = $columnValues;
+            $strikethroughs[] = $strikethrough;
     	}
     	else
     	{
@@ -760,7 +767,20 @@ elseif ($getMode == 'xlsx')
     $writer->setCompany($gCurrentOrganization->getValue('org_longname'));
     $writer->setKeywords(array($gL10n->get('PLG_KEYMANAGER_NAME_OF_PLUGIN'), $gL10n->get('PLG_KEYMANAGER_KEY')));
     $writer->setDescription($gL10n->get('PLG_KEYMANAGER_CREATED_WITH'));
-    $writer->writeSheet($rows,'', $header);
+    
+    $writer->writeSheetHeader('Sheet1', $header );
+    for ($i = 0; $i < count($rows); $i++)
+    {
+        if ($strikethroughs[$i])
+        {
+            $writer->writeSheetRow('Sheet1', $rows[$i] , array('font-style' => 'strikethrough'));
+        }
+        else
+        {
+            $writer->writeSheetRow('Sheet1', $rows[$i]);
+        }
+        
+    }
     $writer->writeToStdOut();
 }
 elseif ($getMode == 'html' && $getExportAndFilter)
