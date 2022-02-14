@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * KeyManager
  *
- * Version 2.1.0
+ * Version 2.1.1
  *
  * KeyManager is an Admidio plugin for managing building and room keys.
  * 
