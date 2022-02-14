@@ -563,6 +563,43 @@ class Keys
     		$this->keys[] = array('kmk_id' => $row['kmk_id'], 'kmk_former' => $row['kmk_former']);
     	} 
     }
+
+ 
+    /**
+     * Reads the keys for an user out of database table @b adm_keymanager_keys
+     * and stores the values to the @b keys array.
+     * @param int $organizationId The id of the organization for which the keys should be read.
+     * @param int $userId The id of the user for which the keys should be read.
+     */
+    public function readKeysByUser($organizationId, $userId)
+    {
+        // first initialize existing data
+        $this->keys = array();
+        
+        $sqlWhereCondition = '';
+        if (!$this->showFormerKeys)
+        {
+            $sqlWhereCondition .= 'AND kmk_former = 0';
+        }
+
+        $sql = 'SELECT DISTINCT kmk_id, kmk_former
+          	      		   FROM '.TBL_KEYMANAGER_DATA.'
+          	         INNER JOIN '.TBL_KEYMANAGER_FIELDS.'
+                             ON kmf_id = kmd_kmf_id
+                            AND kmf_id = ?
+                     INNER JOIN '.TBL_KEYMANAGER_KEYS.'
+                             ON kmk_id = kmd_kmk_id
+                          WHERE (kmk_org_id IS NULL
+                             OR kmk_org_id = ? )
+                            AND kmd_value = ?
+                             '.$sqlWhereCondition.' ';
+        $statement = $this->mDb->queryPrepared($sql, array($this->getProperty('RECEIVER', 'kmf_id'), $organizationId, $userId));
+        
+        while ($row = $statement->fetch())
+        {
+            $this->keys[] = array('kmk_id' => $row['kmk_id'], 'kmk_former' => $row['kmk_former']);
+        }
+    }
     
     
     /**

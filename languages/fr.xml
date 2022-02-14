@@ -39,6 +39,7 @@
     <string name="PLG_KEYMANAGER_KEY_MADE_TO_FORMER">Clé retirée</string>    
     <string name="PLG_KEYMANAGER_KEY_MAKE_TO_FORMER">Tu peux marquer la clé comme retirée. Cela présente l\'avantage que les données sont conservées et tu peux voir plus tard encore qui a emprunté cette clé. Si tu sélectionne Supprimer, les données sont irrévocablement supprimé de la base de données et il n\'est pas possible de consulter les données de cette clé ultérieurement.</string>
     <string name="PLG_KEYMANAGER_KEY_PRINT">Imprimer la clé</string>
+     <string name="PLG_KEYMANAGER_KEYFIELD">Champ clé</string>   
     <string name="PLG_KEYMANAGER_KEYFIELD_CREATE">Générer le champ clé</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE">Supprimer le champ clé</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE_DESC">Ce champ clé et les données clés correspondantes doivent-elles être supprimées ?</string>
@@ -62,6 +63,9 @@
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Informations sur le plug-in</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Nom du plug-in</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN">Paramètres d'affichage du profil</string>
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC">Les clés émises peuvent être consultées dans la vue du profil d'un membre. Par défaut, seul le nom de la clé est affiché. Outre le nom de la clé, un autre champ clé peut être sélectionné et affiché ici.</string>    
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC2">Pour que les clés soient affichées dans la vue de profil, la ligne suivante doit être ajoutée à profile.php: "require_once(ADMIDIO_PATH . FOLDER_PLUGINS .'/keymanager/keymanager_profile_addin.php');".\n\nDe plus amples informations peuvent être trouvées dans le fichier keymanager_profile_addin.php.</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Destinataires</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Afficher toutes les clés</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Cas particulier: utilisateur actuel ou administrateur</string>    

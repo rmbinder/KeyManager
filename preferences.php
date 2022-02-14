@@ -11,6 +11,7 @@
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
+require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
 $pPreferences = new ConfigTablePKM();
@@ -131,6 +132,25 @@ if ($pPreferences->isPffInst())
     $page->addHtml(getPreferencePanel('preferences', 'interface_pff', $gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF'), 'fas fa-file-pdf', $formInterfacePFF->show()));
 }                      
   
+// PANEL: PROFILE ADDIN
+
+$formProfileAddin = new HtmlForm('profile_addin_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'profile_addin')), $page, array('class' => 'form-preferences'));
+
+$keys = new Keys($gDb, $gCurrentOrgId);
+$valueList = array();
+foreach ($keys->mKeyFields as $keyField)
+{
+    if (!in_array($keyField->getValue('kmf_name_intern'), array('KEYNAME', 'RECEIVER', 'RECEIVED_ON'), true))
+    {
+        $valueList[$keyField->getValue('kmf_name_intern')] = $keyField->getValue('kmf_name');
+    }
+}
+
+$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextIdInline' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC', 'helpTextIdLabel' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
+$formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+
+$page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN'), 'fas fa-users-cog', $formProfileAddin->show()));
+
 // PANEL: ACCESS_PREFERENCES
                     
 $formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));

@@ -52,6 +52,10 @@ case 1:
        		case 'interface_pff':
  	        	$pPreferences->config['Optionen']['interface_pff'] = $_POST['interface_pff'];	
             	break;  
+            	
+       		case 'profile_addin':
+       		    $pPreferences->config['Optionen']['profile_addin'] = $_POST['profile_addin'];
+       		    break; 
 
             case 'access_preferences':
                 if (isset($_POST['access_preferences']))

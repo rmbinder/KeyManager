@@ -39,6 +39,7 @@
     <string name="PLG_KEYMANAGER_KEY_MADE_TO_FORMER">Schlüssel ausgesondert</string>    
     <string name="PLG_KEYMANAGER_KEY_MAKE_TO_FORMER">Sie können den Schlüssel als ausgesondert markieren. Dies hat den Vorteil, dass die Daten erhalten bleiben und Sie später immer wieder sehen können, wer diesen Schlüssel ausgeliehen hat. Wenn Sie Löschen auswählen, wird der Datensatz unwiderruflich aus der Datenbank entfernt und es ist später nicht mehr möglich Daten dieses Schlüssels einzusehen.</string>
     <string name="PLG_KEYMANAGER_KEY_PRINT">Schlüssel drucken</string>
+     <string name="PLG_KEYMANAGER_KEYFIELD">Schlüsselfeld</string>   
     <string name="PLG_KEYMANAGER_KEYFIELD_CREATE">Schlüsselfeld erzeugen</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE">Schlüsselfeld löschen</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE_DESC">Soll dieses Schlüsselfeld und die dazugehörigen Schlüsseldaten gelöscht werden?</string>
@@ -62,6 +63,9 @@
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plugininformationen</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Name des Plugins</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN">Einstellungen für die Profilansicht</string>
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC">In der Profilansicht eines Mitglieds können ausgegebene Schlüssel angezeigt werden. Standardmäßig wird nur der Schlüsselname angezeigt. Hier kann, zusätzlich zum Schlüsselnamen, ein weiteres Schlüsselfeld ausgewählt und angezeigt werden.</string>    
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC2">Damit in der Profilansicht Schlüssel angezeigt werden, muss folgende Zeile in die profile.php eingefügt werden: "require_once(ADMIDIO_PATH . FOLDER_PLUGINS .'/keymanager/keymanager_profile_addin.php');".\n\nWeitere Infos dazu finden sich in der Datei keymanager_profile_addin.php.</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Alle Schlüssel anzeigen</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Sonderfall: Aktueller Benutzer oder Administrator</string>    

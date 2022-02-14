@@ -39,6 +39,7 @@
     <string name="PLG_KEYMANAGER_KEY_MADE_TO_FORMER">Key is made to the former</string>    
     <string name="PLG_KEYMANAGER_KEY_MAKE_TO_FORMER">You can make the key to the former. This has the advantage that the data is preserved and you can see again later who has borrowed this key. If you select Delete, the record is irrevocably removed from the database, and it is no longer possible to view the data of this key.</string>
     <string name="PLG_KEYMANAGER_KEY_PRINT">Print the key</string>
+     <string name="PLG_KEYMANAGER_KEYFIELD">Key field</string>   
     <string name="PLG_KEYMANAGER_KEYFIELD_CREATE">Create a key field</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE">Delete the key field</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE_DESC">Should this key field and the associated key data be deleted?</string>
@@ -62,6 +63,9 @@
     <string name="PLG_KEYMANAGER_PLUGIN_INFORMATION">Plug-in informations</string>
     <string name="PLG_KEYMANAGER_PLUGIN_NAME">Plug-in name</string>
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN">Profile view settings</string>
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC">Issued keys can be viewed in a member's profile view. By default, only the key name is displayed. In addition to the key name, another key field can be selected and displayed here.</string>    
+    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC2">In order for keys to be displayed in the profile view, the following line must be added to profile.php: "require_once(ADMIDIO_PATH . FOLDER_PLUGINS .'/keymanager/keymanager_profile_addin.php');".\n\nFurther information can be found in the keymanager_profile_addin.php file.</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Display all keys</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Special case: current user or administrator</string>    
