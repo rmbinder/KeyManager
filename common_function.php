@@ -147,7 +147,7 @@ function convlanguagePKM($field_name)
  */
 function getNewNameIntern($name, $index)
 {
-	$name = umlautePff($name);
+	$name = umlautePKM($name);
 	$newNameIntern = strtoupper(str_replace(' ', '_', $name));
 
 	if ($index > 1)
@@ -194,7 +194,7 @@ function genNewSequence()
  * @param   string  $tmptext
  * @return  string  $tmptext
  */
-function umlautePff($tmptext)
+function umlautePKM($tmptext)
 {
 	// Autor: guenter47
 	// angepasst aufgrund eines Fehlers bei der Umsetzung von ß (rmb)

@@ -151,6 +151,15 @@ $formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_S
 
 $page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN'), 'fas fa-users-cog', $formProfileAddin->show()));
 
+// PANEL: EXPORT
+
+$formExport = new HtmlForm('export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'export')), $page, array('class' => 'form-preferences'));
+$formExport->addInput('file_name', $gL10n->get('PLG_KEYMANAGER_FILE_NAME'), $pPreferences->config['Optionen']['file_name'], array('helpTextIdLabel' => 'PLG_KEYMANAGER_FILE_NAME_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
+$formExport->addCheckbox('add_date', $gL10n->get('PLG_KEYMANAGER_ADD_DATE'), $pPreferences->config['Optionen']['add_date'], array('helpTextIdInline' => 'PLG_KEYMANAGER_ADD_DATE_DESC'));
+$formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+
+$page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYMANAGER_EXPORT'), 'fas fa-file-export', $formExport->show()));
+
 // PANEL: ACCESS_PREFERENCES
                     
 $formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));

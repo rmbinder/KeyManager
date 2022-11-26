@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>     
+    <string name="PLG_KEYMANAGER_ADD_DATE">Ajouter la date</string>
+    <string name="PLG_KEYMANAGER_ADD_DATE_DESC">Si une date au format AAAA-MM-JJ doit être ajoutée à un fichier d'exportation, la coche doit être cochée.</string> 
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Paramètres de copie d'une clé:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">créé avec le Plugin KeyManager de l'administration des membres en ligne Admidio</string> 
@@ -21,9 +23,12 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
+    <string name="PLG_KEYMANAGER_EXPORT">Exporter</string>
     <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Exporter et filtrer</string>
     <string name="PLG_KEYMANAGER_FIELD">Champ de course non.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Ici, un champ d'un nombre consécutif peut être sélectionné. Dans une sélection, le numéro actuel est lu et augmenté en fonction du nombre spécifié.\n\nREMARQUE: KeyManager peut seulement dire si un champ de données est de type "numéro". Si un numéro de série est stocké dans ce champ de données ne peut pas être reconnu.</string>
+    <string name="PLG_KEYMANAGER_FILE_NAME">Nom de fichier</string>
+    <string name="PLG_KEYMANAGER_FILE_NAME_DESC">Le nom de fichier du fichier d'exportation (sans extension).</string>
     <string name="PLG_KEYMANAGER_FORMER">Retirer</string>
     <string name="PLG_KEYMANAGER_GENERAL">Filtre général - Plusieurs termes de filtre doivent être séparés par des virgules. Pour exclure des mots, un - doit être placé devant eux. Exemple : Meier, Huber, -Porte-clés</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface avec le Plug-in FormFiller</string>

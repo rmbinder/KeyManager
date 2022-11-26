@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>   
+    <string name="PLG_KEYMANAGER_ADD_DATE">Datum anfügen</string>
+    <string name="PLG_KEYMANAGER_ADD_DATE_DESC">Soll an eine Exportdatei ein Datum im Format JJJJ-MM-TT angefügt werden, so ist der Haken zu setzen.</string>    
     <string name="PLG_KEYMANAGER_CONFIGURATION">Konfiguration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Einstellungen für das Kopieren eines Schlüssels:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">erstellt mit dem Plugin KeyManager der Online-Mitgliederverwaltung Admidio</string> 
@@ -21,9 +23,12 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
+    <string name="PLG_KEYMANAGER_EXPORT">Export</string>
     <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Export und Filter</string>
     <string name="PLG_KEYMANAGER_FIELD">Feld einer lfd. Nr.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Hier kann ein Feld einer laufenden Nummer ausgewählt werden. Bei einer Auswahl wird die aktuelle Nummer ausgelesen und entsprechend der angegebenen Anzahl erhöht.\n\nHINWEIS: KeyManager kann nur erkennen, ob ein Datenfeld vom Typ "Zahl" ist. Ob in diesem Datenfeld eine laufende Nummer gespeichert ist, kann nicht erkannt werden.</string>
+    <string name="PLG_KEYMANAGER_FILE_NAME">Dateiname</string>
+    <string name="PLG_KEYMANAGER_FILE_NAME_DESC">Der Dateiname der Exportdatei (ohne Endung).</string>
     <string name="PLG_KEYMANAGER_FORMER">Aussondern</string>
     <string name="PLG_KEYMANAGER_GENERAL">Allgemeiner Filter - Mehrere Filterbegriffe sind durch Kommas zu trennen. Um Wörter auszuschließen muß ein - davorgesetzt werden. Beispiel: Meier, Huber, -Schlüsselbehälter</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface zum Plugin FormFiller</string>

@@ -56,6 +56,16 @@ case 1:
        		case 'profile_addin':
        		    $pPreferences->config['Optionen']['profile_addin'] = $_POST['profile_addin'];
        		    break; 
+                
+            case 'export':
+          //  unset(
+         //       $pPreferences->config['SEPA'],
+         //       $pPreferences->config['Rechnungs-Export']
+         //   );
+
+                $pPreferences->config['Optionen']['file_name'] = $_POST['file_name'];
+                $pPreferences->config['Optionen']['add_date'] = isset($_POST['add_date']) ? 1 : 0;
+            break;
 
             case 'access_preferences':
                 if (isset($_POST['access_preferences']))

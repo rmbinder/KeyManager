@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Access permission for preferences</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Here, in addition to the role "Administrator", you can authorize additional roles for access to the "Preferences" module.</string>
+    <string name="PLG_KEYMANAGER_ADD_DATE">Append date</string>
+    <string name="PLG_KEYMANAGER_ADD_DATE_DESC">If a date in the format YYYY-MM-DD is to be added to an export file, the checkmark must be set.</string> 
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Settings for copying a key:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">created with the Plugin KeyManager of the online member administration Admidio</string> 
@@ -21,9 +23,12 @@
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Open documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Allows the documentation of the plugin can be opened (An existing Internet connection is required because the data is located on admidio.org).</string>
+    <string name="PLG_KEYMANAGER_EXPORT">Export</string>
     <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Export and filter</string>
     <string name="PLG_KEYMANAGER_FIELD">Field of a running no.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Here a field of a consecutive number can be selected. In a selection, the current number is read out and increased according to the specified number.\n\nNOTE: KeyManager can only tell if a data field is of type "number". Whether a serial number is stored in this data field can not be recognized.</string>
+    <string name="PLG_KEYMANAGER_FILE_NAME">Filename</string>
+    <string name="PLG_KEYMANAGER_FILE_NAME_DESC">The file name of the export file (without extension).</string>
     <string name="PLG_KEYMANAGER_FORMER">Make to former</string>    
     <string name="PLG_KEYMANAGER_GENERAL">General filter - Multiple filter terms are to be separated by commas. To exclude words, a - must be placed in front of them. Example: Meier, Huber, -Key case</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface to the plugin formfiller</string>

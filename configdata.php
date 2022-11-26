@@ -14,11 +14,13 @@ global $gProfileFields;
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration
 $config_default['Optionen']['interface_pff'] = 0;
 $config_default['Optionen']['profile_addin'] = '';
+$config_default['Optionen']['file_name'] = 'KeyManager';
+$config_default['Optionen']['add_date'] = 0;
 															
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';
 
-//Zugriffsberechtigung f�r das Modul preferences
+//Zugriffsberechtigung für das Modul preferences
 $config_default['access']['preferences'] = array();
 
 /*

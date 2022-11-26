@@ -111,7 +111,11 @@ $valueQuotes = '';
 $charset     = '';
 $classTable  = '';
 $orientation = '';
-$filename    = umlautePFF($g_organization.'-'.$gL10n->get('PLG_KEYMANAGER_KEYMANAGER'));
+$filename    = umlautePKM($pPreferences->config['Optionen']['file_name']);
+if ($pPreferences->config['Optionen']['add_date'])
+{
+    $filename .= '_'.date('Y-m-d');
+}
 
 switch ($getMode)
 {
