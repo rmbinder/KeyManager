@@ -601,7 +601,7 @@ foreach ($keys->keys as $key)
             	$content = 0;
             }
             	
-            if ($getMode == 'csv' || $getMode == 'pdf')
+            if ($getMode == 'csv' || $getMode == 'pdf' || $getMode == 'xlsx')
             {
             	if ($content == 1)
                 {
