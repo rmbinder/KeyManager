@@ -25,7 +25,7 @@
     <string name="PLG_KEYMANAGER_FIELD">Feld einer lfd. Nr.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Hier kann ein Feld einer laufenden Nummer ausgewählt werden. Bei einer Auswahl wird die aktuelle Nummer ausgelesen und entsprechend der angegebenen Anzahl erhöht.\n\nHINWEIS: KeyManager kann nur erkennen, ob ein Datenfeld vom Typ "Zahl" ist. Ob in diesem Datenfeld eine laufende Nummer gespeichert ist, kann nicht erkannt werden.</string>
     <string name="PLG_KEYMANAGER_FORMER">Aussondern</string>
-    <string name="PLG_KEYMANAGER_GENERAL">allgemein</string>           
+    <string name="PLG_KEYMANAGER_GENERAL">Allgemeiner Filter - Mehrere Filterbegriffe sind durch Kommas zu trennen. Um Wörter auszuschließen muß ein - davorgesetzt werden. Beispiel: Meier, Huber, -Schlüsselbehälter</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface zum Plugin FormFiller</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Hier besteht die Möglichkeit, bei installiertem Plugin FormFiller, eine FormFiller-Konfiguration auszuwählen. Anhand dieser kann ein Schlüsselausgabe- oder Schlüsselübergabebeleg erstellt werden. KeyManager liefert hierbei die Werte, FormFiller die Positionen für den Druck.</string>
     <string name="PLG_KEYMANAGER_KEY">Schlüssel</string>

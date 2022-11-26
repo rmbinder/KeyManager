@@ -671,8 +671,40 @@ foreach ($keys->keys as $key)
     	$columnValues[] = $tempValue;
     }
     
-    //pruefung auf filterstring
-    if ($getFilterString == '' || ($getExportAndFilter && ($getFilterString <> '' && (stristr(implode('',$columnValues), $getFilterString  ) || stristr($tmp_csv, $getFilterString)))))
+    $showRow = false;                                               // Marker, ob die aktuelle Zeile angezeigt werden soll
+    if ($getFilterString == '')                                     // wenn Filterstring leer ist, dann Zeile immer anzeigen oder drucken
+    {
+        $showRow = true;
+    }
+    
+    if ($getExportAndFilter && $getFilterString <> '')              // weitere Prüfungen, wenn Filter aktiviert und Filterstring nicht leer ist
+    {
+        $showRowException = false;
+        
+        $filterArray = explode(',', $getFilterString );
+        foreach ($filterArray as $filterString)
+        {
+            $filterString = trim($filterString);
+            if (substr($filterString, 0, 1) == '-')                 // ein Ausnahmebegriff wurde angegeben (Filterstring beginnt mit '-')
+            {
+                $filterString = substr($filterString, 1);
+                if (stristr(implode('',$columnValues), $filterString ) || stristr($tmp_csv, $filterString))
+                {
+                    $showRowException = true;                       // unabhängig von den weiteren Prüfungen: diese Zeile nicht anzeigen
+                }
+            }
+            if (stristr(implode('',$columnValues), $filterString ) || stristr($tmp_csv, $filterString))
+            {
+                $showRow = true;
+            }
+        }
+        if ($showRowException)
+        {
+            $showRow = false;
+        }
+    }
+
+    if ($showRow)
     {
     	if ($getMode == 'csv')
     	{

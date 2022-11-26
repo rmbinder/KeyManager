@@ -25,7 +25,7 @@
     <string name="PLG_KEYMANAGER_FIELD">Champ de course non.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Ici, un champ d'un nombre consécutif peut être sélectionné. Dans une sélection, le numéro actuel est lu et augmenté en fonction du nombre spécifié.\n\nREMARQUE: KeyManager peut seulement dire si un champ de données est de type "numéro". Si un numéro de série est stocké dans ce champ de données ne peut pas être reconnu.</string>
     <string name="PLG_KEYMANAGER_FORMER">Retirer</string>
-    <string name="PLG_KEYMANAGER_GENERAL">Généralement</string>           
+    <string name="PLG_KEYMANAGER_GENERAL">Filtre général - Plusieurs termes de filtre doivent être séparés par des virgules. Pour exclure des mots, un - doit être placé devant eux. Exemple : Meier, Huber, -Porte-clés</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface avec le Plug-in FormFiller</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Ici, il est possible de sélectionner une configuration FormFiller avec le plug-in FormFiller installé. Un récépissé de remise de clé ou un récépissé de remise de clé peut être créé sur cette base. KeyManager fournit les valeurs, FormFiller les positions pour l\'impression.</string>
     <string name="PLG_KEYMANAGER_KEY">Clé</string>

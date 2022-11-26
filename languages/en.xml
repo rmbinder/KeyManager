@@ -25,7 +25,7 @@
     <string name="PLG_KEYMANAGER_FIELD">Field of a running no.</string>
     <string name="PLG_KEYMANAGER_FIELD_DESC">Here a field of a consecutive number can be selected. In a selection, the current number is read out and increased according to the specified number.\n\nNOTE: KeyManager can only tell if a data field is of type "number". Whether a serial number is stored in this data field can not be recognized.</string>
     <string name="PLG_KEYMANAGER_FORMER">Make to former</string>    
-    <string name="PLG_KEYMANAGER_GENERAL">general</string>           
+    <string name="PLG_KEYMANAGER_GENERAL">General filter - Multiple filter terms are to be separated by commas. To exclude words, a - must be placed in front of them. Example: Meier, Huber, -Key case</string>           
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface to the plugin formfiller</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Here you have the possibility to select a FormFiller configuration if the Plugin FormFiller is installed. This can be used to create a key issue or key transfer document. KeyManager supplies the values, FormFiller the positions for the print.</string>
     <string name="PLG_KEYMANAGER_KEY">Key</string>
