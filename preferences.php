@@ -29,7 +29,7 @@ if ($pPreferences->isPffInst())
 	$pPreferences->readPff();
 }
 
-$headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
+$headline = $gL10n->get('SYS_SETTINGS');
 $gNavigation->addUrl(CURRENT_URL, $headline);
 
 // create html page object

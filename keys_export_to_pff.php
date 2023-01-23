@@ -36,6 +36,9 @@ if (substr_count($gNavigation->getUrl(), 'keys_export_to_pff') === 1)
 	// => EXIT
 }
 
+$headline = $gL10n->get('PLG_KEYMANAGER_KEY_PRINT');
+$gNavigation->addUrl(CURRENT_URL, $headline);
+
 if (!array_key_exists($pPreferences->config['Optionen']['interface_pff'], $pPreferences->configpff['Formular']['desc']))
 {
     $gMessage->show($gL10n->get('PLG_KEYMANAGER_PFF_CONFIG_NOT_FOUND'));
@@ -47,9 +50,6 @@ else
 
 $keys = new Keys($gDb, $gCurrentOrgId);
 $keys->readKeyData($getKeyId, $gCurrentOrgId);
-
-// add current url to navigation stack
-$gNavigation->addUrl(CURRENT_URL);
     	
 foreach($keys->mKeyFields as $keyField)
 {    		

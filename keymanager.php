@@ -178,7 +178,7 @@ $headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 // if html mode and last url was not a list view then save this url to navigation stack
 if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false)             
 {
-    $gNavigation->addStartUrl(CURRENT_URL, $headline);
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-key');
 }
 
 if ($getMode != 'csv' && $getMode != 'xlsx' )
