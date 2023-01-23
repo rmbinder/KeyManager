@@ -101,7 +101,7 @@ $columnHeading = array(
     $gL10n->get('SYS_FIELD'),
     '&nbsp;',
     $gL10n->get('SYS_DESCRIPTION'),
-  '<i class="fas fa-asterisk" data-toggle="tooltip" title="'.$gL10n->get('ORG_FIELD_REQUIRED').'"></i>',
+  '<i class="fas fa-asterisk" data-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>',
     $gL10n->get('ORG_DATATYPE'),
     '&nbsp;'
 );
@@ -138,7 +138,7 @@ foreach ($keys->mKeyFields as $keyField)
 
     if ($keyField->getValue('kmf_mandatory') == 1)
     {
-        $mandatory = '<i class="fas fa-asterisk" data-toggle="tooltip" title="'.$gL10n->get('ORG_FIELD_REQUIRED').'"></i>';
+        $mandatory = '<i class="fas fa-asterisk" data-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>';
     }
     else
     {

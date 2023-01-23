@@ -136,7 +136,7 @@ $form->addMultilineTextInput('kmf_value_list', $gL10n->get('ORG_VALUE_LIST'), $k
 
 if ($keyField->getValue('kmf_system') != 1)
 {
-	$form->addCheckbox('kmf_mandatory', $gL10n->get('ORG_FIELD_REQUIRED'), (bool) $keyField->getValue('kmf_mandatory'),
+	$form->addCheckbox('kmf_mandatory', $gL10n->get('SYS_REQUIRED_INPUT'), (bool) $keyField->getValue('kmf_mandatory'),
 	    array('property' => HtmlForm::FIELD_DEFAULT,  'icon' => 'fa-asterisk'));
 }
 
