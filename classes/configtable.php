@@ -599,22 +599,39 @@ class ConfigTablePKM
 
 		if($deinst_org_select == 0)                   //0 = Daten nur in aktueller Org loeschen
 		{
-			$sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
+			/*$sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
                           WHERE kmd_kmk_id IN 
               	        (SELECT kmk_id 
 					       FROM ?
                 	      WHERE kmk_org_id = ? )';
 	
-			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, $GLOBALS['gCurrentOrgId']));	
+			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, $GLOBALS['gCurrentOrgId']));	*/
+		    //queryPrepared doesn´t work Why? Since when?
+		    // This code works:
+		    $sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
+                          WHERE kmd_kmk_id IN
+              	        (SELECT kmk_id
+					       FROM '.TBL_KEYMANAGER_KEYS.'
+                	      WHERE kmk_org_id = \''.$GLOBALS['gCurrentOrgId'].'\' )';
+		    $result_data = $GLOBALS['gDb']->query($sql);
+		    
 			$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_data' )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_data' )));
 		
-			$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
+			/*$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
                           WHERE kml_kmk_id IN 
 				        (SELECT kmk_id 
 					       FROM ?
                           WHERE kmk_org_id = ? )';
 
-			$result_log = $GLOBALS['gDb']->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, $GLOBALS['gCurrentOrgId']));	
+			$result_log = $GLOBALS['gDb']->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, $GLOBALS['gCurrentOrgId']));	*/
+			$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
+                          WHERE kml_kmk_id IN
+				        (SELECT kmk_id
+					       FROM '.TBL_KEYMANAGER_KEYS.'
+                          WHERE kmk_org_id = \''.$GLOBALS['gCurrentOrgId'].'\' )';
+			
+			$result_log = $GLOBALS['gDb']->query($sql);
+			
 			$result .= ($result_log ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_log' )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_log')));
 		
 			$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
