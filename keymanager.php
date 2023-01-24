@@ -176,7 +176,7 @@ $title = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 $headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 
 // if html mode and last url was not a list view then save this url to navigation stack
-if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false)             
+if ($gNavigation->count() === 0 || ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false))             
 {
     $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-key');
 }
