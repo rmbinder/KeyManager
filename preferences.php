@@ -110,14 +110,6 @@ $formSynchronize->addSubmitButton('btn_save_synchronize', $gL10n->get('PLG_KEYMA
 $formSynchronize->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_DESC'));
   
 $page->addHtml(getPreferencePanel('preferences', 'synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), 'fas fa-sync', $formSynchronize->show()));
-
-// PANEL: DEINSTALLATION
-                             
-$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)), $page);                     
-$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'fa-trash-alt', 'class' => 'offset-sm-3'));
-$formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_DEINSTALLATION_DESC'));
-                   
-$page->addHtml(getPreferencePanel('preferences', 'deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), 'fas fa-trash-alt', $formDeinstallation->show()));
         
 // PANEL: INTERFACE_PFF
 
@@ -159,6 +151,14 @@ $formExport->addCheckbox('add_date', $gL10n->get('PLG_KEYMANAGER_ADD_DATE'), $pP
 $formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
 
 $page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYMANAGER_EXPORT'), 'fas fa-file-export', $formExport->show()));
+
+// PANEL: DEINSTALLATION
+
+$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)), $page);
+$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'fa-trash-alt', 'class' => 'offset-sm-3'));
+$formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_DEINSTALLATION_DESC'));
+
+$page->addHtml(getPreferencePanel('preferences', 'deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), 'fas fa-trash-alt', $formDeinstallation->show()));
 
 // PANEL: ACCESS_PREFERENCES
                     
