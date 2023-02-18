@@ -58,11 +58,6 @@ case 1:
        		    break; 
                 
             case 'export':
-          //  unset(
-         //       $pPreferences->config['SEPA'],
-         //       $pPreferences->config['Rechnungs-Export']
-         //   );
-
                 $pPreferences->config['Optionen']['file_name'] = $_POST['file_name'];
                 $pPreferences->config['Optionen']['add_date'] = isset($_POST['add_date']) ? 1 : 0;
             break;
