@@ -25,7 +25,7 @@ require_once(__DIR__ . '/classes/configtable.php');
 
 // calculate default date from which the key fields history should be shown
 $filterDateFrom = DateTime::createFromFormat('Y-m-d', DATE_NOW);
-$filterDateFrom->modify('-'.$gSettingsManager->getInt('members_days_field_history').' day');
+$filterDateFrom->modify('-'.$gSettingsManager->getInt('contacts_field_history_days').' day');
 
 $getKeyId    = admFuncVariableIsValid($_GET, 'key_id',           'int');
 $getDateFrom = admFuncVariableIsValid($_GET, 'filter_date_from', 'date', array('defaultValue' => $filterDateFrom->format($gSettingsManager->getString('system_date'))));
