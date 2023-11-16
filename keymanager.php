@@ -721,7 +721,7 @@ foreach ($keys->keys as $key)
     	}
     	else
     	{
-        	$table->addRowByArray($columnValues, null, array('nobr' => 'true'));
+        	$table->addRowByArray($columnValues, '', array('nobr' => 'true'));
     	}
     }
        
