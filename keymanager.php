@@ -406,7 +406,12 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $page->addHtml($form->show());        
 
         $table = new HtmlTable('adm_keys_table', $page, $hoverRows, $datatable, $classTable);
-        $table->setDatatablesRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
+        if ($datatable)
+        {
+            // ab Admidio 4.3 verursacht setDatatablesRowsPerPage, wenn $datatable "false" ist, folgenden Fehler:
+            // "Fatal error: Uncaught Error: Call to a member function setDatatablesRowsPerPage() on null"
+            $table->setDatatablesRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
+        }
     }
     else
     {
@@ -494,7 +499,10 @@ if ($getMode == 'html')    //change/delete/print button only in html-view
 	$columnAlign[]  = 'center';
 	$columnValues[] = '&nbsp;';
 
-	$table->disableDatatablesColumnsSort(array(count($columnValues)));
+	if ($datatable)
+	{
+	    $table->disableDatatablesColumnsSort(array(count($columnValues)));
+	}
 }
 
 if ($getMode == 'csv')
