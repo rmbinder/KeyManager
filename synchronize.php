@@ -202,7 +202,7 @@ elseif ($getMode == 'write')
 		{
             $user->readDataById($memberId);
 		    
-            $delete_marker = false;
+            $delete_marker = true;
 			$columnValues = array();
 			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$data['last_name'].', '.$data['first_name'].'</a>';
 
@@ -221,13 +221,16 @@ elseif ($getMode == 'write')
 			
 			$membersStatement = $gDb->queryPrepared($sql, array($gCurrentOrgId, DATE_NOW, DATE_NOW, $memberId));
 			
-			while ($row = $membersStatement->fetch())
-			{
-			    $delete_marker = $member->readDataById($row['mem_id']);
-			    if ($delete_marker)
-			    {
-			        $delete_marker = $member->stopMembership();
+			try {
+			    while ($row = $membersStatement->fetch()) {
+			        // stop all role memberships of this organization
+			        $role = new TableRoles($gDb, $row['mem_rol_id']);
+			        $role->stopMembership($memberId);
 			    }
+			} 
+			catch (AdmException $e) 
+			{
+			    $delete_marker = false;
 			}
 			
 			if ($delete_marker)
