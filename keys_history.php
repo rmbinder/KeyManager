@@ -106,7 +106,7 @@ if ($fieldHistoryStatement->rowCount() === 0)
 $page = new HtmlPage('plg-keymanager-keys-history', $headline);
 
 // create filter menu with input elements for Startdate and Enddate                                                 //todo !!!!!!!!!!!!!!!!!!!!!!ohne Umweg �ber $form
-$FilterNavbar = new HtmlNavbar('menu_profile_field_history_filter', null, null, 'filter');
+$FilterNavbar = new HtmlNavbar('menu_profile_field_history_filter', '', null, 'filter');
 $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', $page, array('type' => 'navbar', 'setFocus' => false));
 $form->addInput('filter_date_from', $gL10n->get('SYS_START'), $dateFromHtml, array('type' => 'date', 'maxLength' => 10));
 $form->addInput('filter_date_to', $gL10n->get('SYS_END'), $dateToHtml, array('type' => 'date', 'maxLength' => 10));
