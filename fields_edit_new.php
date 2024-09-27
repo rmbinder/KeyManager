@@ -131,8 +131,14 @@ else
     $form->addSelectBox('kmf_type', $gL10n->get('ORG_DATATYPE'), $keyFieldText,
                   array('property' => HtmlForm::FIELD_REQUIRED, 'defaultValue' => $keyField->getValue('kmf_type')));
 }
-$form->addMultilineTextInput('kmf_value_list', $gL10n->get('ORG_VALUE_LIST'), $keyField->getValue('kmf_value_list', 'database'), 6,
-                       array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextIdLabel' => 'ORG_VALUE_LIST_DESC'));
+
+$form->addMultilineTextInput(
+    'kmf_value_list', 
+    $gL10n->get('ORG_VALUE_LIST'), 
+    htmlentities($keyField->getValue('kmf_value_list', 'database'), ENT_QUOTES),
+    6,
+    array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextIdLabel' => 'ORG_VALUE_LIST_DESC')
+);
 
 if ($keyField->getValue('kmf_system') != 1)
 {
