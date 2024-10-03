@@ -92,9 +92,13 @@ switch ($getMode)
     	$form->addInput('kmf_type', $gL10n->get('ORG_DATATYPE'), $keyFieldText[$keyField->getValue('kmf_type')],
     				array('maxLength' => 30, 'property' => HtmlForm::FIELD_DISABLED));
     	
-    	$form->addMultilineTextInput('kmf_value_list', $gL10n->get('ORG_VALUE_LIST'),
-    			$keyField->getValue('kmf_value_list', 'database'), 6,
-    			array('property' => HtmlForm::FIELD_DISABLED));
+    	$form->addMultilineTextInput(
+    	    'kmf_value_list', 
+    	    $gL10n->get('ORG_VALUE_LIST'),
+    		(string) $keyField->getValue('kmf_value_list', 'database'), 
+    	    6,
+    		array('property' => HtmlForm::FIELD_DISABLED)
+    	);
     	
     	$form->addMultilineTextInput('kmf_description', $gL10n->get('SYS_DESCRIPTION'),
     			$keyField->getValue('kmf_description'), 3,
