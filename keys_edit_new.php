@@ -116,7 +116,7 @@ foreach ($keys->mKeyFields as $keyField)
             (bool) $keys->getValue($kmfNameIntern),
             array(
                 'property'        => $fieldProperty,
-                'helpTextIdLabel' => $helpId,
+                'helpTextId' => $helpId,
                 'icon'            => $keys->getProperty($kmfNameIntern, 'kmf_icon', 'database')
             )
         );
@@ -133,7 +133,7 @@ foreach ($keys->mKeyFields as $keyField)
             array(
                 'property'        => $fieldProperty,
                 'defaultValue'    => $defaultValue,
-                'helpTextIdLabel' => $helpId,
+                'helpTextId' => $helpId,
                 'icon'            => $keys->getProperty($kmfNameIntern, 'kmf_icon', 'database')
             )
         );
@@ -154,7 +154,7 @@ foreach ($keys->mKeyFields as $keyField)
                 'property'          => $fieldProperty,
                 'defaultValue'      => $keys->getValue($kmfNameIntern, 'database'),
                 'showNoValueButton' => $showDummyRadioButton,
-                'helpTextIdLabel'   => $helpId,
+                'helpTextId'   => $helpId,
                 'icon'              => $keys->getProperty($kmfNameIntern, 'kmf_icon', 'database')
             )
         );
@@ -169,7 +169,7 @@ foreach ($keys->mKeyFields as $keyField)
             array(
                 'maxLength'       => 4000,
                 'property'        => $fieldProperty,
-                'helpTextIdLabel' => $helpId,
+                'helpTextId' => $helpId,
                 'icon'            => $keys->getProperty($kmfNameIntern, 'kmf_icon', 'database')
             )
         );
@@ -217,7 +217,7 @@ foreach ($keys->mKeyFields as $keyField)
             	$sql,
             	array(
             		'property' => $fieldProperty,
-            		'helpTextIdLabel' => $helpId,
+            		'helpTextId' => $helpId,
             		'icon' => $keys->getProperty($kmfNameIntern, 'kmf_icon', 'database'),
             		'defaultValue' => $keys->getValue($kmfNameIntern),
             		'multiselect' => false
@@ -256,7 +256,7 @@ foreach ($keys->mKeyFields as $keyField)
             		'type' => $fieldType,
                 	'maxLength' => $maxlength, 
                 	'property' => $fieldProperty, 
-                	'helpTextIdLabel' => $helpId, 
+                	'helpTextId' => $helpId, 
                 	'icon' => $keys->getProperty($kmfNameIntern, 'kmf_icon', 'database')
             	)
         	);
@@ -268,13 +268,13 @@ if ($getCopy)
 {
 	$form->addLine();
 	$form->addDescription($gL10n->get('PLG_KEYMANAGER_COPY_PREFERENCES').'<br/>');
-	$form->addInput('copy_number', $gL10n->get('PLG_KEYMANAGER_NUMBER'), 1, array('type' => 'number', 'minNumber' => 1, 'maxNumber' => 9999, 'step' => 1, 'helpTextIdInline' => 'PLG_KEYMANAGER_NUMBER_DESC'));
+	$form->addInput('copy_number', $gL10n->get('PLG_KEYMANAGER_NUMBER'), 1, array('type' => 'number', 'minNumber' => 1, 'maxNumber' => 9999, 'step' => 1, 'helpTextId' => 'PLG_KEYMANAGER_NUMBER_DESC'));
 	$sql = 'SELECT kmf_id, kmf_name
               FROM '.TBL_KEYMANAGER_FIELDS.'
              WHERE kmf_type = \'NUMBER\'
                AND ( kmf_org_id = '.$gCurrentOrgId.'
                 OR kmf_org_id IS NULL )';
-	$form->addSelectBoxFromSql('copy_field', $gL10n->get('PLG_KEYMANAGER_FIELD'), $gDb, $sql, array('multiselect' => false, 'helpTextIdInline' => 'PLG_KEYMANAGER_FIELD_DESC'));
+	$form->addSelectBoxFromSql('copy_field', $gL10n->get('PLG_KEYMANAGER_FIELD'), $gDb, $sql, array('multiselect' => false, 'helpTextId' => 'PLG_KEYMANAGER_FIELD_DESC'));
 	$form->addLine();
 }
 

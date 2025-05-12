@@ -106,7 +106,7 @@ else
 if ($getKmfId > 0)
 {
     $form->addInput('kmf_name_intern', $gL10n->get('SYS_INTERNAL_NAME'), $keyField->getValue('kmf_name_intern'),
-                    array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED, 'helpTextIdLabel' => 'SYS_INTERNAL_NAME_DESC'));
+                    array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED, 'helpTextId' => 'SYS_INTERNAL_NAME_DESC'));
 }
 
 $keyFieldText = array(
@@ -139,7 +139,7 @@ $form->addMultilineTextInput(
     $gL10n->get('ORG_VALUE_LIST'), 
     (string) $keyField->getValue('kmf_value_list', 'database'),
     6,
-    array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextIdLabel' => 'ORG_VALUE_LIST_DESC')
+    array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextId' => 'ORG_VALUE_LIST_DESC')
 );
 
 if ($keyField->getValue('kmf_system') != 1)

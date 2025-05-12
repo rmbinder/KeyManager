@@ -140,7 +140,8 @@ foreach ($keys->mKeyFields as $keyField)
     }
 }
 
-$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextIdInline' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC', 'helpTextIdLabel' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
+$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
+//$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextIdInline' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC', 'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
 $formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
 
 $page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN'), 'fas fa-users-cog', $formProfileAddin->show()));
@@ -148,8 +149,8 @@ $page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('P
 // PANEL: EXPORT
 
 $formExport = new HtmlForm('export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'export')), $page, array('class' => 'form-preferences'));
-$formExport->addInput('file_name', $gL10n->get('PLG_KEYMANAGER_FILE_NAME'), $pPreferences->config['Optionen']['file_name'], array('helpTextIdLabel' => 'PLG_KEYMANAGER_FILE_NAME_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
-$formExport->addCheckbox('add_date', $gL10n->get('PLG_KEYMANAGER_ADD_DATE'), $pPreferences->config['Optionen']['add_date'], array('helpTextIdInline' => 'PLG_KEYMANAGER_ADD_DATE_DESC'));
+$formExport->addInput('file_name', $gL10n->get('PLG_KEYMANAGER_FILE_NAME'), $pPreferences->config['Optionen']['file_name'], array('helpTextId' => 'PLG_KEYMANAGER_FILE_NAME_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
+$formExport->addCheckbox('add_date', $gL10n->get('PLG_KEYMANAGER_ADD_DATE'), $pPreferences->config['Optionen']['add_date'], array('helpTextId' => 'PLG_KEYMANAGER_ADD_DATE_DESC'));
 $formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
 
 $page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYMANAGER_EXPORT'), 'fas fa-file-export', $formExport->show()));
@@ -172,7 +173,7 @@ $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
            AND ( cat.cat_org_id = '.$gCurrentOrgId.'
             OR cat.cat_org_id IS NULL )
       ORDER BY cat_sequence, rol.rol_name ASC';
-$formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextIdInline' => 'PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC', 'multiselect' => true));
+$formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextId' => 'PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC', 'multiselect' => true));
 $formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
 
 $page->addHtml(getPreferencePanel('preferences', 'access_preferences', $gL10n->get('PLG_KEYMANAGER_ACCESS_PREFERENCES'), 'fas fa-key', $formAccessPreferences->show()));
