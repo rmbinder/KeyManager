@@ -79,7 +79,7 @@ $page->addJavascript('
 $page->addHtml('
 <ul id="preferences_tabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-        <a id="tabs_nav_preferences" class="nav-link" href="#tabs-preferences" data-toggle="tab" role="tab">'.$gL10n->get('SYS_SETTINGS').'</a>
+        <a id="tabs_nav_preferences" class="nav-link" href="#tabs-preferences" data-bs-toggle="tab" role="tab">'.$gL10n->get('SYS_SETTINGS').'</a>
     </li>
 </ul>
 

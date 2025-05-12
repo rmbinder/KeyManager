@@ -92,7 +92,7 @@ if ($getMode == 'preview')     //Default
 				'first_name' => $row['first_name'],
 				'count' => 0,
 				'delete_marker' => true,
-				'info' => '<i class="fas '.$icon['member']['image'].'" data-toggle="tooltip" title="'.$icon['member']['text'].'"></i> -> <i class="fas '.$icon['not_member']['image'].'" data-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>');
+				'info' => '<i class="fas '.$icon['member']['image'].'" data-bs-toggle="tooltip" title="'.$icon['member']['text'].'"></i> -> <i class="fas '.$icon['not_member']['image'].'" data-bs-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>');
 				
 		$user->readDataById($row['usr_id']);
 		
@@ -142,8 +142,8 @@ if ($getMode == 'preview')     //Default
 		$table->setColumnAlignByArray(array('left', 'center', 'center'));
 		$columnValues = array();
 		$columnValues[] = $gL10n->get('SYS_NAME');
-        $columnValues[] = '<i class="fas fa-key" data-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'"></i>';
-		$columnValues[] = '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>';
+        $columnValues[] = '<i class="fas fa-key" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'"></i>';
+		$columnValues[] = '<i class="fas fa-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>';
 		$table->addRowHeadingByArray($columnValues);
 		
 		foreach ($members as $memberId => $data)
@@ -196,7 +196,7 @@ elseif ($getMode == 'write')
 	$classTable  = 'table table-condensed';
 	$table = new HtmlTable('table_saved_synchronize', $page, $hoverRows, $datatable, $classTable);
 	$table->setColumnAlignByArray(array('left', 'center'));
-    $columnValues = array($gL10n->get('SYS_NAME'), '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
+    $columnValues = array($gL10n->get('SYS_NAME'), '<i class="fas fa-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
 	$member = new Membership($gDb);
@@ -241,11 +241,11 @@ elseif ($getMode == 'write')
 			
 			if ($delete_marker)
 			{
-			    $columnValues[] = '<i class="fas '.$icon['not_member']['image'].'" data-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>';
+			    $columnValues[] = '<i class="fas '.$icon['not_member']['image'].'" data-bs-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>';
 			}
 			else
 			{
-			    $columnValues[] = '<i class="fas '.$icon['error']['image'].'" data-toggle="tooltip" title="'.$icon['error']['text'].'"></i>';
+			    $columnValues[] = '<i class="fas '.$icon['error']['image'].'" data-bs-toggle="tooltip" title="'.$icon['error']['text'].'"></i>';
 			    $errorMessage .= '<br/>-'.$data['last_name'].', '.$data['first_name'];
 			    $_SESSION['pKeyManager']['synchronize'][$memberId]['delete_marker'] = false;
 			}
@@ -278,7 +278,7 @@ elseif ($getMode == 'print')
 	$page->setHeadline($gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'));
 	$table = new HtmlTable('table_print_synchronize', $page, $hoverRows, $datatable, $classTable);
 	$table->setColumnAlignByArray(array('left', 'center'));
-	$columnValues = array($gL10n->get('SYS_NAME'),  '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
+	$columnValues = array($gL10n->get('SYS_NAME'),  '<i class="fas fa-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
 	foreach ($_SESSION['pKeyManager']['synchronize'] as $member => $data)
@@ -287,7 +287,7 @@ elseif ($getMode == 'print')
 		{
 			$columnValues = array();
 			$columnValues[] = $data['last_name'].', '. $data['first_name'];
-			$columnValues[] = '<i class="fas '.$icon['not_member']['image'].'" data-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>';
+			$columnValues[] = '<i class="fas '.$icon['not_member']['image'].'" data-bs-toggle="tooltip" title="'.$icon['not_member']['text'].'"></i>';
 			$table->addRowByArray($columnValues);
 		}
 	}
