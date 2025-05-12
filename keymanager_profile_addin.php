@@ -23,7 +23,7 @@ use Admidio\Users\Entity\User;
 
 $getUserUuid   = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));
 
-require_once(__DIR__ . '/../../adm_program/system/common.php');                    
+require_once(__DIR__ . '/../../system/common.php');                    
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');

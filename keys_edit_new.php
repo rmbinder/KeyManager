@@ -20,7 +20,7 @@
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../system/common.php');
 require_once(__DIR__ . '/classes/keys.php');
 require_once(__DIR__ . '/classes/configtable.php');
 require_once(__DIR__ . '/common_function.php');
@@ -54,7 +54,7 @@ $gNavigation->addUrl(CURRENT_URL, $headline);
 
 // create html page object
 $page = new HtmlPage('plg-keymanager-keys-edit-new', $headline);
-$page->addJavascriptFile('adm_program/libs/zxcvbn/dist/zxcvbn.js');
+$page->addJavascriptFile(ADMIDIO_URL . FOLDER_LIBS . '/zxcvbn/dist/zxcvbn.js');
 
 // don´t show menu items (copy/print...) if a new key is created
 if ($getKeyId != 0)
