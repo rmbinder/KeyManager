@@ -12,6 +12,10 @@
  * @brief Reads the keys and the key fields structure out of database and give access to it
  *
  */
+use Admidio\Infrastructure\Image;
+use Admidio\Infrastructure\Language;
+use Admidio\Infrastructure\Utils\StringUtils;
+
 class Keys
 {
 	public $mKeyFields = array();   ///< Array with all key fields objects
