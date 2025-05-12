@@ -18,6 +18,7 @@
  *
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -37,7 +38,7 @@ if (!isUserAuthorizedForPreferences())
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
-$keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf', $getKmfId );
+$keyField = new Entity($gDb, TBL_KEYMANAGER_FIELDS, 'kmf', $getKmfId );
 
 switch ($getMode)
 {

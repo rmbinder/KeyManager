@@ -14,6 +14,7 @@
  */
 use Admidio\Infrastructure\Image;
 use Admidio\Infrastructure\Language;
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\StringUtils;
 
 class Keys
@@ -454,7 +455,7 @@ class Keys
     		{
     			if (!array_key_exists($row['kmd_kmf_id'], $this->mKeyData))
     			{
-    				$this->mKeyData[$row['kmd_kmf_id']] = new TableAccess($this->mDb, TBL_KEYMANAGER_DATA, 'kmd');
+    				$this->mKeyData[$row['kmd_kmf_id']] = new Entity($this->mDb, TBL_KEYMANAGER_DATA, 'kmd');
     			}
     			$this->mKeyData[$row['kmd_kmf_id']]->setArray($row);
     		}
@@ -495,7 +496,7 @@ class Keys
     	// why !$this->newKey -> updateFingerPrint will be done in getNewKeyId
     	if (!$this->newKey && $this->columnsValueChanged)
     	{
-    		$updateKey = new TableAccess($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk', $this->mKeyId);
+    		$updateKey = new Entity($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk', $this->mKeyId);
     		$updateKey->setValue('kmk_usr_id_change', NULL, false);
     		$updateKey->save();
     	}
@@ -527,7 +528,7 @@ class Keys
     	{
     		if (!array_key_exists($row['kmf_name_intern'], $this->mKeyFields))
     		{
-    			$this->mKeyFields[$row['kmf_name_intern']] = new TableAccess($this->mDb, TBL_KEYMANAGER_FIELDS, 'kmf');
+    			$this->mKeyFields[$row['kmf_name_intern']] = new Entity($this->mDb, TBL_KEYMANAGER_FIELDS, 'kmf');
     		}
      		$this->mKeyFields[$row['kmf_name_intern']]->setArray($row);
      		$this->keyFieldsSort[$row['kmf_name_intern']] = $row['kmf_sequence'];
@@ -654,7 +655,7 @@ class Keys
     
     	if (!array_key_exists($kmfId, $this->mKeyData) )
     	{
-    		$this->mKeyData[$kmfId] = new TableAccess($this->mDb, TBL_KEYMANAGER_DATA, 'kmd');
+    		$this->mKeyData[$kmfId] = new Entity($this->mDb, TBL_KEYMANAGER_DATA, 'kmd');
     		$this->mKeyData[$kmfId]->setValue('kmd_kmf_id', $kmfId);
     		$this->mKeyData[$kmfId]->setValue('kmd_kmk_id', $this->mKeyId);
     	}
@@ -663,7 +664,7 @@ class Keys
     			
         if ($returnCode && $GLOBALS['gSettingsManager']->getBool('profile_log_edit_fields'))
     	{
-    		$logEntry = new TableAccess($this->mDb, TBL_KEYMANAGER_LOG, 'kml');
+    		$logEntry = new Entity($this->mDb, TBL_KEYMANAGER_LOG, 'kml');
     		$logEntry->setValue('kml_kmk_id', $this->mKeyId);
     		$logEntry->setValue('kml_kmf_id', $kmfId);
     		$logEntry->setValue('kml_value_old', $oldFieldValue);
@@ -693,14 +694,14 @@ class Keys
    
     	while ($row = $statement->fetch())
     	{
-    		$delKey = new TableAccess($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk', $row['kmk_id']);
+    		$delKey = new Entity($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk', $row['kmk_id']);
     		$delKey->delete();
     	}
 
     	//generate a new KeyId
     	if ($this->newKey)
     	{
-    		$newKey = new TableAccess($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk');
+    		$newKey = new Entity($this->mDb, TBL_KEYMANAGER_KEYS, 'kmk');
     		$newKey->setValue('kmk_org_id', $GLOBALS['gCurrentOrgId']);
     		$newKey->setValue('kmk_former', 0);
     		$newKey->save();

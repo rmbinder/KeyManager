@@ -21,6 +21,8 @@
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\Membership;
+use Admidio\Roles\Entity\Role;
 use Admidio\Users\Entity\User;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -197,7 +199,7 @@ elseif ($getMode == 'write')
     $columnValues = array($gL10n->get('SYS_NAME'), '<i class="fas fa-info-circle" data-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
-	$member = new TableMembers($gDb);
+	$member = new Membership($gDb);
 	$errorMessage = '';
 	
 	foreach ($_SESSION['pKeyManager']['synchronize'] as $memberId => $data)
@@ -228,7 +230,7 @@ elseif ($getMode == 'write')
 			try {
 			    while ($row = $membersStatement->fetch()) {
 			        // stop all role memberships of this organization
-			        $role = new TableRoles($gDb, $row['mem_rol_id']);
+			        $role = new Role($gDb, (int) $row['mem_rol_id']);
 			        $role->stopMembership($memberId);
 			    }
 			} 

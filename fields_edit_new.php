@@ -16,6 +16,7 @@
  *
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -46,7 +47,7 @@ else
 
 $gNavigation->addUrl(CURRENT_URL, $headline);
 
-$keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
+$keyField = new Entity($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
 
 if ($getKmfId > 0)
 {

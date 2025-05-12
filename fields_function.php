@@ -16,10 +16,11 @@
  * mode     : 1 - create or edit key field
  *            2 - delete key field
  *            4 - change sequence of key field
- * sequence : mode if the key field move up or down, values are TableUserField::MOVE_UP, TableUserField::MOVE_DOWN
+ * sequence : mode if the key field move up or down, values are MenuEntry::MOVE_UP, MenuEntry::MOVE_DOWN
  *
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\StringUtils;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -29,7 +30,7 @@ require_once(__DIR__ . '/classes/configtable.php');
 // Initialize and check the parameters
 $getKmfId    = admFuncVariableIsValid($_GET, 'kmf_id',   'int');
 $getMode     = admFuncVariableIsValid($_GET, 'mode',     'int',    array('requireValue' => true));
-$getSequence = admFuncVariableIsValid($_GET, 'sequence', 'string', array('validValues' => array(TableUserField::MOVE_UP, TableUserField::MOVE_DOWN)));
+$getSequence = admFuncVariableIsValid($_GET, 'sequence', 'string', array('validValues' => array(MenuEntry::MOVE_UP, MenuEntry::MOVE_DOWN)));
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
@@ -41,7 +42,7 @@ if (!isUserAuthorizedForPreferences())
     // => EXIT
 }
 
-$keyField = new TableAccess($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
+$keyField = new Entity($gDb, TBL_KEYMANAGER_FIELDS, 'kmf');
 
 if ($getKmfId > 0)
 {
@@ -170,12 +171,12 @@ elseif($getMode === 4)
                 OR kmf_org_id IS NULL ) ';
     
     // field will get one number lower and therefore move a position up in the list
-    if ($getSequence === TableUserField::MOVE_UP)
+    if ($getSequence === MenuEntry::MOVE_UP)
     {
         $newSequence = $kmfSequence - 1;
     }
     // field will get one number higher and therefore move a position down in the list
-    elseif ($getSequence === TableUserField::MOVE_DOWN)
+    elseif ($getSequence === MenuEntry::MOVE_DOWN)
     {
         $newSequence = $kmfSequence + 1;
     }

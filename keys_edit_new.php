@@ -17,6 +17,7 @@
  *
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -280,7 +281,7 @@ if ($getCopy)
 
 $form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));
 
-$infoKey = new TableAccess($gDb, TBL_KEYMANAGER_KEYS, 'kmk', (int) $getKeyId);
+$infoKey = new Entity($gDb, TBL_KEYMANAGER_KEYS, 'kmk', (int) $getKeyId);
 
 // show information about key who creates the recordset and changed it
 $form->addHtml(admFuncShowCreateChangeInfoById(

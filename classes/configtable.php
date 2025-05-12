@@ -259,7 +259,7 @@ class ConfigTablePKM
 		
 		if ($statement->rowCount() == 0)                 
 		{
-			$keyField = new TableAccess($GLOBALS['gDb'], TBL_KEYMANAGER_FIELDS, 'kmf');
+			$keyField = new Entity($GLOBALS['gDb'], TBL_KEYMANAGER_FIELDS, 'kmf');
 			$keyField->setValue('kmf_org_id', (int) $GLOBALS['gCurrentOrgId']);
 			$keyField->setValue('kmf_sequence', 1);
 			$keyField->setValue('kmf_system', 1);
@@ -270,7 +270,7 @@ class ConfigTablePKM
 			$keyField->setValue('kmf_description', 'Der Name des Schlüssels (z.B. Haupteingang)');
 			$keyField->save();
 		
-			$keyField = new TableAccess($GLOBALS['gDb'], TBL_KEYMANAGER_FIELDS, 'kmf');
+			$keyField = new Entity($GLOBALS['gDb'], TBL_KEYMANAGER_FIELDS, 'kmf');
 			$keyField->setValue('kmf_org_id', (int) $GLOBALS['gCurrentOrgId']);
 			$keyField->setValue('kmf_sequence', 2);
 			$keyField->setValue('kmf_system', 1);
@@ -281,7 +281,7 @@ class ConfigTablePKM
 			$keyField->setValue('kmf_description', 'Der Empfänger des Schlüssels');
 			$keyField->save();
 		
-			$keyField = new TableAccess($GLOBALS['gDb'], TBL_KEYMANAGER_FIELDS, 'kmf');
+			$keyField = new Entity($GLOBALS['gDb'], TBL_KEYMANAGER_FIELDS, 'kmf');
 			$keyField->setValue('kmf_org_id', (int) $GLOBALS['gCurrentOrgId']);
 			$keyField->setValue('kmf_sequence', 3);
 			$keyField->setValue('kmf_system', 1);
