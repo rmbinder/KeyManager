@@ -137,10 +137,10 @@ else
 
 $form->addMultilineTextInput(
     'kmf_value_list', 
-    $gL10n->get('ORG_VALUE_LIST'), 
+    $gL10n->get('SYS_VALUE_LIST'), 
     (string) $keyField->getValue('kmf_value_list', 'database'),
     6,
-    array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextId' => 'ORG_VALUE_LIST_DESC')
+    array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextId' => 'SYS_VALUE_LIST_DESC')
 );
 
 if ($keyField->getValue('kmf_system') != 1)

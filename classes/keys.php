@@ -662,7 +662,7 @@ class Keys
     	
     	$returnCode = $this->mKeyData[$kmfId]->setValue('kmd_value', $newValue);
     			
-        if ($returnCode && $GLOBALS['gSettingsManager']->getBool('profile_log_edit_fields'))
+        if ($returnCode && $GLOBALS['gSettingsManager']->getBool('changelog_module_enabled'))
     	{
     		$logEntry = new Entity($this->mDb, TBL_KEYMANAGER_LOG, 'kml');
     		$logEntry->setValue('kml_kmk_id', $this->mKeyId);

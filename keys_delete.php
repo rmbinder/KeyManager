@@ -53,16 +53,16 @@ switch ($getMode)
     		
     	$headline = $gL10n->get('PLG_KEYMANAGER_KEY_DELETE');
     		
-    	// create html page object
-    	$page = new HtmlPage('plg-keymanager-keys-delete', $headline);
-    		
     	// add current url to navigation stack
     	$gNavigation->addUrl(CURRENT_URL, $headline);
     		
+    	// create html page object
+    	$page = new HtmlPage('plg-keymanager-keys-delete', $headline);
+    	
     	$page->addHtml('<p class="lead">'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE_DESC').'</p>');
     		
     	// show form
-    	$form = new HtmlForm('key_delete_form', null, $page);
+    	$form = new HtmlForm('key_delete_form', '', $page);
     	
     	foreach ($keys->mKeyFields as $keyField)
     	{
@@ -82,7 +82,11 @@ switch ($getMode)
     				|| $keys->getProperty($kmfNameIntern, 'kmf_type') === 'RADIO_BUTTON')
     		{
     			$arrListValues = $keys->getProperty($kmfNameIntern, 'kmf_value_list', 'text');
-    			$content = $arrListValues[$content];
+    			$content = '';
+    			if ($content > 0)
+    			{
+    			    $content = $arrListValues[$content];
+    			}
     		}
     		
     		$form->addInput(
@@ -93,10 +97,10 @@ switch ($getMode)
     		);
     	 }	
     	
-    	$form->addButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'fa-trash-alt', 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php', array('key_id' => $getKeyId, 'mode' => 2)), 'class' => 'btn-primary offset-sm-3'));
+    	$form->addButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'bi bi-trash', 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php', array('key_id' => $getKeyId, 'mode' => 2)), 'class' => 'btn-primary offset-sm-3'));
     	if (!$getKeyFormer)
     	{
-    		$form->addButton('btn_former', $gL10n->get('PLG_KEYMANAGER_FORMER'), array('icon' => 'fa-eye-slash', 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php', array('key_id' => $getKeyId, 'mode' => 3)), 'class' => 'btn-primary offset-sm-3'));
+    		$form->addButton('btn_former', $gL10n->get('PLG_KEYMANAGER_FORMER'), array('icon' => 'bi bi-person-fill-dash', 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_delete.php', array('key_id' => $getKeyId, 'mode' => 3)), 'class' => 'btn-primary offset-sm-3'));
     		$form->addCustomContent('', '<br />'.$gL10n->get('PLG_KEYMANAGER_KEY_MAKE_TO_FORMER'));
     	}
     	

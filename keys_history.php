@@ -42,7 +42,7 @@ $user = new User($gDb, $gProfileFields);
 $headline = $gL10n->get('SYS_CHANGE_HISTORY_OF', array($keys->getValue('KEYNAME')));
 
 // if profile log is activated then the key field history will be shown otherwise show error
-if (!$gSettingsManager->getBool('profile_log_edit_fields'))
+if (!$gSettingsManager->getBool('changelog_module_enabled'))
 {
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     // => EXIT
@@ -118,7 +118,9 @@ $form->addSubmitButton('btn_send', $gL10n->get('SYS_OK'));
 $FilterNavbar->addForm($form->show(false));
 $page->addHtml($FilterNavbar->show());
 
-$table = new HtmlTable('profile_field_history_table', $page, true, true);
+//$table = new HtmlTable('profile_field_history_table', $page, true, true);
+// Workaround für Admidio 5 (ohne Verwendung der Presenter-Klassen; $datatable darf nicht true sein)
+$table = new HtmlTable('profile_field_history_table', $page, true, false);
 
 $columnHeading = array();
 

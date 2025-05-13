@@ -140,8 +140,8 @@ foreach ($keys->mKeyFields as $keyField)
     }
 }
 
-$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
-//$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextIdInline' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC', 'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
+$formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC'));
+$formProfileAddin->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
 $formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
 
 $page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN'), 'fas fa-users-cog', $formProfileAddin->show()));
@@ -180,7 +180,7 @@ $page->addHtml(getPreferencePanel('preferences', 'access_preferences', $gL10n->g
                   
 // PANEL: PLUGIN INFORMATIONS
 
-$formPluginInformations = new HtmlForm('plugin_informations_preferences_form', null, $page, array('class' => 'form-preferences'));                   
+$formPluginInformations = new HtmlForm('plugin_informations_preferences_form', '', $page, array('class' => 'form-preferences'));                   
 $formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_KEYMANAGER_PLUGIN_NAME'), $gL10n->get('PLG_KEYMANAGER_NAME_OF_PLUGIN'));
 $formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_KEYMANAGER_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
 $formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_KEYMANAGER_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);

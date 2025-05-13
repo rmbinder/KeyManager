@@ -28,6 +28,8 @@
  *
  *****************************************************************************/
      	
+use Admidio\Infrastructure\Entity\Entity;
+
 class ConfigTablePKM
 {
 	public $config = array();        ///< Array mit allen Konfigurationsdaten
@@ -127,32 +129,21 @@ class ConfigTablePKM
 	protected function findPff()
 	{
 		$location = ADMIDIO_PATH . FOLDER_PLUGINS;
-		$searchedFile = 'formfiller.php';
+		$searchFile = 'createpdf.php';
 		$formFillerfiles = array();
-		$tempFiles = array();
-		
-		$all = opendir($location);
-		while ($found = readdir($all))
+
+		foreach (glob($location.'/*/src/'.$searchFile) as $filename)
 		{
-			if (is_dir($location.'/'.$found) and $found<> ".." and $found<> ".")
-			{
-				$tempFiles= glob($location.'/'.$found.'/'. $searchedFile);
-				if (count($tempFiles) > 0)
-				{
-					$formFillerfiles[] = $found;              // only directory is needed
-				}
-			}
+		    $formFillerfiles[] = $filename;
 		}
-		closedir($all);
-		unset($all);
 		
 		if (count($formFillerfiles) != 1)
 		{
-			$this->pffDir = false;
+		    $this->pffDir = false;
 		}
 		else
 		{
-			$this->pffDir = $formFillerfiles[0];
+		    $this->pffDir = substr($formFillerfiles[0], strlen($location)+1, strlen($searchFile)-3);
 		}
 	}
 	
