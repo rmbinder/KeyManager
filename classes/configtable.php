@@ -132,18 +132,18 @@ class ConfigTablePKM
 		$searchFile = 'createpdf.php';
 		$formFillerfiles = array();
 
-		foreach (glob($location.'/*/src/'.$searchFile) as $filename)
+		foreach (glob($location.'/{,*/,*/*/,*/*/*/}'.$searchFile, GLOB_BRACE) as $filename)
 		{
 		    $formFillerfiles[] = $filename;
 		}
 		
-		if (count($formFillerfiles) != 1)
+		if (count($formFillerfiles) !== 1)
 		{
 		    $this->pffDir = false;
 		}
 		else
 		{
-		    $this->pffDir = substr($formFillerfiles[0], strlen($location)+1, strlen($searchFile)-3);
+		    $this->pffDir = substr($formFillerfiles[0], strlen($location)+1, -(strlen($searchFile)+1));
 		}
 	}
 	

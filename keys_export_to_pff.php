@@ -84,6 +84,6 @@ foreach($keys->mKeyFields as $keyField)
     $pkmArray['kmf-'. $kmfNameIntern] = $content;
 }
 
-admRedirect(SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.$pPreferences->pffDir().'/src/createpdf.php', $pkmArray));
+admRedirect(SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.$pPreferences->pffDir().'/createpdf.php', $pkmArray));
     		
     		
