@@ -97,7 +97,7 @@ $page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_
     
 // Create table
 $table = new HtmlTable('tbl_profile_fields', $page, true);
-$table->setMessageIfNoRowsFound('ORG_NO_FIELD_CREATED');
+$table->setMessageIfNoRowsFound('SYS_NO_ENTRIES');
 
 // create array with all column heading values
 $columnHeading = array(

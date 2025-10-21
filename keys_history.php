@@ -101,7 +101,7 @@ if ($fieldHistoryStatement->rowCount() === 0)
     // message is shown, so delete this page from navigation stack
     $gNavigation->deleteLastUrl();
     $gMessage->setForwardUrl($gNavigation->getUrl(), 1000);
-    $gMessage->show($gL10n->get('SYS_NO_CHANGES_LOGGED_PROFIL', array($keys->getValue('KEYNAME'))));
+    $gMessage->show($gL10n->get('SYS_NO_ENTRIES'));
     // => EXIT
 }
 

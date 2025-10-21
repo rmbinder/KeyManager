@@ -641,7 +641,7 @@ foreach ($keys->keys as $key)
         	if ($getMode == 'csv')
             {
             	$arrListValues = $keys->getProperty($kmfNameIntern, 'kmf_value_list', 'text');
-            	$content = $arrListValues[$content];
+            	$content = isset($arrListValues[$content]) ? $arrListValues[$content] : '';
             }
             else
             {

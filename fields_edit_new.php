@@ -94,12 +94,12 @@ $form = new HtmlForm('key_fields_edit_form', SecurityUtils::encodeUrl(ADMIDIO_UR
 
 if ($keyField->getValue('kmf_system') == 1)
 {
-    $form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
+    $form->addInput('kmf_name', $gL10n->get('SYS_NAME'), (string) $keyField->getValue('kmf_name', 'database'),
                     array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED));
 }
 else
 {
-    $form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
+    $form->addInput('kmf_name', $gL10n->get('SYS_NAME'), (string) $keyField->getValue('kmf_name', 'database'),
                     array('maxLength' => 100, 'property' => HtmlForm::FIELD_REQUIRED));
 }
 
