@@ -107,7 +107,7 @@ switch ($getMode)
     			$keyField->getValue('kmf_description'), 3,
     			array( 'property' => HtmlForm::FIELD_DISABLED));
     	
-        $form->addSubmitButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'fa-trash-alt', 'class' => ' offset-sm-3'));
+        $form->addSubmitButton('btn_delete', $gL10n->get('SYS_DELETE'), array('icon' => 'bi-trash', 'class' => ' offset-sm-3'));
     		
     	$page->addHtml($form->show(false));
     	$page->show();

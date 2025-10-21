@@ -61,14 +61,14 @@ $page->addJavascript('
                 if (data === "success") {
 
                     formAlert.attr("class", "alert alert-success form-alert");
-                    formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
+                    formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
                     formAlert.fadeIn("slow");
                     formAlert.animate({opacity: 1.0}, 2500);
                     formAlert.fadeOut("slow");
                 } else {
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
-                    formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
+                    formAlert.html("<i class=\"bi bi-exclamation-circle\"></i>" + data);
                 }
             }
         });
@@ -90,28 +90,28 @@ $page->addHtml('
 // PANEL: KEYCREATE
 
 $formKeyCreate = new HtmlForm('keycreate_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => 0)), $page);
-$formKeyCreate->addSubmitButton('btn_save_keycreate', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), array('icon' => 'fa-plus-circle', 'class' => 'offset-sm-3'));
+$formKeyCreate->addSubmitButton('btn_save_keycreate', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), array('icon' => 'bi-plus-circle', 'class' => 'offset-sm-3'));
 $formKeyCreate->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE_DESC'));
 
-$page->addHtml(getPreferencePanel('preferences', 'keycreate', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'fas fa-plus-circle', $formKeyCreate->show()));
+$page->addHtml(getPreferencePanel('preferences', 'keycreate', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), 'bi bi-plus-circle', $formKeyCreate->show()));
 
 // PANEL: KEYFIELDS
 
 $formKeyFields = new HtmlForm('keyfields_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields.php'), $page);    
-$formKeyFields->addSubmitButton('btn_save_keyfields', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE'), array('icon' => 'fa-edit', 'class' => 'offset-sm-3'));
+$formKeyFields->addSubmitButton('btn_save_keyfields', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE'), array('icon' => 'bi-pen', 'class' => 'offset-sm-3'));
 $formKeyFields->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC'));
                         
-$page->addHtml(getPreferencePanel('preferences', 'keyfields', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE'), 'fas fa-edit', $formKeyFields->show()));
+$page->addHtml(getPreferencePanel('preferences', 'keyfields', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE'), 'bi bi-pen', $formKeyFields->show()));
 
 // PANEL: SYNCHRONIZE
 
 unset($_SESSION['pKeyManager']['synchronize']);
 
 $formSynchronize = new HtmlForm('synchronize_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php'), $page);                        
-$formSynchronize->addSubmitButton('btn_save_synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), array('icon' => 'fa-sync', 'class' => ' offset-sm-3'));
+$formSynchronize->addSubmitButton('btn_save_synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), array('icon' => 'bi-arrow-repeat', 'class' => ' offset-sm-3'));
 $formSynchronize->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_DESC'));
   
-$page->addHtml(getPreferencePanel('preferences', 'synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), 'fas fa-sync', $formSynchronize->show()));
+$page->addHtml(getPreferencePanel('preferences', 'synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), 'bi bi-arrow-repeat', $formSynchronize->show()));
         
 // PANEL: INTERFACE_PFF
 
@@ -121,9 +121,9 @@ if ($pPreferences->isPffInst())
     $formInterfacePFF = new HtmlForm('interface_pff_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'interface_pff')), $page, array('class' => 'form-preferences'));
     $formInterfacePFF->addSelectBox('interface_pff', $gL10n->get('PLG_KEYMANAGER_CONFIGURATION'), $pPreferences->configpff['Formular']['desc'], array( 'defaultValue' => $pPreferences->config['Optionen']['interface_pff'], 'showContextDependentFirstEntry' => false));
     $formInterfacePFF->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF_DESC'));
-    $formInterfacePFF->addSubmitButton('btn_save_interface_pff', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+    $formInterfacePFF->addSubmitButton('btn_save_interface_pff', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
  
-    $page->addHtml(getPreferencePanel('preferences', 'interface_pff', $gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF'), 'fas fa-file-pdf', $formInterfacePFF->show()));
+    $page->addHtml(getPreferencePanel('preferences', 'interface_pff', $gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF'), 'bi bi-file-pdf', $formInterfacePFF->show()));
 }                      
   
 // PANEL: PROFILE ADDIN
@@ -142,26 +142,26 @@ foreach ($keys->mKeyFields as $keyField)
 
 $formProfileAddin->addSelectBox('profile_addin', $gL10n->get('PLG_KEYMANAGER_KEYFIELD'), $valueList, array('defaultValue' => $pPreferences->config['Optionen']['profile_addin'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC'));
 $formProfileAddin->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
-$formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+$formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN'), 'fas fa-users-cog', $formProfileAddin->show()));
+$page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN'), 'bi bi-person-fill-gear', $formProfileAddin->show()));
 
 // PANEL: EXPORT
 
 $formExport = new HtmlForm('export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'export')), $page, array('class' => 'form-preferences'));
 $formExport->addInput('file_name', $gL10n->get('PLG_KEYMANAGER_FILE_NAME'), $pPreferences->config['Optionen']['file_name'], array('helpTextId' => 'PLG_KEYMANAGER_FILE_NAME_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
 $formExport->addCheckbox('add_date', $gL10n->get('PLG_KEYMANAGER_ADD_DATE'), $pPreferences->config['Optionen']['add_date'], array('helpTextId' => 'PLG_KEYMANAGER_ADD_DATE_DESC'));
-$formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+$formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYMANAGER_EXPORT'), 'fas fa-file-export', $formExport->show()));
+$page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYMANAGER_EXPORT'), 'bi bi-file-arrow-down', $formExport->show()));
 
 // PANEL: DEINSTALLATION
 
 $formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)), $page);
-$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'fa-trash-alt', 'class' => 'offset-sm-3'));
+$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
 $formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_DEINSTALLATION_DESC'));
 
-$page->addHtml(getPreferencePanel('preferences', 'deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), 'fas fa-trash-alt', $formDeinstallation->show()));
+$page->addHtml(getPreferencePanel('preferences', 'deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), 'bi bi-trash', $formDeinstallation->show()));
 
 // PANEL: ACCESS_PREFERENCES
                     
@@ -174,9 +174,9 @@ $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
             OR cat.cat_org_id IS NULL )
       ORDER BY cat_sequence, rol.rol_name ASC';
 $formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextId' => 'PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC', 'multiselect' => true));
-$formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+$formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('preferences', 'access_preferences', $gL10n->get('PLG_KEYMANAGER_ACCESS_PREFERENCES'), 'fas fa-key', $formAccessPreferences->show()));
+$page->addHtml(getPreferencePanel('preferences', 'access_preferences', $gL10n->get('PLG_KEYMANAGER_ACCESS_PREFERENCES'), 'bi bi-key', $formAccessPreferences->show()));
                   
 // PANEL: PLUGIN INFORMATIONS
 
@@ -185,7 +185,7 @@ $formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_KEYMANAGE
 $formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_KEYMANAGER_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
 $formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_KEYMANAGER_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
 
-$page->addHtml(getPreferencePanel('preferences', 'plugin_informations', $gL10n->get('PLG_KEYMANAGER_PLUGIN_INFORMATION'), 'fas fa-info-circle', $formPluginInformations->show()));
+$page->addHtml(getPreferencePanel('preferences', 'plugin_informations', $gL10n->get('PLG_KEYMANAGER_PLUGIN_INFORMATION'), 'bi bi-info-circle', $formPluginInformations->show()));
 
 $page->addHtml('
         </div>

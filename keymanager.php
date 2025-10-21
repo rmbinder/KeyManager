@@ -182,7 +182,7 @@ $headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
 // if html mode and last url was not a list view then save this url to navigation stack
 if ($gNavigation->count() === 0 || ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false))             
 {
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-key');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-key');
 }
 
 if ($getMode != 'csv' && $getMode != 'xlsx' )
@@ -247,9 +247,9 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         }
         $hoverRows = true;
 
-        $inputFilterStringLabel = '<i class="fas fa-search" alt="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" title="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'"></i>';
-        $selectBoxKeyNameLabel ='<i class="fas fa-key" alt="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'"></i>';
-        $selectBoxReceiverLabel = '<i class="fas fa-user" alt="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" title="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'"></i>';
+        $inputFilterStringLabel = '<i class="bi bi-search" alt="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'" title="'.$gL10n->get('PLG_KEYMANAGER_GENERAL').'"></i>';
+        $selectBoxKeyNameLabel ='<i class="bi bi-key" alt="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'" title="'.$gL10n->get('PLG_KEYMANAGER_KEYNAME').'"></i>';
+        $selectBoxReceiverLabel = '<i class="bi bi-person-fill" alt="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'" title="'.$gL10n->get('PLG_KEYMANAGER_RECEIVER').'"></i>';
         
         // create html page object
         $page = new HtmlPage('plg-keymanager-main-html');
@@ -309,9 +309,9 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         if ($getExportAndFilter)
         {
             // links to print and exports
-            $page->addPageFunctionsMenuItem('menu_item_lists_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
+            $page->addPageFunctionsMenuItem('menu_item_lists_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'bi-printer');
         
-            $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'fa-file-download');
+            $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'bi-download');
             $page->addPageFunctionsMenuItem('menu_item_lists_xlsx', $gL10n->get('SYS_MICROSOFT_EXCEL').' (XLSX)',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
                     'filter_string'     => $getFilterString,
@@ -320,7 +320,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'export_and_filter' => $getExportAndFilter,
                     'show_all'          => $getShowAll,
                     'mode'              => 'xlsx')),
-                'fa-file-excel', 'menu_item_lists_export');
+                'bi-file-earmark-excel', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL').' (CSV)',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
                     'filter_string'     => $getFilterString,
@@ -329,7 +329,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'export_and_filter' => $getExportAndFilter,
                     'show_all'          => $getShowAll,
                     'mode'              => 'csv-ms')),
-                'fa-file-excel', 'menu_item_lists_export');
+                'bi-filetype-csv', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_pdf', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
                     'filter_string'     => $getFilterString,
@@ -338,7 +338,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'export_and_filter' => $getExportAndFilter,
                     'show_all'          => $getShowAll,
                     'mode'              => 'pdf')),
-                'fa-file-pdf', 'menu_item_lists_export');
+                'bi-file-earmark-pdf', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_pdfl', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
                     'filter_string'     => $getFilterString,
@@ -347,7 +347,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'export_and_filter' => $getExportAndFilter,
                     'show_all'          => $getShowAll,
                     'mode'              => 'pdfl')),
-                'fa-file-pdf', 'menu_item_lists_export');
+                'bi-file-earmark-pdf', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_csv', $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
                     'filter_string'     => $getFilterString,
@@ -356,12 +356,12 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'export_and_filter' => $getExportAndFilter,
                     'show_all'          => $getShowAll,
                     'mode'              => 'csv-oo')),
-                'fa-file-csv', 'menu_item_lists_export');
+                'bi-filetype-csv', 'menu_item_lists_export');
         }
         
         if (isUserAuthorizedForPreferences())
 		{
-    		$page->addPageFunctionsMenuItem('menu_preferences', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'fa-cog');
+    		$page->addPageFunctionsMenuItem('menu_preferences', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'bi-gear-fill');
 		} 
         
 		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
@@ -677,7 +677,7 @@ foreach ($keys->keys as $key)
     	if ($pPreferences->isPffInst())
     	{
     		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_export_to_pff.php', array('key_id' => $key['kmk_id'])). '">
-    	                       <i class="bi bi-printer-fill" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'"></i>
+    	                       <i class="bi bi-printer" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'"></i>
     	                   </a>';
     	}
     	if (isUserAuthorizedForPreferences())

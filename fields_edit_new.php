@@ -146,7 +146,7 @@ $form->addMultilineTextInput(
 if ($keyField->getValue('kmf_system') != 1)
 {
 	$form->addCheckbox('kmf_mandatory', $gL10n->get('SYS_REQUIRED_INPUT'), (bool) $keyField->getValue('kmf_mandatory'),
-	    array('property' => HtmlForm::FIELD_DEFAULT,  'icon' => 'fa-asterisk'));
+	    array('property' => HtmlForm::FIELD_DEFAULT,  'icon' => 'bi-asterisk'));
 }
 
 $form->addMultilineTextInput(
@@ -156,7 +156,7 @@ $form->addMultilineTextInput(
     3
 );
 
-$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));
+$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3'));
 $form->addHtml(admFuncShowCreateChangeInfoById(
     (int) $keyField->getValue('kmf_usr_id_create'), $keyField->getValue('kmf_timestamp_create'),
     (int) $keyField->getValue('kmf_usr_id_change'), $keyField->getValue('kmf_timestamp_change')          

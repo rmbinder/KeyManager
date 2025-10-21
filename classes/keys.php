@@ -231,11 +231,11 @@ class Keys
                 case 'CHECKBOX':
                     if ($value == 1)
                     {
-                        $htmlValue = '<i class="fas fa-check-square"></i>';
+                        $htmlValue = '<i class="bi bi-check-square"></i>';
                     }
                     else
                     {
-                        $htmlValue = '<i class="fas fa-square"></i>';
+                        $htmlValue = '<i class="bi bi-square"></i>';
                     }
                     break;
                 case 'DATE':
@@ -302,7 +302,7 @@ class Keys
         {
             if ($this->mKeyFields[$fieldNameIntern]->getValue('kmf_type') === 'CHECKBOX')
             {
-                $value = '<i class="fas fa-square"></i>';
+                $value = '<i class="bi bi-square"></i>';
             }
         }
 

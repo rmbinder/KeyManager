@@ -44,9 +44,9 @@ if (!isUserAuthorizedForPreferences())
 $user = new User($gDb, $gProfileFields);
 
 $icon = array();
-$icon['member'] = array('image' => 'fa-user', 'text' => $gL10n->get('SYS_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
-$icon['not_member'] = array('image' => 'fa-user-slash', 'text' => $gL10n->get('SYS_NOT_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
-$icon['error'] = array('image' => 'fa-times', 'text' => $gL10n->get('SYS_ERROR'));
+$icon['member'] = array('image' => 'bi-person-fill', 'text' => $gL10n->get('SYS_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
+$icon['not_member'] = array('image' => 'bi-person-x-fill', 'text' => $gL10n->get('SYS_NOT_MEMBER_OF_ORGANIZATION', array($gCurrentOrganization->getValue('org_longname'))));
+$icon['error'] = array('image' => 'bi-alarm', 'text' => $gL10n->get('SYS_ERROR'));
 
 // set headline of the script
 $headline = $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE');
@@ -142,8 +142,8 @@ if ($getMode == 'preview')     //Default
 		$table->setColumnAlignByArray(array('left', 'center', 'center'));
 		$columnValues = array();
 		$columnValues[] = $gL10n->get('SYS_NAME');
-        $columnValues[] = '<i class="fas fa-key" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'"></i>';
-		$columnValues[] = '<i class="fas fa-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>';
+        $columnValues[] = '<i class="bi bi-key" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_NUMBER_OF_KEYS').'"></i>';
+		$columnValues[] = '<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>';
 		$table->addRowHeadingByArray($columnValues);
 		
 		foreach ($members as $memberId => $data)
@@ -161,7 +161,7 @@ if ($getMode == 'preview')     //Default
 
 		if (array_search(true, array_column($members, 'delete_marker')))
 		{
-            $form->addSubmitButton('btn_next_page', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' btn-primary'));
+            $form->addSubmitButton('btn_next_page', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' btn-primary'));
 		}
 		$form->addDescription('<br/>'.$gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW'));
 		
@@ -187,7 +187,7 @@ elseif ($getMode == 'write')
 			);
 
 	// links to print and exports
-	$page->addPageFunctionsMenuItem('menu_item_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
+	$page->addPageFunctionsMenuItem('menu_item_print_view', $gL10n->get('SYS_PRINT_PREVIEW'), 'javascript:void(0);', 'bi-printer');
 	
 	$form = new HtmlForm('synchronize_saved_form', null, $page);
 	
@@ -196,7 +196,7 @@ elseif ($getMode == 'write')
 	$classTable  = 'table table-condensed';
 	$table = new HtmlTable('table_saved_synchronize', $page, $hoverRows, $datatable, $classTable);
 	$table->setColumnAlignByArray(array('left', 'center'));
-    $columnValues = array($gL10n->get('SYS_NAME'), '<i class="fas fa-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
+    $columnValues = array($gL10n->get('SYS_NAME'), '<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
 	$member = new Membership($gDb);
@@ -278,7 +278,7 @@ elseif ($getMode == 'print')
 	$page->setHeadline($gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'));
 	$table = new HtmlTable('table_print_synchronize', $page, $hoverRows, $datatable, $classTable);
 	$table->setColumnAlignByArray(array('left', 'center'));
-	$columnValues = array($gL10n->get('SYS_NAME'),  '<i class="fas fa-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
+	$columnValues = array($gL10n->get('SYS_NAME'),  '<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_INFORMATIONS').'"></i>');
 	$table->addRowHeadingByArray($columnValues);
 	
 	foreach ($_SESSION['pKeyManager']['synchronize'] as $member => $data)

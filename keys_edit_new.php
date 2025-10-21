@@ -63,13 +63,13 @@ if ($getKeyId != 0)
     if ($gSettingsManager->getBool('changelog_module_enabled')  )
 	{
         $page->addPageFunctionsMenuItem('menu_item_change_history', $gL10n->get('SYS_CHANGE_HISTORY'),
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', array('key_id' => $getKeyId)), 'fa-history');
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', array('key_id' => $getKeyId)), 'bi-clock-history');
 	} 
 
 	if (isUserAuthorizedForPreferences())
 	{
         $page->addPageFunctionsMenuItem('menu_copy_key', $gL10n->get('PLG_KEYMANAGER_KEY_COPY'),
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $getKeyId, 'copy' => 1)), 'fa-clone');                            
+            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $getKeyId, 'copy' => 1)), 'bi-copy');                            
 	}
 }
 
@@ -279,7 +279,7 @@ if ($getCopy)
 	$form->addLine();
 }
 
-$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));
+$form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3'));
 
 $infoKey = new Entity($gDb, TBL_KEYMANAGER_KEYS, 'kmk', (int) $getKeyId);
 

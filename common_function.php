@@ -231,7 +231,7 @@ function getPreferencePanel($group, $id, $title, $icon, $body)
         <div class="card" id="panel_' . $id . '">
             <div class="card-header">
                 <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse_' . $id . '">
-                    <i class="' . $icon . ' fa-fw"></i>' . $title . '
+                    <i class="' . $icon . ' bi-fw"></i>' . $title . '
                 </a>
             </div>
             <div id="collapse_' . $id . '" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion_preferences">

@@ -93,7 +93,7 @@ $page->addJavascript('
     }
 ');
 
-$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php',  'fa-plus-circle');
+$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php',  'bi-plus-circle');
     
 // Create table
 $table = new HtmlTable('tbl_profile_fields', $page, true);
@@ -104,7 +104,7 @@ $columnHeading = array(
     $gL10n->get('SYS_FIELD'),
     '&nbsp;',
     $gL10n->get('SYS_DESCRIPTION'),
-  '<i class="fas fa-asterisk" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>',
+  '<i class="bi bi-asterisk" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>',
     $gL10n->get('ORG_DATATYPE'),
     '&nbsp;'
 );
@@ -135,17 +135,17 @@ foreach ($keys->mKeyFields as $keyField)
             $maxPosPrev = strrpos($textPrev, ' ');
             $fieldDescription = substr($textPrev, 0, $maxPosPrev).
                 ' <span class="collapse" id="viewdetails'.$kmfId.'">'.substr($fieldDescription, $maxPosPrev).'.
-                </span> <a class="admidio-icon-link" data-bs-toggle="collapse" data-bs-target="#viewdetails'.$kmfId.'"><i class="fas fa-angle-double-right" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_MORE').'"></i></a>';
+                </span> <a class="admidio-icon-link" data-bs-toggle="collapse" data-bs-target="#viewdetails'.$kmfId.'"><i class="bi bi-chevron double right" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_MORE').'"></i></a>';
         }
     }
 
     if ($keyField->getValue('kmf_mandatory') == 1)
     {
-        $mandatory = '<i class="fas fa-asterisk" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>';
+        $mandatory = '<i class="bi bi-asterisk" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>';
     }
     else
     {
-         $mandatory = '<i class="fas fa-asterisk admidio-opacity-reduced" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').': '.$gL10n->get('SYS_NO').'"></i>';
+         $mandatory = '<i class="bi bi-asterisk admidio-opacity-reduced" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').': '.$gL10n->get('SYS_NO').'"></i>';
     }
 
     $keyFieldText = array(
@@ -162,21 +162,21 @@ foreach ($keys->mKeyFields as $keyField)
            
     if ($keyField->getValue('kmf_system') == 1)
     {
-        $kmfSystem .= '<i class="fas fa-trash invisible"></i>';
+        $kmfSystem .= '<i class="bi bi-trash invisible"></i>';
     }
     else
     {
     	$kmfSystem .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $kmfId)).'">
-                <i class="fas fa-trash-alt" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE').'"></i></a>';
+                <i class="bi bi-trash" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE').'"></i></a>';
     }
 
     // create array with all column values
     $columnValues = array(
         '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php', array('kmf_id' => $kmfId)).'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a> ',
         '<a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.MenuEntry::MOVE_UP.'\', '.$kmfId.')">
-            <i class="fas fa-chevron-circle-up" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_UP', array('SYS_PROFILE_FIELD')) . '"></i></a>
+            <i class="bi bi-chevron-up" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_UP', array('SYS_PROFILE_FIELD')) . '"></i></a>
         <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.MenuEntry::MOVE_DOWN.'\', '.$kmfId.')">
-            <i class="fas fa-chevron-circle-down" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_DOWN', array('SYS_PROFILE_FIELD')) . '"></i></a>',     
+            <i class="bi bi-chevron-down" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_DOWN', array('SYS_PROFILE_FIELD')) . '"></i></a>',     
         $fieldDescription,
         $mandatory,
     	$keyFieldText[$keyField->getValue('kmf_type')],
