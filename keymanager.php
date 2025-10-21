@@ -253,6 +253,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         
         // create html page object
         $page = new HtmlPage('plg-keymanager-main-html');
+        $page->setContentFullWidth();
         $page->setTitle($title);
         $page->setHeadline($headline);
 
