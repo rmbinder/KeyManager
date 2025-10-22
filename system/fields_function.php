@@ -24,9 +24,9 @@ use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Menu\Entity\MenuEntry;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getKmfId    = admFuncVariableIsValid($_GET, 'kmf_id',   'int');
@@ -147,7 +147,7 @@ if($getMode === 1)
     
     unset($_SESSION['fields_request']);
     
-    $gMessage->setForwardUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields.php', 1000);
+    $gMessage->setForwardUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields.php', 1000);
     $gMessage->show($gL10n->get('SYS_SAVE_DATA'));
     // => EXIT
 }

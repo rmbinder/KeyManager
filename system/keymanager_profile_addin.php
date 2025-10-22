@@ -23,10 +23,10 @@ use Admidio\Users\Entity\User;
 
 $getUserUuid   = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));
 
-require_once(__DIR__ . '/../../system/common.php');                    
+require_once(__DIR__ . '/../../../system/common.php');                    
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/keys.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 $pPreferences = new ConfigTablePKM();                  
 $pPreferences->read();
@@ -45,7 +45,7 @@ if (sizeof($keys->keys) === 0)
 
 $page->addHtml('<div class="card admidio-field-group" id="keymanager_box">
 				<div class="card-header">'.$gL10n->get('PLG_KEYMANAGER_KEYMANAGER'));
-$page->addHtml('<a class="admidio-icon-link float-right" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keymanager.php', array(
+$page->addHtml('<a class="admidio-icon-link float-right" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/system/keymanager.php', array(
                         'export_and_filter' => true,
                         'show_all'          => true,
                         'same_side'         => true,
@@ -61,7 +61,7 @@ foreach ($keys->keys as $key)
 	$page->addHtml('<li class= "list-group-item">');
 	$page->addHtml('<div style="text-align: left;float:left;">');
 
-	$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $key['kmk_id'])).'">'.$keys->getValue('KEYNAME').'</a>';
+	$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_edit_new.php', array('key_id' => $key['kmk_id'])).'">'.$keys->getValue('KEYNAME').'</a>';
 	
 	$contentAdd = $keys->getValue($pPreferences->config['Optionen']['profile_addin']);
 	if (!empty($contentAdd))
@@ -93,13 +93,13 @@ foreach ($keys->keys as $key)
 	
 	if ($pPreferences->isPffInst())
 	{
-	    $page->addHtml('<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_export_to_pff.php', array('key_id' => $key['kmk_id'])). '">
+	    $page->addHtml('<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/system/keys_export_to_pff.php', array('key_id' => $key['kmk_id'])). '">
     	                       <i class="bi bi-printer" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'"></i>
     	                </a>');
 	}
 	if (isUserAuthorizedForPreferences())
 	{
-	    $page->addHtml('<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php', array('key_id' => $key['kmk_id'], 'key_former' => $key['kmk_former'])). '">
+	    $page->addHtml('<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/system/keys_delete.php', array('key_id' => $key['kmk_id'], 'key_former' => $key['kmk_former'])). '">
     	                       <i class="bi bi-dash-circle-fill" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'"></i>
     	                </a>');
 	}

@@ -13,10 +13,10 @@
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Menu\Entity\MenuEntry;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
-require_once(__DIR__ . '/classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
+require_once(__DIR__ . '/../classes/keys.php');
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
@@ -93,7 +93,7 @@ $page->addJavascript('
     }
 ');
 
-$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php',  'bi-plus-circle');
+$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_edit_new.php',  'bi-plus-circle');
     
 // Create table
 $table = new HtmlTable('tbl_profile_fields', $page, true);
@@ -166,13 +166,13 @@ foreach ($keys->mKeyFields as $keyField)
     }
     else
     {
-    	$kmfSystem .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $kmfId)).'">
+    	$kmfSystem .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_delete.php', array('kmf_id' => $kmfId)).'">
                 <i class="bi bi-trash" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE').'"></i></a>';
     }
 
     // create array with all column values
     $columnValues = array(
-        '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_edit_new.php', array('kmf_id' => $kmfId)).'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a> ',
+        '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_edit_new.php', array('kmf_id' => $kmfId)).'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a> ',
         '<a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.MenuEntry::MOVE_UP.'\', '.$kmfId.')">
             <i class="bi bi-chevron-up" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_UP', array('SYS_PROFILE_FIELD')) . '"></i></a>
         <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.MenuEntry::MOVE_DOWN.'\', '.$kmfId.')">

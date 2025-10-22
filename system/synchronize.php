@@ -25,9 +25,9 @@ use Admidio\Roles\Entity\Membership;
 use Admidio\Roles\Entity\Role;
 use Admidio\Users\Entity\User;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'preview', 'validValues' => array('preview', 'write', 'print')));
@@ -128,7 +128,7 @@ if ($getMode == 'preview')     //Default
 		$members[$row['kmd_value']]['count']++;
 	} 
 	
-	$form = new HtmlForm('synchronize_preview_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php', array('mode' => 'write')), $page);
+	$form = new HtmlForm('synchronize_preview_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/synchronize.php', array('mode' => 'write')), $page);
 	
 	if (sizeof($members) > 0)
 	{
@@ -181,7 +181,7 @@ elseif ($getMode == 'write')
 {
 	$page->addJavascript('
     	$("#menu_item_print_view").click(function() {
-            window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php', array('mode' => 'print')).'", "_blank");
+            window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/synchronize.php', array('mode' => 'print')).'", "_blank");
         });',
 			true
 			);

@@ -20,9 +20,9 @@
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../system/common.php');
-require_once(__DIR__ . '/classes/keys.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../../../system/common.php');
+require_once(__DIR__ . '/../classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 require_once(__DIR__ . '/common_function.php');
 
 // Initialize and check the parameters
@@ -63,18 +63,18 @@ if ($getKeyId != 0)
     if ($gSettingsManager->getBool('changelog_module_enabled')  )
 	{
         $page->addPageFunctionsMenuItem('menu_item_change_history', $gL10n->get('SYS_CHANGE_HISTORY'),
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', array('key_id' => $getKeyId)), 'bi-clock-history');
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_history.php', array('key_id' => $getKeyId)), 'bi-clock-history');
 	} 
 
 	if (isUserAuthorizedForPreferences())
 	{
         $page->addPageFunctionsMenuItem('menu_copy_key', $gL10n->get('PLG_KEYMANAGER_KEY_COPY'),
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $getKeyId, 'copy' => 1)), 'bi-copy');                            
+            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_edit_new.php', array('key_id' => $getKeyId, 'copy' => 1)), 'bi-copy');                            
 	}
 }
 
 // create html form
-$form = new HtmlForm('edit_key_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_save.php', array('key_id' => $getKeyId)), $page);
+$form = new HtmlForm('edit_key_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_save.php', array('key_id' => $getKeyId)), $page);
 
 foreach ($keys->mKeyFields as $keyField)
 {

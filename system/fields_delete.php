@@ -21,10 +21,10 @@
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/keys.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 $getMode  = admFuncVariableIsValid($_GET, 'mode',   'numeric', array('defaultValue' => 1));
 $getKmfId = admFuncVariableIsValid($_GET, 'kmf_id', 'int');
@@ -71,7 +71,7 @@ switch ($getMode)
     	$page->addHtml('<p class="lead">'.$gL10n->get('PLG_KEYMANAGER_KEYFIELD_DELETE_DESC').'</p>');
     		
     	// show form
-    	$form = new HtmlForm('keyfield_delete_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_delete.php', array('kmf_id' => $getKmfId, 'mode' => 2)), $page);
+    	$form = new HtmlForm('keyfield_delete_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_delete.php', array('kmf_id' => $getKmfId, 'mode' => 2)), $page);
     	
     	$form->addInput('kmf_name', $gL10n->get('SYS_NAME'), $keyField->getValue('kmf_name', 'database'),
     			array('maxLength' => 100, 'property' => HtmlForm::FIELD_DISABLED));

@@ -19,9 +19,9 @@
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getKmfId = admFuncVariableIsValid($_GET, 'kmf_id', 'int');
@@ -90,7 +90,7 @@ $page->addJavascript('
 );
 
 // show form
-$form = new HtmlForm('key_fields_edit_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields_function.php', array('kmf_id' => $getKmfId, 'mode' => 1)), $page);
+$form = new HtmlForm('key_fields_edit_form', SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_function.php', array('kmf_id' => $getKmfId, 'mode' => 1)), $page);
 
 if ($keyField->getValue('kmf_system') == 1)
 {

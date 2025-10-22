@@ -1,17 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * KeyManager
- *
- * Version 3.0.0
- *
- * KeyManager is an Admidio plugin for managing building and room keys.
- * 
- * Note: KeyManager uses the external class XLSXWriter (https://github.com/mk-j/PHP_XLSXWriter)
- * 
- * Author: rmb
- *
- * Compatible with Admidio version 5
+ * Creates the main view for the admidio plugin keymanager
  *
  * @copyright The Admidio Team
  * @see https://www.admidio.org/
@@ -39,19 +29,10 @@ use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Users\Entity\User;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/keys.php');
-require_once(__DIR__ . '/classes/configtable.php');
-
-//$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/keymanager...
-$scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
-
-// only authorized user are allowed to start this module
-if (!isUserAuthorized($scriptName))
-{
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
+require_once(__DIR__ . '/../classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 if (!isset($_SESSION['pKeyManager']['filter_string']))
 {
@@ -100,14 +81,7 @@ else
 }
 
 $pPreferences = new ConfigTablePKM();
-if ($pPreferences->checkForUpdate())
-{
-	$pPreferences->init();
-}
-else
-{
-	$pPreferences->read();
-}
+$pPreferences->read();
 
 // initialize some special mode parameters
 $separator   = '';
@@ -152,7 +126,7 @@ switch ($getMode)
         $classTable  = 'table table-condensed table-striped';
         break;
     case 'xlsx':
-	    include_once(__DIR__ . '/libs/PHP_XLSXWriter/xlsxwriter.class.php');
+	    include_once(__DIR__ . '/../libs/PHP_XLSXWriter/xlsxwriter.class.php');
 	    $getMode     = 'xlsx';
 	    break;
     default:
@@ -260,7 +234,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $page->addJavascript('
             $("#filter_keyname").change(function () {
               
-                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                         'mode'              => 'html',
                         'filter_string'     => $getFilterString,
                         'filter_receiver'   => $getFilterReceiver,
@@ -272,7 +246,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
             });
             $("#filter_receiver").change(function () {
            
-                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                         'mode'              => 'html',
                         'filter_string'     => $getFilterString,
                         'filter_keyname'    => $getFilterKeyName,
@@ -283,7 +257,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
        
             });
             $("#menu_item_lists_print_view").click(function() {
-                window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                     'filter_string'     => $getFilterString, 
                     'filter_keyname'    => $getFilterKeyName, 
                     'filter_receiver'   => $getFilterReceiver,
@@ -313,7 +287,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         
             $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'bi-download');
             $page->addPageFunctionsMenuItem('menu_item_lists_xlsx', $gL10n->get('SYS_MICROSOFT_EXCEL').' (XLSX)',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                     'filter_string'     => $getFilterString,
                     'filter_keyname'    => $getFilterKeyName,
                     'filter_receiver'   => $getFilterReceiver,
@@ -322,7 +296,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'xlsx')),
                 'bi-file-earmark-excel', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL').' (CSV)',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                     'filter_string'     => $getFilterString,
                     'filter_keyname'    => $getFilterKeyName,
                     'filter_receiver'   => $getFilterReceiver,
@@ -331,7 +305,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'csv-ms')),
                 'bi-filetype-csv', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_pdf', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                     'filter_string'     => $getFilterString,
                     'filter_keyname'    => $getFilterKeyName,
                     'filter_receiver'   => $getFilterReceiver,
@@ -340,7 +314,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'pdf')),
                 'bi-file-earmark-pdf', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_pdfl', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                     'filter_string'     => $getFilterString,
                     'filter_keyname'    => $getFilterKeyName,
                     'filter_receiver'   => $getFilterReceiver,
@@ -349,7 +323,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'pdfl')),
                 'bi-file-earmark-pdf', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_csv', $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array(
                     'filter_string'     => $getFilterString,
                     'filter_keyname'    => $getFilterKeyName,
                     'filter_receiver'   => $getFilterReceiver,
@@ -361,10 +335,10 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         
         if (isUserAuthorizedForPreferences())
 		{
-    		$page->addPageFunctionsMenuItem('menu_preferences', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'bi-gear-fill');
+    		$page->addPageFunctionsMenuItem('menu_preferences', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences.php'),  'bi-gear-fill');
 		} 
         
-		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keymanager.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
+		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keymanager.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
         
 		if ($getExportAndFilter)
 		{  
@@ -606,7 +580,7 @@ foreach ($keys->keys as $key)
           
 		if ($kmfNameIntern == 'KEYNAME' && $getMode == 'html')
         {
-          	$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => $key['kmk_id'])).'">'.$content.'</a>';
+          	$content = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_edit_new.php', array('key_id' => $key['kmk_id'])).'">'.$content.'</a>';
         }
           
         if ($keys->getProperty($kmfNameIntern, 'kmf_type') == 'CHECKBOX')
@@ -676,13 +650,13 @@ foreach ($keys->keys as $key)
     	
     	if ($pPreferences->isPffInst())
     	{
-    		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_export_to_pff.php', array('key_id' => $key['kmk_id'])). '">
+    		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/system/keys_export_to_pff.php', array('key_id' => $key['kmk_id'])). '">
     	                       <i class="bi bi-printer" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_PRINT').'"></i>
     	                   </a>';
     	}
     	if (isUserAuthorizedForPreferences())
     	{
-    		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/keys_delete.php', array('key_id' => $key['kmk_id'], 'key_former' => $key['kmk_former'])). '">
+    		$tempValue .= '<a class="admidio-icon-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/system/keys_delete.php', array('key_id' => $key['kmk_id'], 'key_former' => $key['kmk_former'])). '">
     	                       <i class="bi bi-trash" title="'.$gL10n->get('PLG_KEYMANAGER_KEY_DELETE').'"></i>
     	                   </a>';
     	}

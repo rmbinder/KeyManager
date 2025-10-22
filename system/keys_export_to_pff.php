@@ -18,10 +18,10 @@
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../system/common.php');
-require_once(__DIR__ . '/classes/keys.php');
+require_once(__DIR__ . '/../../../system/common.php');
+require_once(__DIR__ . '/../classes/keys.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/..//configtable.php');
 
 // Initialize and check the parameters
 $getKeyId = admFuncVariableIsValid($_GET, 'key_id',  'int');
@@ -34,7 +34,7 @@ $pPreferences->readPff();
 
 if (substr_count($gNavigation->getUrl(), 'keys_export_to_pff') === 1)
 {
-	admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER. '/keymanager.php');
+	admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER. '/system/keymanager.php');
 	// => EXIT
 }
 

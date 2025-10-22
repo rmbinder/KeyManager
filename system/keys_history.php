@@ -21,10 +21,10 @@
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Users\Entity\User;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/keys.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 // calculate default date from which the key fields history should be shown
 $filterDateFrom = DateTime::createFromFormat('Y-m-d', DATE_NOW);
@@ -110,7 +110,7 @@ $page = new HtmlPage('plg-keymanager-keys-history', $headline);
 
 // create filter menu with input elements for Startdate and Enddate                                                 //todo !!!!!!!!!!!!!!!!!!!!!!ohne Umweg �ber $form
 $FilterNavbar = new HtmlNavbar('menu_profile_field_history_filter', '', null, 'filter');
-$form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_history.php', $page, array('type' => 'navbar', 'setFocus' => false));
+$form = new HtmlForm('navbar_filter_form', ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_history.php', $page, array('type' => 'navbar', 'setFocus' => false));
 $form->addInput('filter_date_from', $gL10n->get('SYS_START'), $dateFromHtml, array('type' => 'date', 'maxLength' => 10));
 $form->addInput('filter_date_to', $gL10n->get('SYS_END'), $dateToHtml, array('type' => 'date', 'maxLength' => 10));
 $form->addInput('key_id', '', $getKeyId, array('property' => HtmlForm::FIELD_HIDDEN));

@@ -11,10 +11,10 @@
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/keys.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/keys.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 $pPreferences = new ConfigTablePKM();
 $pPreferences->read();
@@ -89,7 +89,7 @@ $page->addHtml('
 
 // PANEL: KEYCREATE
 
-$formKeyCreate = new HtmlForm('keycreate_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/keys_edit_new.php', array('key_id' => 0)), $page);
+$formKeyCreate = new HtmlForm('keycreate_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/keys_edit_new.php', array('key_id' => 0)), $page);
 $formKeyCreate->addSubmitButton('btn_save_keycreate', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE'), array('icon' => 'bi-plus-circle', 'class' => 'offset-sm-3'));
 $formKeyCreate->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_KEY_CREATE_DESC'));
 
@@ -97,7 +97,7 @@ $page->addHtml(getPreferencePanel('preferences', 'keycreate', $gL10n->get('PLG_K
 
 // PANEL: KEYFIELDS
 
-$formKeyFields = new HtmlForm('keyfields_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/fields.php'), $page);    
+$formKeyFields = new HtmlForm('keyfields_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields.php'), $page);    
 $formKeyFields->addSubmitButton('btn_save_keyfields', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE'), array('icon' => 'bi-pen', 'class' => 'offset-sm-3'));
 $formKeyFields->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC'));
                         
@@ -107,7 +107,7 @@ $page->addHtml(getPreferencePanel('preferences', 'keyfields', $gL10n->get('PLG_K
 
 unset($_SESSION['pKeyManager']['synchronize']);
 
-$formSynchronize = new HtmlForm('synchronize_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/synchronize.php'), $page);                        
+$formSynchronize = new HtmlForm('synchronize_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/synchronize.php'), $page);                        
 $formSynchronize->addSubmitButton('btn_save_synchronize', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE'), array('icon' => 'bi-arrow-repeat', 'class' => ' offset-sm-3'));
 $formSynchronize->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_SYNCHRONIZE_DESC'));
   
@@ -118,7 +118,7 @@ $page->addHtml(getPreferencePanel('preferences', 'synchronize', $gL10n->get('PLG
 // show menu item 'interface to formfiller' only if plugin formfiller is installed
 if ($pPreferences->isPffInst())
 {                      
-    $formInterfacePFF = new HtmlForm('interface_pff_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'interface_pff')), $page, array('class' => 'form-preferences'));
+    $formInterfacePFF = new HtmlForm('interface_pff_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'interface_pff')), $page, array('class' => 'form-preferences'));
     $formInterfacePFF->addSelectBox('interface_pff', $gL10n->get('PLG_KEYMANAGER_CONFIGURATION'), $pPreferences->configpff['Formular']['desc'], array( 'defaultValue' => $pPreferences->config['Optionen']['interface_pff'], 'showContextDependentFirstEntry' => false));
     $formInterfacePFF->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_INTERFACE_PFF_DESC'));
     $formInterfacePFF->addSubmitButton('btn_save_interface_pff', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
@@ -128,7 +128,7 @@ if ($pPreferences->isPffInst())
   
 // PANEL: PROFILE ADDIN
 
-$formProfileAddin = new HtmlForm('profile_addin_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'profile_addin')), $page, array('class' => 'form-preferences'));
+$formProfileAddin = new HtmlForm('profile_addin_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'profile_addin')), $page, array('class' => 'form-preferences'));
 
 $keys = new Keys($gDb, $gCurrentOrgId);
 $valueList = array();
@@ -148,7 +148,7 @@ $page->addHtml(getPreferencePanel('preferences', 'profile_addin', $gL10n->get('P
 
 // PANEL: EXPORT
 
-$formExport = new HtmlForm('export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'export')), $page, array('class' => 'form-preferences'));
+$formExport = new HtmlForm('export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'export')), $page, array('class' => 'form-preferences'));
 $formExport->addInput('file_name', $gL10n->get('PLG_KEYMANAGER_FILE_NAME'), $pPreferences->config['Optionen']['file_name'], array('helpTextId' => 'PLG_KEYMANAGER_FILE_NAME_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
 $formExport->addCheckbox('add_date', $gL10n->get('PLG_KEYMANAGER_ADD_DATE'), $pPreferences->config['Optionen']['add_date'], array('helpTextId' => 'PLG_KEYMANAGER_ADD_DATE_DESC'));
 $formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
@@ -157,7 +157,7 @@ $page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYM
 
 // PANEL: DEINSTALLATION
 
-$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)), $page);
+$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('mode' => 2)), $page);
 $formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
 $formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_DEINSTALLATION_DESC'));
 
@@ -165,7 +165,7 @@ $page->addHtml(getPreferencePanel('preferences', 'deinstallation', $gL10n->get('
 
 // PANEL: ACCESS_PREFERENCES
                     
-$formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));
+$formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));
 
 $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
           FROM '.TBL_CATEGORIES.' AS cat, '.TBL_ROLES.' AS rol
