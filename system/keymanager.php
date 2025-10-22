@@ -28,11 +28,11 @@
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Users\Entity\User;
+use Plugins\KeyManager\classes\Config\ConfigTable;
+use Plugins\KeyManager\classes\Service\Keys;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/keys.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
 if (!isset($_SESSION['pKeyManager']['filter_string']))
 {
@@ -80,7 +80,7 @@ else
     $getExportAndFilter = $_SESSION['pKeyManager']['export_and_filter'];
 }
 
-$pPreferences = new ConfigTablePKM();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 // initialize some special mode parameters

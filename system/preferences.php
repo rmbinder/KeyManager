@@ -10,13 +10,13 @@
  */
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Plugins\KeyManager\classes\Config\ConfigTable;
+use Plugins\KeyManager\classes\Service\Keys;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/keys.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
-$pPreferences = new ConfigTablePKM();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module

@@ -19,17 +19,17 @@
 
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Plugins\KeyManager\classes\Config\ConfigTable;
+use Plugins\KeyManager\classes\Service\Keys;
 
 require_once(__DIR__ . '/../../../system/common.php');
-require_once(__DIR__ . '/../classes/keys.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 require_once(__DIR__ . '/common_function.php');
 
 // Initialize and check the parameters
 $getKeyId = admFuncVariableIsValid($_GET, 'key_id', 'int');
 $getCopy  = admFuncVariableIsValid($_GET, 'copy',   'bool');
 
-$pPreferences = new ConfigTablePKM();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 $keys = new Keys($gDb, $gCurrentOrgId);

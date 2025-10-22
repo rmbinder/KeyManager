@@ -22,6 +22,7 @@ use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Exception;
 use Admidio\Users\Entity\User;
+use Plugins\KeyManager\classes\Config\ConfigTable;
 
 // Fehlermeldungen anzeigen
 error_reporting(E_ALL);
@@ -29,8 +30,6 @@ error_reporting(E_ALL);
 try {
     require_once (__DIR__ . '/../../system/common.php');
     require_once (__DIR__ . '/system/common_function.php');
-    require_once (__DIR__ . '/classes/keys.php');
-    require_once (__DIR__ . '/classes/configtable.php');
 
     // $scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/keymanager...
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
@@ -40,7 +39,7 @@ try {
         throw new Exception('SYS_NO_RIGHTS');
     }
 
-    $pPreferences = new ConfigTablePKM();
+    $pPreferences = new ConfigTable();
     if ($pPreferences->checkForUpdate()) {
         $pPreferences->init();
     } else {

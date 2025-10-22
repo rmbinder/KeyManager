@@ -31,6 +31,42 @@ if (! defined('TBL_KEYMANAGER_LOG')) {
     define('TBL_KEYMANAGER_LOG', $g_tbl_praefix . '_keymanager_log');
 }
 
+spl_autoload_register('myAutoloader');
+
+/**
+ * Mein Autoloader
+ * Script aus dem Netz
+ * https://www.marcosimbuerger.ch/tech-blog/php-autoloader.html
+ * @param   string  $className   Die übergebene Klasse
+ * @return  string  Der überprüfte Klassenname
+ */
+function myAutoloader($className) {
+    // Projekt spezifischer Namespace-Prefix.
+    $prefix = 'Plugins\\';
+    
+    // Base-Directory für den Namespace-Prefix.
+    $baseDir = __DIR__ . '/../../';
+    
+    // Check, ob die Klasse den Namespace-Prefix verwendet.
+    $len = strlen($prefix);
+    
+    if (strncmp($prefix, $className, $len) !== 0) {
+        // Wenn der Namespace-Prefix nicht verwendet wird, wird abgebrochen.
+        return;
+    }
+    // Den relativen Klassennamen ermitteln.
+    $relativeClassName = substr($className, $len);
+    
+    // Den Namespace-Präfix mit dem Base-Directory ergänzen,
+    // Namespace-Trennzeichen durch Verzeichnis-Trennzeichen im relativen Klassennamen ersetzen,
+    // .php anhängen.
+    $file = $baseDir . str_replace('\\', '/', $relativeClassName) . '.php';
+    // Pfad zur Klassen-Datei zurückgeben.
+    if (file_exists($file)) {
+        require $file;
+    }
+}
+
 /**
  * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
  * Zur Prüfung werden die Einstellungen von 'Modulrechte' und 'Sichtbar für'

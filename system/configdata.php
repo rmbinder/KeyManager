@@ -9,8 +9,6 @@
  ***********************************************************************************************
  */
 
-global $gProfileFields;
-
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration
 $config_default['Optionen']['interface_pff'] = 0;
 $config_default['Optionen']['profile_addin'] = '';

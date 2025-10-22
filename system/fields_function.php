@@ -23,17 +23,17 @@
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Menu\Entity\MenuEntry;
+use Plugins\KeyManager\classes\Config\ConfigTable;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getKmfId    = admFuncVariableIsValid($_GET, 'kmf_id',   'int');
 $getMode     = admFuncVariableIsValid($_GET, 'mode',     'int',    array('requireValue' => true));
 $getSequence = admFuncVariableIsValid($_GET, 'sequence', 'string', array('validValues' => array(MenuEntry::MOVE_UP, MenuEntry::MOVE_DOWN)));
 
-$pPreferences = new ConfigTablePKM();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module

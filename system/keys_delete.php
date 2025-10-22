@@ -23,18 +23,18 @@
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Users\Entity\User;
+use Plugins\KeyManager\classes\Config\ConfigTable;
+use Plugins\KeyManager\classes\Service\Keys;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/keys.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getMode      = admFuncVariableIsValid($_GET, 'mode',      'numeric', array('defaultValue' => 1));
 $getKeyId     = admFuncVariableIsValid($_GET, 'key_id',    'int');
 $getKeyFormer = admFuncVariableIsValid($_GET, 'key_former', 'bool');
 
-$pPreferences = new ConfigTablePKM();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module

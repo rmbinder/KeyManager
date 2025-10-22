@@ -20,11 +20,10 @@
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Users\Entity\User;
+use Plugins\KeyManager\classes\Service\Keys;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/keys.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
 // calculate default date from which the key fields history should be shown
 $filterDateFrom = DateTime::createFromFormat('Y-m-d', DATE_NOW);
