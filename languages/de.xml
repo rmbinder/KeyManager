@@ -56,7 +56,6 @@
     <string name="PLG_KEYMANAGER_KEYLIST">Schlüsselliste</string>   
     <string name="PLG_KEYMANAGER_KEYMANAGER">Schlüsselverwalter</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Schlüsselname</string>
-    <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Neu</string>
     <string name="PLG_KEYMANAGER_NUMBER">Anzahl</string>

@@ -55,8 +55,7 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Les champs clés peuvent être créées et traitées dans la gestion des champs clés.</string>
     <string name="PLG_KEYMANAGER_KEYLIST">Liste des clés</string>
     <string name="PLG_KEYMANAGER_KEYMANAGER">Administrateur clé</string>
-    <string name="PLG_KEYMANAGER_KEYNAME">Nom clé</string>
-    <string name="PLG_KEYMANAGER_MENU_URL_ERROR">Le contrôle d\'autorisation du plug-in a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string>    
+    <string name="PLG_KEYMANAGER_KEYNAME">Nom clé</string>  
     <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Nouveau</string>
     <string name="PLG_KEYMANAGER_NUMBER">Nombre</string>

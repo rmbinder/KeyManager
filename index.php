@@ -35,7 +35,7 @@ try {
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
 
     // only authorized user are allowed to start this module
-    if (! isUserAuthorized($scriptName)) {
+    if (! isUserAuthorized()) {
         throw new Exception('SYS_NO_RIGHTS');
     }
 
