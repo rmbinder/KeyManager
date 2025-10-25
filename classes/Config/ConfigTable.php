@@ -23,8 +23,6 @@
  * read()						          -	liest die Konfigurationsdaten aus der Datenbank
  * checkForUpdate()				          -	vergleicht die Angaben in der Datei version.php
  * 									        mit den Daten in der DB
- * deleteConfigData($deinst_org_select)   -	loescht Konfigurationsdaten in der Datenbank
- * deleteKeyData($deinst_org_select)      - Loescht Nutzerdaten in der Datenbank
  *
  *****************************************************************************/
      	
@@ -313,7 +311,9 @@ class ConfigTable
 		
 		$this->config['Plugininformationen']['version'] = self::$version;
 		$this->config['Plugininformationen']['stand'] = self::$stand;
-	
+		$this->config['Plugininformationen']['table_name'] = $this->table_name;
+		$this->config['Plugininformationen']['shortcut'] = self::$shortcut;
+		
 		// die eingelesenen Konfigurationsdaten in ein Arbeitsarray kopieren
 		$config_ist = $this->config;
 
@@ -538,136 +538,27 @@ class ConfigTable
     	return $ret;
 	}
 	
-    /**
-     * Loescht die Konfigurationsdaten in der Datenbank
-     * @param   int     $deinst_org_select  0 = Daten nur in aktueller Org loeschen, 1 = Daten in allen Org loeschen
-     * @return  string  $result             Ergebnismeldung
-     */
-	public function deleteConfigData($deinst_org_select)
-	{
-    	$result      = '';		
-    	$sqlWhereCondition = '';
-		$result_data = false;
-		$result_db   = false;
-		
-		if ($deinst_org_select == 0)                    //0 = Daten nur in aktueller Org loeschen 
-		{
-			$sqlWhereCondition = 'AND plp_org_id =  \''.$GLOBALS['gCurrentOrgId'].'\' ';	
-		}
-
-		$sql = 'DELETE FROM '.$this->table_name.'
-        			  WHERE plp_name LIKE ?
-                      '. $sqlWhereCondition ;
-		$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'__%'));	
-		$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($this->table_name)) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($this->table_name)));
-		
-		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
-		$sql = 'SELECT * FROM '.$this->table_name.' ';
-		$statement = $GLOBALS['gDb']->queryPrepared($sql);
-
-    	if ($statement->rowCount() == 0)
-    	{
-        	$sql = 'DROP TABLE '.$this->table_name.' ';
-        	$result_db = $GLOBALS['gDb']->queryPrepared($sql);
-        	$result .= ($result_db ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', array($this->table_name )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', array($this->table_name)));
-        }
-        else
-        {
-        	$result .= $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE', array($this->table_name )) ;
-        }
-		
-		return $result;
-	}
-	
-	/**
-	 * Loescht die Nutzerdaten in der Datenbank
-	 * @param   int     $deinst_org_select  0 = Daten nur in aktueller Org loeschen, 1 = Daten in allen Orgs loeschen
-	 * @return  string  $result             Ergebnismeldung
+    
+    	/**
+	 * Liest alle Zugriffsrollen ein, die in der Konfigurationstabelle gespeichert sind
+	 * @return  array $data
 	 */
-	public function deleteKeyData($deinst_org_select)
+	public function getAllAccessRoles()
 	{
-		global $g_tbl_praefix;
-	
-		$result = ''; 
-
-		if($deinst_org_select == 0)                   //0 = Daten nur in aktueller Org loeschen
-		{
-			/*$sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
-                          WHERE kmd_kmk_id IN 
-              	        (SELECT kmk_id 
-					       FROM ?
-                	      WHERE kmk_org_id = ? )';
-	
-			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, $GLOBALS['gCurrentOrgId']));	*/
-		    //queryPrepared doesn´t work Why? Since when?
-		    // This code works:
-		    $sql = 'DELETE FROM '.TBL_KEYMANAGER_DATA.'
-                          WHERE kmd_kmk_id IN
-              	        (SELECT kmk_id
-					       FROM '.TBL_KEYMANAGER_KEYS.'
-                	      WHERE kmk_org_id = \''.$GLOBALS['gCurrentOrgId'].'\' )';
-		    $result_data = $GLOBALS['gDb']->query($sql);
-		    
-			$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_data' )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_data' )));
-		
-			/*$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
-                          WHERE kml_kmk_id IN 
-				        (SELECT kmk_id 
-					       FROM ?
-                          WHERE kmk_org_id = ? )';
-
-			$result_log = $GLOBALS['gDb']->queryPrepared($sql, array(TBL_KEYMANAGER_KEYS, $GLOBALS['gCurrentOrgId']));	*/
-			$sql = 'DELETE FROM '.TBL_KEYMANAGER_LOG.'
-                          WHERE kml_kmk_id IN
-				        (SELECT kmk_id
-					       FROM '.TBL_KEYMANAGER_KEYS.'
-                          WHERE kmk_org_id = \''.$GLOBALS['gCurrentOrgId'].'\' )';
-			
-			$result_log = $GLOBALS['gDb']->query($sql);
-			
-			$result .= ($result_log ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_log' )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_log')));
-		
-			$sql = 'DELETE FROM '.TBL_KEYMANAGER_KEYS.'
-	        	          WHERE kmk_org_id = ? ';
-
-			$result_keys = $GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId']));
-			$result .= ($result_keys ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_keys' )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_keys')));
-		
-			$sql = 'DELETE FROM '.TBL_KEYMANAGER_FIELDS.'
-                          WHERE kmf_org_id = ? ';
-			
-			$result_fields = $GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId']));
-			$result .= ($result_fields ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN', array($g_tbl_praefix . '_keymanager_fields' )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR', array($g_tbl_praefix . '_keymanager_fields')));
-		}
-		
-		//drop tables keys, data, log and fields 
-		$table_array = array(
-				TBL_KEYMANAGER_FIELDS,
-				TBL_KEYMANAGER_DATA,
-				TBL_KEYMANAGER_KEYS,
-				TBL_KEYMANAGER_LOG );
-	
-		foreach ($table_array as $table_name)
-		{
-			$result_db   = false;
-			
-			// wenn in der Tabelle keine Eintraege mehr sind, dann kann sie geloescht werden
-			// oder wenn 'Daten in allen Orgs loeschen' gewaehlt wurde
-			$sql = 'SELECT * FROM '.$table_name.' ';
-			$statement = $GLOBALS['gDb']->queryPrepared($sql);
-				
-			if ($statement->rowCount() == 0 || $deinst_org_select == 1)
-			{
-				$sql = 'DROP TABLE '.$table_name.' ';
-				$result_db = $GLOBALS['gDb']->queryPrepared($sql);
-				$result .= ($result_db ? $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_TABLE_DELETED', array($table_name )) : $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR', array($table_name)));
-			}
-			else 
-			{
-				$result .= $GLOBALS['gL10n']->get('PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE', array($table_name)) ;
-			}
-		}
-		
-		return $result;
+	    global $gDb;
+	    
+	    $data = array();
+	    
+	    $sql = 'SELECT plp_id, plp_name, plp_value, plp_org_id
+                  FROM '.$this->table_name.'
+                 WHERE plp_name = ? ';
+	    $statement = $gDb->queryPrepared($sql, array(self::$shortcut.'__install__access_role_id'));
+	    
+	    while ($row = $statement->fetch())
+	    {
+	        $data[] = $row['plp_value'];
+	    }
+	    
+	    return $data;
 	}
 }

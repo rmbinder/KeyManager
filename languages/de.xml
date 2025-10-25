@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
-    <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>   
+    <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Hier können, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigt werden.</string> 
+    <string name="PLG_KEYMANAGER_ACCESS_ROLE">Zugriffsrolle</string>
+    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Zugriff auf das Plugin KeyManager</string>
+    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN_DESC">Mitglieder dieser Rolle haben Zugriff auf das Plugin KeyManager</string>          
     <string name="PLG_KEYMANAGER_ADD_DATE">Datum anfügen</string>
     <string name="PLG_KEYMANAGER_ADD_DATE_DESC">Soll an eine Exportdatei ein Datum im Format JJJJ-MM-TT angefügt werden, so ist der Haken zu setzen.</string>    
+    <string name="PLG_KEYMANAGER_CONFIG_DATA">Konfigurations- und Schlüsseldaten</string>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Konfiguration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Einstellungen für das Kopieren eines Schlüssels:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">erstellt mit dem Plugin KeyManager der Online-Mitgliederverwaltung Admidio</string> 
-    <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Nur Daten der aktuellen Organisation löschen.</string>
-    <string name="PLG_KEYMANAGER_DEINST_ALLORG">Daten in allen Organisationen löschen.</string>
-    <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- Die Tabelle #VAR1_BOLD# konnte nicht gelöscht werden, da sich darin noch Daten einer weiteren Organisation oder eines anderen Plugins befinden.\n</string> 
-    <string name="PLG_KEYMANAGER_DEINST_DATA_DELETED_IN">- Daten in Tabelle #VAR1_BOLD# gelöscht.\n</string>  
-    <string name="PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR">- Beim Löschen der Daten in Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string>
-    <string name="PLG_KEYMANAGER_DEINST_ENDMESSAGE">\nUm das Plugin vollständig zu entfernen, müssen noch die Programmdateien und der Menü-Eintrag gelöscht werden.</string>
-    <string name="PLG_KEYMANAGER_DEINST_STARTMESSAGE">Folgende Löschvorgänge wurden durchgeführt:\n\n</string>
-    <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR">- Beim Löschen der Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string> 
-    <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE">- Die Tabelle #VAR1_BOLD# konnte nicht gelöscht werden, da sich darin noch Daten einer weiteren Organisation befinden.\n</string> 
-    <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETED">- Tabelle #VAR1_BOLD# gelöscht.\n</string>  
-    <string name="PLG_KEYMANAGER_DEINSTALLATION">Deinstallation</string>
-    <string name="PLG_KEYMANAGER_DEINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge in der Datenbank gelöscht werden.</string>
-    <string name="PLG_KEYMANAGER_DEINSTALLATION_FORM_DESC">Wähle den Installationsumfang aus.\n\n***ACHTUNG: Diese Routine löscht nur Einträge in der Admidio-Datenbank. Programmdateien und der Link im Menü werden nicht gelöscht! ***</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
@@ -54,9 +45,10 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE">Schlüsselfelder pflegen</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">In der Schlüsselfeldpflege können Schlüsselfelder angelegt und bearbeitet werden.</string>
     <string name="PLG_KEYMANAGER_KEYLIST">Schlüsselliste</string>   
-    <string name="PLG_KEYMANAGER_KEYMANAGER">Schlüsselverwalter</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Schlüsselname</string>
-    <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
+    <string name="PLG_KEYMANAGER_MENU_ITEM">Menüpunkt</string>
+    <string name="PLG_KEYMANAGER_NAME">KeyManager</string>
+    <string name="PLG_KEYMANAGER_NAME_DESC">Das Plugin KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Neu</string>
     <string name="PLG_KEYMANAGER_NUMBER">Anzahl</string>
     <string name="PLG_KEYMANAGER_NUMBER_DESC">Anzahl der anzufügenden Schlüssel</string>
@@ -79,8 +71,32 @@
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">Alle Benutzer sind Empfänger eines Schlüssels, es kann kein Abgleich durchgeführt werden.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">Dies ist nur eine Übersicht des Abgleichs, es wurde noch nichts gespeichert.\n\n Benutzer können nur zu Ehemaligen gemacht werden, wenn die Anzahl der Schlüssel 0 beträgt und sie nicht Administrator oder der aktuelle Benutzer sind.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">Die aufgelisteten Benutzer sind jetzt Ehemalige.</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE">Entferne Zugriffsrolle</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ALERT">Es werden nur Rollen (=Zugriffsrollen) entfernt, die durch das Plugin während des Setups angelegt wurden.</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR">- Beim Löschen der Zugriffsrollen ist ein Fehler aufgetreten. Es konnten nicht alle Zugriffsrollen gelöscht werden.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- Die vom Plugin angelegten Zugriffsrollen wurden gelöscht.\n</string>   
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLES_STILL_PRESENT">- Der Menüpunkt kann nicht gelöscht werden, da noch Zugriffsrollen vorhanden sind.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACTORGONLY">nur in der aktuellen Organisation</string>
+    <string name="PLG_KEYMANAGER_UNINST_ALLORG">in allen Organisationen</string>            
+    <string name="PLG_KEYMANAGER_UNINST_CONFIG_DATA">Entferne Konfigurations- und Schlüsseldaten</string>
+    <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- Beim Löschen der Konfigurationsdaten ist ein Fehler aufgetreten.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- Die vom Plugin angelegten Konfigurationsdaten wurden gelöscht.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Daten in Tabelle #VAR1_BOLD# gelöscht.\n</string>  
+    <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR">- Beim Löschen der Daten in Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- Beim Löschen der Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_NOTPOSSIBLE">- Die Tabelle #VAR1_BOLD# konnte nicht gelöscht werden, da sich darin noch Daten einer weiteren Organisation befinden.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETED">- Tabelle #VAR1_BOLD# gelöscht.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM">Entferne Menüpunkt</string> 
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ALERT">Der Menüpunkt wird nur entfernt, wenn vorher alle vom Plugin angelegten Zugriffsrollen (auch in anderen Organisationen) gelöscht wurden.</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ERROR">- Beim Löschen des Menüpunktes ist ein Fehler aufgetreten.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_SUCCESS">- Der vom Plugin angelegte Menüpunkt wurde gelöscht.\n</string>               
+    <string name="PLG_KEYMANAGER_UNINST_STARTMESSAGE">Folgende Löschvorgänge wurden durchgeführt:\n\n</string>  
+    <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>    
+    <string name="PLG_KEYMANAGER_UNINSTALLATION">Deinstallation</string>
+    <string name="PLG_KEYMANAGER_UNINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge gelöscht werden.</string> 
     <!-- Phrases only in Database -->
     <string name="PKM_KEYNAME">Schlüsselname</string>
     <string name="PKM_RECEIVED_ON">empfangen am</string>
-    <string name="PKM_RECEIVER">Empfänger</string>        
+    <string name="PKM_RECEIVER">Empfänger</string> 
 </resources>

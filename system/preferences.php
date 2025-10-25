@@ -155,13 +155,13 @@ $formExport->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'),
 
 $page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYMANAGER_EXPORT'), 'bi bi-file-arrow-down', $formExport->show()));
 
-// PANEL: DEINSTALLATION
+// PANEL: UNINSTALLATION
 
-$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('mode' => 2)), $page);
-$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
-$formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_DEINSTALLATION_DESC'));
+$formUninstallation = new HtmlForm('uninstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/uninstallation.php'), $page);
+$formUninstallation->addSubmitButton('btn_save_uninstallation', $gL10n->get('PLG_KEYMANAGER_UNINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
+$formUninstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_UNINSTALLATION_DESC'));
 
-$page->addHtml(getPreferencePanel('preferences', 'deinstallation', $gL10n->get('PLG_KEYMANAGER_DEINSTALLATION'), 'bi bi-trash', $formDeinstallation->show()));
+$page->addHtml(getPreferencePanel('preferences', 'uninstallation', $gL10n->get('PLG_KEYMANAGER_UNINSTALLATION'), 'bi bi-trash', $formUninstallation->show()));
 
 // PANEL: ACCESS_PREFERENCES
                     
@@ -181,7 +181,7 @@ $page->addHtml(getPreferencePanel('preferences', 'access_preferences', $gL10n->g
 // PANEL: PLUGIN INFORMATIONS
 
 $formPluginInformations = new HtmlForm('plugin_informations_preferences_form', '', $page, array('class' => 'form-preferences'));                   
-$formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_KEYMANAGER_PLUGIN_NAME'), $gL10n->get('PLG_KEYMANAGER_NAME_OF_PLUGIN'));
+$formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_KEYMANAGER_PLUGIN_NAME'), $gL10n->get('PLG_KEYMANAGER_NAME'));
 $formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_KEYMANAGER_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
 $formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_KEYMANAGER_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
 

@@ -44,13 +44,13 @@ if (sizeof($keys->keys) === 0)
 }
 
 $page->addHtml('<div class="card admidio-field-group" id="keymanager_box">
-				<div class="card-header">'.$gL10n->get('PLG_KEYMANAGER_KEYMANAGER'));
+				<div class="card-header">'.$gL10n->get('PLG_KEYMANAGER_NAME'));
 $page->addHtml('<a class="admidio-icon-link float-right" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/'.PLUGIN_FOLDER.'/system/keymanager.php', array(
                         'export_and_filter' => true,
                         'show_all'          => true,
                         'same_side'         => true,
                         'filter_receiver'   => $user->getValue('usr_id'))). '">
-                    <i class="bi bi-key" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_KEYMANAGER').'"></i>
+                    <i class="bi bi-key" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_KEYMANAGER_NAME').'"></i>
     	        </a>');
 $page->addHtml('</div><div id="keymanager_box_body" class="card-body">');
 

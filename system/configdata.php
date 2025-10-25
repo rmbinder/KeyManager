@@ -17,6 +17,8 @@ $config_default['Optionen']['add_date'] = 0;
 															
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';
+$config_default['Plugininformationen']['table_name'] = '';
+$config_default['Plugininformationen']['shortcut'] = '';
 
 //Zugriffsberechtigung für das Modul preferences
 $config_default['access']['preferences'] = array();

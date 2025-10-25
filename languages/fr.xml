@@ -2,24 +2,15 @@
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>     
+    <string name="PLG_KEYMANAGER_ACCESS_ROLE">Rôle d'accès</string>
+    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Accès au plugin KeyManager</string>
+    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN_DESC">Les membres de ce rôle ont accès au plugin KeyManager</string>          
     <string name="PLG_KEYMANAGER_ADD_DATE">Ajouter la date</string>
     <string name="PLG_KEYMANAGER_ADD_DATE_DESC">Si une date au format AAAA-MM-JJ doit être ajoutée à un fichier d'exportation, la coche doit être cochée.</string> 
+    <string name="PLG_KEYMANAGER_CONFIG_DATA">Configuration et données clés</string>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Paramètres de copie d'une clé:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">créé avec le Plugin KeyManager de l'administration des membres en ligne Admidio</string> 
-    <string name="PLG_KEYMANAGER_DEINST_ACTORGONLY">Supprimer uniquement les données de l\'organisation actuelle.</string>
-    <string name="PLG_KEYMANAGER_DEINST_ALLORG">Supprimer les données de toutes les organisations.</string>
-    <string name="PLG_KEYMANAGER_DEINST_CONFIGTABLE_DELETE_NOTPOSSIBLE">- La table #VAR1_BOLD# n\'a pas pu être supprimé parce qu\'il contient encore des données d\'une autre organisation ou d\'un autre plugin. \n</string> 
-    <string name="PLG_KEYMANAGER_DEINST_DATA_DELETED_IN">- Données de la table #VAR1_BOLD# effacé.\n</string>  
-    <string name="PLG_KEYMANAGER_DEINST_DATA_DELETED_IN_ERROR">- Une erreur s\'est produite lors de la suppression des données de la table #VAR1_BOLD#.\n</string>
-    <string name="PLG_KEYMANAGER_DEINST_ENDMESSAGE">\nPour supprimer complètement le plugin, les fichiers du programme et l\'entrée de menu doivent encore être supprimés.</string>
-    <string name="PLG_KEYMANAGER_DEINST_STARTMESSAGE">Les suppressions suivantes ont été effectuées:\n\n</string>
-    <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression de la table #VAR1_BOLD#.\n</string> 
-    <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETE_NOTPOSSIBLE">- La table #VAR1_BOLD# n\'a pas pu être supprimée parce qu\'elle contient encore des données d\'une autre organisation.\n</string> 
-    <string name="PLG_KEYMANAGER_DEINST_TABLE_DELETED">- La table #VAR1_BOLD# supprimée.\n</string>  
-    <string name="PLG_KEYMANAGER_DEINSTALLATION">Désinstallation</string>
-    <string name="PLG_KEYMANAGER_DEINSTALLATION_DESC">En désinstallant le plug-in, les entrées créées par le plugin peuvent être supprimées de la base de données.</string>
-    <string name="PLG_KEYMANAGER_DEINSTALLATION_FORM_DESC">Sélectionne l\'étendue de l\'installation.\n\n***ATTENTION: Cette routine ne supprime que les entrées de la base de données Admidio. Les fichiers de programme et le lien dans le menu ne sont pas effacés ! ***</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
@@ -44,7 +35,7 @@
     <string name="PLG_KEYMANAGER_KEY_MADE_TO_FORMER">Clé retirée</string>    
     <string name="PLG_KEYMANAGER_KEY_MAKE_TO_FORMER">Tu peux marquer la clé comme retirée. Cela présente l\'avantage que les données sont conservées et tu peux voir plus tard encore qui a emprunté cette clé. Si tu sélectionne Supprimer, les données sont irrévocablement supprimé de la base de données et il n\'est pas possible de consulter les données de cette clé ultérieurement.</string>
     <string name="PLG_KEYMANAGER_KEY_PRINT">Imprimer la clé</string>
-     <string name="PLG_KEYMANAGER_KEYFIELD">Champ clé</string>   
+    <string name="PLG_KEYMANAGER_KEYFIELD">Champ clé</string>   
     <string name="PLG_KEYMANAGER_KEYFIELD_CREATE">Générer le champ clé</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE">Supprimer le champ clé</string>
     <string name="PLG_KEYMANAGER_KEYFIELD_DELETE_DESC">Ce champ clé et les données clés correspondantes doivent-elles être supprimées ?</string>
@@ -54,9 +45,10 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE">Gérer les champs clés</string>
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Les champs clés peuvent être créées et traitées dans la gestion des champs clés.</string>
     <string name="PLG_KEYMANAGER_KEYLIST">Liste des clés</string>
-    <string name="PLG_KEYMANAGER_KEYMANAGER">Administrateur clé</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Nom clé</string>  
-    <string name="PLG_KEYMANAGER_NAME_OF_PLUGIN">KeyManager</string>
+    <string name="PLG_KEYMANAGER_MENU_ITEM">Élément de menu</string>
+    <string name="PLG_KEYMANAGER_NAME">KeyManager</string>
+    <string name="PLG_KEYMANAGER_NAME_DESC">Le plugin KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Nouveau</string>
     <string name="PLG_KEYMANAGER_NUMBER">Nombre</string>
     <string name="PLG_KEYMANAGER_NUMBER_DESC">Nombre de clés à ajouter</string>    
@@ -79,8 +71,32 @@
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">Tous les utilisateurs sont les destinataires d'une clé, aucune réconciliation ne peut être effectuée.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">Ceci est juste un aperçu de la comparaison, rien n'a encore été enregistré.\n\n Les utilisateurs ne peuvent devenir des anciens que si le nombre de clés est 0 et qu'il ne s'agit ni de l'administrateur ni de l'utilisateur actuel.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">Les utilisateurs listés sont maintenant des anciens.</string>
-    <!-- Phrases only in Database -->
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE">Supprimer le rôle d'accès</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ALERT">Seuls les rôles (= rôles d'accès) qui ont été créés par le plugin lors de l'installation seront supprimés.</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR">- Une erreur s'est produite lors de la suppression des rôles d'accès. Tous les rôles d'accès n'ont pas pu être supprimés.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- Les rôles d'accès créés par le plugin ont été supprimés.\n</string>   
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLES_STILL_PRESENT">- L'élément de menu ne peut pas être supprimé car les rôles d'accès existent toujours.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACTORGONLY">Supprimer uniquement les données de l\'organisation actuelle.</string>
+    <string name="PLG_KEYMANAGER_UNINST_ALLORG">Supprimer les données de toutes les organisations.</string>
+    <string name="PLG_KEYMANAGER_UNINST_CONFIG_DATA">Supprimer la configuration et les données clés</string>
+    <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- Une erreur s'est produite lors de la suppression des données de configuration.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- Les données de configuration créées par le plugin ont été supprimées.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Données de la table #VAR1_BOLD# effacé.\n</string>  
+    <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR">- Une erreur s\'est produite lors de la suppression des données de la table #VAR1_BOLD#.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression de la table #VAR1_BOLD#.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_NOTPOSSIBLE">- La table #VAR1_BOLD# n\'a pas pu être supprimée parce qu\'elle contient encore des données d\'une autre organisation.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETED">- La table #VAR1_BOLD# supprimée.\n</string>  
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM">Supprimer l'élément de menu</string> 
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ALERT">L'élément de menu ne sera supprimé que si tous les rôles d'accès créés par le plugin (y compris dans d'autres organisations) ont été supprimés au préalable.</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ERROR">- Une erreur s'est produite lors de la suppression de l'élément de menu.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_SUCCESS">- L'élément de menu créé par le plugin a été supprimé.\n</string>               
+    <string name="PLG_KEYMANAGER_UNINST_STARTMESSAGE">Les suppressions suivantes ont été effectuées:\n\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR">- La table "adm_plugin_preferences" n\'a pas pu être supprimée car elle contient encore des données d\'un autre plugin.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>    
+    <string name="PLG_KEYMANAGER_UNINSTALLATION">Désinstallation</string>
+    <string name="PLG_KEYMANAGER_UNINSTALLATION_DESC">Les entrées créées par le plugin peuvent être supprimées via la désinstallation.</string>
+     <!-- Phrases only in Database -->
     <string name="PKM_KEYNAME">Nom de clé</string>
     <string name="PKM_RECEIVED_ON">reçues le</string>
-    <string name="PKM_RECEIVER">Destinataires</string>        
+    <string name="PKM_RECEIVER">Destinataires</string>   
 </resources>

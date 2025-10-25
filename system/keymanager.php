@@ -166,8 +166,8 @@ try {
     $user = new User($gDb, $gProfileFields);
 
     // define title (html) and headline
-    $title = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
-    $headline = $gL10n->get('PLG_KEYMANAGER_KEYMANAGER');
+    $title = $gL10n->get('PLG_KEYMANAGER_NAME');
+    $headline = $gL10n->get('PLG_KEYMANAGER_NAME');
 
     // if html mode and last url was not a list view then save this url to navigation stack
     if ($gNavigation->count() === 0 || ($getMode == 'html' && strpos($gNavigation->getUrl(), 'keymanager.php') === false)) {
@@ -746,7 +746,7 @@ try {
         $writer->setSubject($gL10n->get('PLG_KEYMANAGER_KEYLIST'));
         $writer->setCompany($gCurrentOrganization->getValue('org_longname'));
         $writer->setKeywords(array(
-            $gL10n->get('PLG_KEYMANAGER_NAME_OF_PLUGIN'),
+            $gL10n->get('PLG_KEYMANAGER_NAME'),
             $gL10n->get('PLG_KEYMANAGER_KEY')
         ));
         $writer->setDescription($gL10n->get('PLG_KEYMANAGER_CREATED_WITH'));
