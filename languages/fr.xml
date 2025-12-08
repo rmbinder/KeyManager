@@ -2,12 +2,10 @@
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>     
-    <string name="PLG_KEYMANAGER_ACCESS_ROLE">Rôle d'accès</string>
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Accès au plugin KeyManager</string>
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN_DESC">Les membres de ce rôle ont accès au plugin KeyManager</string>          
     <string name="PLG_KEYMANAGER_ADD_DATE">Ajouter la date</string>
     <string name="PLG_KEYMANAGER_ADD_DATE_DESC">Si une date au format AAAA-MM-JJ doit être ajoutée à un fichier d'exportation, la coche doit être cochée.</string> 
-    <string name="PLG_KEYMANAGER_CONFIG_DATA">Configuration et données clés</string>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Paramètres de copie d'une clé:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">créé avec le Plugin KeyManager de l'administration des membres en ligne Admidio</string> 
@@ -22,6 +20,7 @@
     <string name="PLG_KEYMANAGER_FILE_NAME_DESC">Le nom de fichier du fichier d'exportation (sans extension).</string>
     <string name="PLG_KEYMANAGER_FORMER">Retirer</string>
     <string name="PLG_KEYMANAGER_GENERAL">Filtre général - Plusieurs termes de filtre doivent être séparés par des virgules. Pour exclure des mots, un - doit être placé devant eux. Exemple : Meier, Huber, -Porte-clés</string>           
+    <string name="PLG_KEYMANAGER_INSTALL_UPDATE_REQUIRED">L'installation existante est incomplète. Il est nécessaire de relancer la procédure d'installation.\n\nPour l'installer, exécutez le script suivant : #VAR1#</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface avec le Plug-in FormFiller</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Ici, il est possible de sélectionner une configuration FormFiller avec le plug-in FormFiller installé. Un récépissé de remise de clé ou un récépissé de remise de clé peut être créé sur cette base. KeyManager fournit les valeurs, FormFiller les positions pour l\'impression.</string>
     <string name="PLG_KEYMANAGER_KEY">Clé</string>
@@ -46,7 +45,6 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Les champs clés peuvent être créées et traitées dans la gestion des champs clés.</string>
     <string name="PLG_KEYMANAGER_KEYLIST">Liste des clés</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Nom clé</string>  
-    <string name="PLG_KEYMANAGER_MENU_ITEM">Élément de menu</string>
     <string name="PLG_KEYMANAGER_NAME">KeyManager</string>
     <string name="PLG_KEYMANAGER_NAME_DESC">Le plugin KeyManager</string>
     <string name="PLG_KEYMANAGER_NEW">Nouveau</string>
@@ -71,14 +69,8 @@
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">Tous les utilisateurs sont les destinataires d'une clé, aucune réconciliation ne peut être effectuée.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">Ceci est juste un aperçu de la comparaison, rien n'a encore été enregistré.\n\n Les utilisateurs ne peuvent devenir des anciens que si le nombre de clés est 0 et qu'il ne s'agit ni de l'administrateur ni de l'utilisateur actuel.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">Les utilisateurs listés sont maintenant des anciens.</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE">Supprimer le rôle d'accès</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ALERT">Seuls les rôles (= rôles d'accès) qui ont été créés par le plugin lors de l'installation seront supprimés.</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR">- Une erreur s'est produite lors de la suppression des rôles d'accès. Tous les rôles d'accès n'ont pas pu être supprimés.\n</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- Les rôles d'accès créés par le plugin ont été supprimés.\n</string>   
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLES_STILL_PRESENT">- L'élément de menu ne peut pas être supprimé car les rôles d'accès existent toujours.\n</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACTORGONLY">Supprimer uniquement les données de l\'organisation actuelle.</string>
-    <string name="PLG_KEYMANAGER_UNINST_ALLORG">Supprimer les données de toutes les organisations.</string>
-    <string name="PLG_KEYMANAGER_UNINST_CONFIG_DATA">Supprimer la configuration et les données clés</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR">- Une erreur s'est produite lors de la suppression du rôle d'accès.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- Le rôle d'accès créé par le plugin a été supprimé.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- Une erreur s'est produite lors de la suppression des données de configuration.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- Les données de configuration créées par le plugin ont été supprimées.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Données de la table #VAR1_BOLD# effacé.\n</string>  
@@ -86,10 +78,11 @@
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression de la table #VAR1_BOLD#.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_NOTPOSSIBLE">- La table #VAR1_BOLD# n\'a pas pu être supprimée parce qu\'elle contient encore des données d\'une autre organisation.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETED">- La table #VAR1_BOLD# supprimée.\n</string>  
-    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM">Supprimer l'élément de menu</string> 
-    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ALERT">L'élément de menu ne sera supprimé que si tous les rôles d'accès créés par le plugin (y compris dans d'autres organisations) ont été supprimés au préalable.</string>
     <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ERROR">- Une erreur s'est produite lors de la suppression de l'élément de menu.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_NOT_DELETED">- L'élément de menu créé par l'extension n'a pas pu être supprimé car il est encore utilisé dans une autre organisation.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_SUCCESS">- L'élément de menu créé par le plugin a été supprimé.\n</string>               
+    <string name="PLG_KEYMANAGER_UNINST_NO_INST_IDS_FOUND">- Aucun élément de menu ni rôle d'accès n'a été trouvé. Vous devez supprimer manuellement l'élément de menu et le rôle d'accès.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_SECURITY_CHECK">Êtes-vous sûr de vouloir désinstaller le plugin?</string> 
     <string name="PLG_KEYMANAGER_UNINST_STARTMESSAGE">Les suppressions suivantes ont été effectuées:\n\n</string>
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR">- La table "adm_plugin_preferences" n\'a pas pu être supprimée car elle contient encore des données d\'un autre plugin.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>    

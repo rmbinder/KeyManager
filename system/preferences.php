@@ -157,7 +157,7 @@ $page->addHtml(getPreferencePanel('preferences', 'export', $gL10n->get('PLG_KEYM
 
 // PANEL: UNINSTALLATION
 
-$formUninstallation = new HtmlForm('uninstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/uninstallation.php'), $page);
+$formUninstallation = new HtmlForm('uninstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/uninstall.php'), $page);
 $formUninstallation->addSubmitButton('btn_save_uninstallation', $gL10n->get('PLG_KEYMANAGER_UNINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
 $formUninstallation->addCustomContent('', ''.$gL10n->get('PLG_KEYMANAGER_UNINSTALLATION_DESC'));
 

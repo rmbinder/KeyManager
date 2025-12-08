@@ -2,12 +2,10 @@
 <resources>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Access permission for preferences</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Here, in addition to the role "Administrator", you can authorize additional roles for access to the "Preferences" module.</string>
-    <string name="PLG_KEYMANAGER_ACCESS_ROLE">Access role</string>
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Access to the KeyManager plugin</string>
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN_DESC">Members of this role have access to the KeyManager plugin</string> 
     <string name="PLG_KEYMANAGER_ADD_DATE">Append date</string>
     <string name="PLG_KEYMANAGER_ADD_DATE_DESC">If a date in the format YYYY-MM-DD is to be added to an export file, the checkmark must be set.</string> 
-    <string name="PLG_KEYMANAGER_CONFIG_DATA">Configuration and key data</string>
     <string name="PLG_KEYMANAGER_CONFIGURATION">Configuration</string>
     <string name="PLG_KEYMANAGER_COPY_PREFERENCES">Settings for copying a key:</string>
     <string name="PLG_KEYMANAGER_CREATED_WITH">created with the Plugin KeyManager of the online member administration Admidio</string> 
@@ -22,6 +20,7 @@
     <string name="PLG_KEYMANAGER_FILE_NAME_DESC">The file name of the export file (without extension).</string>
     <string name="PLG_KEYMANAGER_FORMER">Make to former</string>    
     <string name="PLG_KEYMANAGER_GENERAL">General filter - Multiple filter terms are to be separated by commas. To exclude words, a - must be placed in front of them. Example: Meier, Huber, -Key case</string>           
+    <string name="PLG_KEYMANAGER_INSTALL_UPDATE_REQUIRED">The existing installation is incomplete. It is necessary to run the installation routine again..\n\nTo install, run the following script: #VAR1#</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF">Interface to the plugin formfiller</string>
     <string name="PLG_KEYMANAGER_INTERFACE_PFF_DESC">Here you have the possibility to select a FormFiller configuration if the Plugin FormFiller is installed. This can be used to create a key issue or key transfer document. KeyManager supplies the values, FormFiller the positions for the print.</string>
     <string name="PLG_KEYMANAGER_KEY">Key</string>
@@ -46,7 +45,6 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">Key fields can be created and edited in key field maintenance.</string>
     <string name="PLG_KEYMANAGER_KEYLIST">Key list</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Name of the key</string>  
-    <string name="PLG_KEYMANAGER_MENU_ITEM">Menu item</string>
     <string name="PLG_KEYMANAGER_NAME">KeyManager</string>  
     <string name="PLG_KEYMANAGER_NAME_DESC">The KeyManager plugin</string> 
     <string name="PLG_KEYMANAGER_NEW">New</string>
@@ -71,14 +69,8 @@
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_NO_ASSIGN">All users are recipients of a key, no reconciliation can be performed.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_PREVIEW">This is just an overview of the comparison, nothing has been saved yet.\n\n Users can only be made to a former if the number of keys is 0 and they are not administrator or the current user.</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_SAVED">The listed users are now former.</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE">Remove access role</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ALERT">Only roles (=access roles) that were created by the plugin during setup will be removed.</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR">- An error occurred while deleting access roles. Not all access roles could be deleted.\n</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- The access roles created by the plugin have been deleted.\n</string>   
-    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLES_STILL_PRESENT">- The menu item cannot be deleted because access roles still exist.\n</string>
-    <string name="PLG_KEYMANAGER_UNINST_ACTORGONLY">only in the current organization</string> 
-    <string name="PLG_KEYMANAGER_UNINST_ALLORG">in all organizations</string>
-    <string name="PLG_KEYMANAGER_UNINST_CONFIG_DATA">Remove configuration and key data</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR"> An error occurred while deleting the access role.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- The access role created by the plugin has been deleted.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- An error occurred while deleting the configuration data.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- The configuration data created by the plugin has been deleted.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Data in table #VAR1_BOLD# deleted.\n</string>  
@@ -86,10 +78,11 @@
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- An error occurred while deleting table #VAR1_BOLD#.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_NOTPOSSIBLE">- The table #VAR1_BOLD# could not be deleted because it still contains data from another organization.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETED">- Table #VAR1_BOLD# deleted.\n</string>  
-    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM">Remove menu item</string> 
-    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ALERT">The menu item will only be removed if all access roles created by the plugin (including in other organizations) have been deleted beforehand.</string>
     <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_ERROR">- An error occurred while deleting the menu item.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_NOT_DELETED">- The menu item created by the plugin could not be deleted because it is still in use in another organization.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_MENU_ITEM_SUCCESS">- The menu item created by the plugin has been deleted.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_NO_INST_IDS_FOUND">- No menu item and/or access role could be found. You must delete the menu item and access role manually.\n</string> 
+    <string name="PLG_KEYMANAGER_UNINST_SECURITY_CHECK">Are you sure you want to uninstall the plugin?</string> 
     <string name="PLG_KEYMANAGER_UNINST_STARTMESSAGE">The following deletions were performed:\n\n</string>
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR">- The table "adm_plugin_preferences" could not be deleted because it houses more data from other plugins.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS">- The created table "adm_plugin_preferences" was deleted.\n</string>

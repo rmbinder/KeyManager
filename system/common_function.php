@@ -10,6 +10,7 @@
  */
 use Admidio\Components\Entity\Component;
 use Admidio\Roles\Entity\RolesRights;
+use Plugins\KeyManager\classes\Config\ConfigTable;
 
 if (basename($_SERVER['SCRIPT_FILENAME']) === 'common_function.php') {
     exit('This page may not be called directly!');
@@ -142,8 +143,12 @@ function isUserAuthorized( string $scriptname = '')
  */
 function isUserAuthorizedForPreferences()
 {
-    global $pPreferences, $gCurrentUser;
+    global $gCurrentUser;
 
+    // Konfiguration einlesen
+    $pPreferences = new ConfigTable();
+    $pPreferences->read();
+    
     $userIsAuthorized = false;
 
     if ($gCurrentUser->isAdministrator()) // Mitglieder der Rolle Administrator dürfen "Preferences" immer aufrufen

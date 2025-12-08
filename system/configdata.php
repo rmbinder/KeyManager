@@ -17,11 +17,13 @@ $config_default['Optionen']['add_date'] = 0;
 															
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';
-$config_default['Plugininformationen']['table_name'] = '';
-$config_default['Plugininformationen']['shortcut'] = '';
 
 //Zugriffsberechtigung für das Modul preferences
 $config_default['access']['preferences'] = array();
+
+//Infos für Uninstall
+$config_default['install']['access_role_id'] = 0;
+$config_default['install']['menu_item_id'] = 0;
 
 /*
  *  Mittels dieser Zeichenkombination werden Konfigurationsdaten, die zur Laufzeit als Array verwaltet werden,

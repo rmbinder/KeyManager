@@ -31,22 +31,28 @@ try {
     require_once (__DIR__ . '/../../system/common.php');
     require_once (__DIR__ . '/system/common_function.php');
 
-    // $scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/keymanager...
-    $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
-
     // only authorized user are allowed to start this module
     if (! isUserAuthorized()) {
         throw new Exception('SYS_NO_RIGHTS');
     }
+    
+      $gNavigation->addStartUrl(CURRENT_URL);
+      
 
     $pPreferences = new ConfigTable();
     if ($pPreferences->checkForUpdate()) {
         $pPreferences->init();
-    } else {
-        $pPreferences->read();
-    }
+    } 
+    $pPreferences->read();
 
-    $gNavigation->addStartUrl(CURRENT_URL);
+    if ($pPreferences->config['install']['access_role_id'] == 0 || $pPreferences->config['install']['menu_item_id'] == 0) {
+        
+        $urlInst = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/install.php';
+        $gMessage->show($gL10n->get('PLG_KEYMANAGER_INSTALL_UPDATE_REQUIRED', array(
+            '<a href="' . $urlInst . '">' . $urlInst . '</a>'
+        )));
+    }
+    
     admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/keymanager.php');
 } catch (Exception $e) {
     $gMessage->show($e->getMessage());

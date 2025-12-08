@@ -14,4 +14,4 @@ if (basename($_SERVER['SCRIPT_FILENAME']) === 'version.php') {
 }
 
 $plugin_version = '3.0.0 Beta 1';
-$plugin_stand   = '23.10.2025';
+$plugin_stand   = '08.12.2025';
