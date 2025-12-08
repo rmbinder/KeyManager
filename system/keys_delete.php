@@ -22,6 +22,7 @@
  *****************************************************************************/
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Exception;
 use Admidio\Users\Entity\User;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 use Plugins\KeyManager\classes\Service\Keys;
@@ -40,7 +41,7 @@ $pPreferences->read();
 // only authorized user are allowed to start this module
 if (!isUserAuthorizedForPreferences())
 {
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+	 throw new Exception('SYS_NO_RIGHTS');
 }
 
 $keys = new Keys($gDb, $gCurrentOrgId);

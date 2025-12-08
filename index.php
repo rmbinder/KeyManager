@@ -18,10 +18,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
-use Admidio\Infrastructure\Utils\FileSystemUtils;
-use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Exception;
-use Admidio\Users\Entity\User;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 
 // Fehlermeldungen anzeigen

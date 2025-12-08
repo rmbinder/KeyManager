@@ -17,6 +17,7 @@
  *****************************************************************************/
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Exception;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 use Plugins\KeyManager\classes\Service\Keys;
 
@@ -43,7 +44,7 @@ $gNavigation->addUrl(CURRENT_URL, $headline);
 
 if (!array_key_exists($pPreferences->config['Optionen']['interface_pff'], $pPreferences->configpff['Formular']['desc']))
 {
-    $gMessage->show($gL10n->get('PLG_KEYMANAGER_PFF_CONFIG_NOT_FOUND'));
+    throw new Exception('PLG_KEYMANAGER_PFF_CONFIG_NOT_FOUND');
 }
 else 
 {

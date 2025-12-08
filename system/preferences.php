@@ -10,6 +10,7 @@
  */
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Exception;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 use Plugins\KeyManager\classes\Service\Keys;
 
@@ -22,7 +23,7 @@ $pPreferences->read();
 // only authorized user are allowed to start this module
 if (!isUserAuthorizedForPreferences())
 {
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+	 throw new Exception('SYS_NO_RIGHTS');
 }
 
 //read formfiller configuration if plugin formfiller is installed

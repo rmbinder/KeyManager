@@ -20,7 +20,8 @@
  *
  * ***************************************************************************
  */
-use Admidio\Infrastructure\Utils\SecurityUtils;
+ 
+use Admidio\Infrastructure\Exception;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 
 require_once (__DIR__ . '/../../../system/common.php');
@@ -31,16 +32,11 @@ $pPreferences->read();
 
 // only authorized user are allowed to start this module
 if (! isUserAuthorizedForPreferences()) {
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+     throw new Exception('SYS_NO_RIGHTS');
 }
 
 // Initialize and check the parameters
 $getForm = admFuncVariableIsValid($_GET, 'form', 'string');
-
-// in ajax mode only return simple text on error
-if ($getMode === 1) {
-    $gMessage->showHtmlTextOnly(true);
-}
 
 try {
     switch ($getForm) {
@@ -75,6 +71,6 @@ try {
 $pPreferences->save();
 
 echo 'success';
-break;
+
 
 

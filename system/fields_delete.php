@@ -19,6 +19,7 @@
  *****************************************************************************/
 
 use Admidio\Infrastructure\Entity\Entity;
+use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 
@@ -34,7 +35,7 @@ $pPreferences->read();
 // only authorized user are allowed to start this module
 if (!isUserAuthorizedForPreferences())
 {
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+	 throw new Exception('SYS_NO_RIGHTS');
 }
 
 $keyField = new Entity($gDb, TBL_KEYMANAGER_FIELDS, 'kmf', $getKmfId );

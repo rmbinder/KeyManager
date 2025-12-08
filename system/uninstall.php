@@ -14,11 +14,10 @@
  *
  ***********************************************************************************************
  */
-use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Exception;
+use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Menu\Entity\MenuEntry;
 use Admidio\Roles\Entity\Role;
-use Admidio\Roles\Entity\RolesRights;
 use Admidio\UI\Presenter\FormPresenter;
 use Admidio\UI\Presenter\PagePresenter;
 use Plugins\KeyManager\classes\Config\ConfigTable;

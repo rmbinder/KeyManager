@@ -8,7 +8,6 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
-use Admidio\Components\Entity\Component;
 use Admidio\Roles\Entity\RolesRights;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 

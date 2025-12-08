@@ -19,6 +19,7 @@
  *****************************************************************************/
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Exception;
 use Admidio\Users\Entity\User;
 use Plugins\KeyManager\classes\Service\Keys;
 
@@ -43,7 +44,7 @@ $headline = $gL10n->get('SYS_CHANGE_HISTORY_OF', array($keys->getValue('KEYNAME'
 // if profile log is activated then the key field history will be shown otherwise show error
 if (!$gSettingsManager->getBool('changelog_module_enabled'))
 {
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+     throw new Exception('SYS_NO_RIGHTS');
     // => EXIT
 }
 

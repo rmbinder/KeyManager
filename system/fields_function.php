@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 use Admidio\Infrastructure\Entity\Entity;
+use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Menu\Entity\MenuEntry;
 use Plugins\KeyManager\classes\Config\ConfigTable;
@@ -39,7 +40,7 @@ $pPreferences->read();
 // only authorized user are allowed to start this module
 if (!isUserAuthorizedForPreferences())
 {
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+     throw new Exception('SYS_NO_RIGHTS');
     // => EXIT
 }
 
