@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>
+<resources>   
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Access permission for preferences</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Here, in addition to the role "Administrator", you can authorize additional roles for access to the "Preferences" module.</string>
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Access to the KeyManager plugin</string>
@@ -63,6 +63,7 @@
     <string name="PLG_KEYMANAGER_RECEIVER">Receiver</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Display all keys</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Special case: current user or administrator</string>    
+    <string name="PLG_KEYMANAGER_SWITCH_TO_PLUGIN_KEYMANAGER">Wechsel zum Plugin KeyManager</string>   
     <string name="PLG_KEYMANAGER_SYNCHRONIZE">Synchronize users with recipients</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">This allows users to be made without a key to a former user.\n\n A T T E N T I O N\n\n  This feature should only be used if KeyManager is operated in its own organization.</string>    
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_ERROR">A mistake happened! Users with #VAR1# could not be deleted.</string>
@@ -73,6 +74,7 @@
     <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- The access role created by the plugin has been deleted.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- An error occurred while deleting the configuration data.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- The configuration data created by the plugin has been deleted.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_FILE_CHANGES_SUCCESS">- The file changes made by the plugin have been removed.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Data in table #VAR1_BOLD# deleted.\n</string>  
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR">- An error occurred while deleting the data in table #VAR1_BOLD#.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- An error occurred while deleting table #VAR1_BOLD#.\n</string> 

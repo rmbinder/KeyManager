@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>
+<resources>    
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>     
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Accès au plugin KeyManager</string>
@@ -63,6 +63,7 @@
     <string name="PLG_KEYMANAGER_RECEIVER">Destinataires</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Afficher toutes les clés</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Cas particulier: utilisateur actuel ou administrateur</string>    
+    <string name="PLG_KEYMANAGER_SWITCH_TO_PLUGIN_KEYMANAGER">Wechsel zum Plugin KeyManager</string>   
     <string name="PLG_KEYMANAGER_SYNCHRONIZE">Synchroniser les utilisateurs avec les destinataires</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">Cela permet aux utilisateurs d'être créés sans clé pour un ancien utilisateur.\n\n M I S E  E N  G A R D E\n\n Cette fonctionnalité ne doit être utilisée que si KeyManager est utilisé dans sa propre organisation.</string>    
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_ERROR">Une erreur s'est produite! Les utilisateurs avec #VAR1# n'ont pas pu être supprimés.</string>
@@ -73,6 +74,7 @@
     <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- Le rôle d'accès créé par le plugin a été supprimé.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- Une erreur s'est produite lors de la suppression des données de configuration.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- Les données de configuration créées par le plugin ont été supprimées.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_FILE_CHANGES_SUCCESS">- Les modifications apportées aux fichiers par le plugin ont été supprimées.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Données de la table #VAR1_BOLD# effacé.\n</string>  
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR">- Une erreur s\'est produite lors de la suppression des données de la table #VAR1_BOLD#.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression de la table #VAR1_BOLD#.\n</string> 
@@ -88,7 +90,7 @@
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>    
     <string name="PLG_KEYMANAGER_UNINSTALLATION">Désinstallation</string>
     <string name="PLG_KEYMANAGER_UNINSTALLATION_DESC">Les entrées créées par le plugin peuvent être supprimées via la désinstallation.</string>
-     <!-- Phrases only in Database -->
+    <!-- Phrases only in Database -->
     <string name="PKM_KEYNAME">Nom de clé</string>
     <string name="PKM_RECEIVED_ON">reçues le</string>
     <string name="PKM_RECEIVER">Destinataires</string>   

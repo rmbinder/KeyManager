@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>
+<resources>   
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Hier können, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigt werden.</string> 
     <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Zugriff auf das Plugin KeyManager</string>
@@ -63,6 +63,7 @@
     <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Alle Schlüssel anzeigen</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Sonderfall: Aktueller Benutzer oder Administrator</string>    
+    <string name="PLG_KEYMANAGER_SWITCH_TO_PLUGIN_KEYMANAGER">Wechsel zum Plugin KeyManager</string>   
     <string name="PLG_KEYMANAGER_SYNCHRONIZE">Benutzer mit Empfänger abgleichen</string>
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_DESC">Hierüber können Benutzer ohne Schlüssel zu Ehemaligen gemacht werden.\n\n V O R S I C H T\n\n Diese Funktion sollte nur verwendet werden, wenn KeyManager in einer eigenen Organisation betrieben wird.</string>    
     <string name="PLG_KEYMANAGER_SYNCHRONIZE_ERROR">Es ist ein Fehler passiert! Benutzer mit #VAR1# konnten nicht gelöscht werden.</string>
@@ -73,6 +74,7 @@
     <string name="PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS">- Die vom Plugin angelegte Zugriffsrolle wurde gelöscht.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR">- Beim Löschen der Konfigurationsdaten ist ein Fehler aufgetreten.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS">- Die vom Plugin angelegten Konfigurationsdaten wurden gelöscht.\n</string>
+    <string name="PLG_KEYMANAGER_UNINST_FILE_CHANGES_SUCCESS">- Die vom Plugin durchgeführten Dateiänderungen wurden wieder entfernt.\n</string> 
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN">- Daten in Tabelle #VAR1_BOLD# gelöscht.\n</string>  
     <string name="PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR">- Beim Löschen der Daten in Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR">- Beim Löschen der Tabelle #VAR1_BOLD# ist ein Fehler aufgetreten.\n</string> 
@@ -87,7 +89,7 @@
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</string>
     <string name="PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>    
     <string name="PLG_KEYMANAGER_UNINSTALLATION">Deinstallation</string>
-    <string name="PLG_KEYMANAGER_UNINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge gelöscht werden.</string>
+    <string name="PLG_KEYMANAGER_UNINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge gelöscht werden.</string>       
     <!-- Phrases only in Database -->
     <string name="PKM_KEYNAME">Schlüsselname</string>
     <string name="PKM_RECEIVED_ON">empfangen am</string>

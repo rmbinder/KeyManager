@@ -15,6 +15,7 @@
  ***********************************************************************************************
  */
 use Admidio\Infrastructure\Exception;
+use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Menu\Entity\MenuEntry;
 use Admidio\Roles\Entity\Role;
@@ -89,151 +90,196 @@ try {
         case 'uninst':
             // Sicherheitsabfrage wurde bestätigt, es darf alles gelöscht werden
 
-            // Zugriffsrolle und Menüpunkt löschen
-            if ($pPreferences->config['install']['access_role_id'] == 0 || $pPreferences->config['install']['menu_item_id'] == 0) {
-                // nur zur Sicherheit; dass 'access_role_id' und/oder 'menu_item_id' Null ist, dürfte eigentlich nicht vorkommen
-                $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_NO_INST_IDS_FOUND');
-            } else {
-                $result_role = true;
+            try {
+                // Dateiänderungen in profile.view.tpl und profile.php wieder rückgängig machen
 
-                $role = new Role($gDb, (int) $pPreferences->config['install']['access_role_id']);
+                // ADMIDIO_PATH funktioniert ohne allow_url_open (PHP.ini)
+                $templateFile = ADMIDIO_PATH . FOLDER_THEMES . '/simple/templates/modules/profile.view';
+                $profileFile = ADMIDIO_PATH . FOLDER_MODULES . '/profile/profile';
+                $zeilenumbruch = "\r\n";
 
-                $result_role = $role->delete();
-                $result .= ($result_role ? $gL10n->get('PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR'));
+                $templateString = file_get_contents($templateFile . '.tpl');
 
-                $result_menu = false;
+                // diese Texte wurden bei der Installation in die profile.view.tpl eingefügt
+                $substArray = array(
+                    '{include file="../../../..' . FOLDER_PLUGINS . PLUGIN_FOLDER . '/templates/profile.view.include.button.plugin.keymanager.tpl"}' . $zeilenumbruch,
+                    '{include file="../../../..' . FOLDER_PLUGINS . PLUGIN_FOLDER . '/templates/profile.view.include.keymanager.tab.plugin.keymanager.tpl"}' . $zeilenumbruch,
+                    '{include file="../../../..' . FOLDER_PLUGINS . PLUGIN_FOLDER . '/templates/profile.view.include.keymanager.accordion.plugin.keymanager.tpl"}' . $zeilenumbruch
+                );
 
-                // Alle in der Konfigurationstabelle gespeicherten Zugriffsrollen (org-übergreifend) einlesen
-                $access_roles_prefs = $pPreferences->getAllAccessRoles();
-
-                // der Menüpunkt wird nur entfernt, wenn die bei der Installation erzeugte Zugriffsrolle
-                // die einzige Rolle ist, die noch in der Konfigurationstabelle gespeichert ist
-                if (count($access_roles_prefs) === 1 && $access_roles_prefs[0] == $pPreferences->config['install']['access_role_id']) {
-                    $menu = new MenuEntry($gDb, (int) $pPreferences->config['install']['menu_item_id']);
-                    $result_menu = $menu->delete();
-                    $result .= ($result_menu ? $gL10n->get('PLG_KEYMANAGER_UNINST_MENU_ITEM_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_MENU_ITEM_ERROR'));
-                } else {
-                    // Menüpunkt nicht entfernen, wenn er noch für eine andere Organisation verwendet wird
-                    $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_MENU_ITEM_NOT_DELETED');
+                // eingefügte Texte durch '' ersetzen
+                foreach ($substArray as $subst) {
+                    $templateString = str_replace($subst, '', $templateString);
                 }
-            }
+                file_put_contents($templateFile . '.tpl', $templateString);
 
-            // Konfigurationsdaten löschen (nur in aktueller Organisation)
-            $result_data = false;
-            $result_db = false;
+                $profileString = file_get_contents($profileFile . '.php');
 
-            $sql = 'DELETE FROM ' . $pPreferences->getTableName() . '
+                // dieser Text wurde bei der Installation in die profile.view.tpl eingefügt
+                $subst = "require_once(ADMIDIO_PATH . FOLDER_PLUGINS .'" . PLUGIN_FOLDER . "/system/keymanager_profile_addin.php');" . $zeilenumbruch;
+
+                // eingefügten Text durch '' ersetzen
+                $profileString = str_replace($subst, '', $profileString);
+                file_put_contents($profileFile . '.php', $profileString);
+
+                // die bei der Installation angelegten Sicherungsdateien wieder löschen
+                FileSystemUtils::deleteFileIfExists($templateFile . '_keymanager_save.tpl');
+                FileSystemUtils::deleteFileIfExists($profileFile . '_keymanager_save.php');
+
+                $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_FILE_CHANGES_SUCCESS');
+
+                // Zugriffsrolle und Menüpunkt löschen
+
+                if ($pPreferences->config['install']['access_role_id'] == 0 || $pPreferences->config['install']['menu_item_id'] == 0) {
+                    // nur zur Sicherheit; dass 'access_role_id' und/oder 'menu_item_id' Null ist, dürfte eigentlich nicht vorkommen
+                    $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_NO_INST_IDS_FOUND');
+                } else {
+                    $result_role = true;
+
+                    $role = new Role($gDb, (int) $pPreferences->config['install']['access_role_id']);
+
+                    $result_role = $role->delete();
+                    $result .= ($result_role ? $gL10n->get('PLG_KEYMANAGER_UNINST_ACCESS_ROLE_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_ACCESS_ROLE_ERROR'));
+
+                    $result_menu = false;
+
+                    // Alle in der Konfigurationstabelle gespeicherten Zugriffsrollen (org-übergreifend) einlesen
+                    $access_roles_prefs = $pPreferences->getAllAccessRoles();
+
+                    // der Menüpunkt wird nur entfernt, wenn die bei der Installation erzeugte Zugriffsrolle
+                    // die einzige Rolle ist, die noch in der Konfigurationstabelle gespeichert ist
+                    if (count($access_roles_prefs) === 1 && $access_roles_prefs[0] == $pPreferences->config['install']['access_role_id']) {
+                        $menu = new MenuEntry($gDb, (int) $pPreferences->config['install']['menu_item_id']);
+                        $result_menu = $menu->delete();
+                        $result .= ($result_menu ? $gL10n->get('PLG_KEYMANAGER_UNINST_MENU_ITEM_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_MENU_ITEM_ERROR'));
+                    } else {
+                        // Menüpunkt nicht entfernen, wenn er noch für eine andere Organisation verwendet wird
+                        $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_MENU_ITEM_NOT_DELETED');
+                    }
+                }
+
+                // Konfigurationsdaten löschen
+
+                $result_data = false;
+                $result_db = false;
+
+                $sql = 'DELETE FROM ' . $pPreferences->getTableName() . '
         			              WHERE plp_name LIKE ?
         			                AND plp_org_id = ? ';
-            $result_data = $gDb->queryPrepared($sql, array(
-                $pPreferences->getShortcut() . '__%',
-                $gCurrentOrgId
-            ));
+                $result_data = $gDb->queryPrepared($sql, array(
+                    $pPreferences->getShortcut() . '__%',
+                    $gCurrentOrgId
+                ));
 
-            // wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
-            $sql = 'SELECT * FROM ' . $pPreferences->getTableName() . ' ';
-            $statement = $gDb->queryPrepared($sql);
+                // wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
+                $sql = 'SELECT * FROM ' . $pPreferences->getTableName() . ' ';
+                $statement = $gDb->queryPrepared($sql);
 
-            if ($statement->rowCount() == 0) {
-                $sql = 'DROP TABLE ' . $pPreferences->getTableName() . ' ';
-                $result_db = $gDb->queryPrepared($sql);
-            }
+                if ($statement->rowCount() == 0) {
+                    $sql = 'DROP TABLE ' . $pPreferences->getTableName() . ' ';
+                    $result_db = $gDb->queryPrepared($sql);
+                }
 
-            $result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR'));
-            $result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR'));
+                $result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_UNINST_DATA_DELETE_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_DATA_DELETE_ERROR'));
+                $result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_UNINST_TABLE_DELETE_SUCCESS') : $gL10n->get('PLG_KEYMANAGER_UNINST_TABLE_DELETE_ERROR'));
 
-            // Schlüsseldaten
-            $sql = 'DELETE FROM ' . TBL_KEYMANAGER_DATA . '
+                // Schlüsseldaten
+                $sql = 'DELETE FROM ' . TBL_KEYMANAGER_DATA . '
                           WHERE kmd_kmk_id IN
               	        (SELECT kmk_id
 					       FROM ' . TBL_KEYMANAGER_KEYS . '
                 	      WHERE kmk_org_id = ? )';
 
-            $result_data = $gDb->queryPrepared($sql, array(
-                $gCurrentOrgId
-            ));
+                $result_data = $gDb->queryPrepared($sql, array(
+                    $gCurrentOrgId
+                ));
 
-            $result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
-                $g_tbl_praefix . '_keymanager_data'
-            )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
-                $g_tbl_praefix . '_keymanager_data'
-            )));
+                $result .= ($result_data ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
+                    $g_tbl_praefix . '_keymanager_data'
+                )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
+                    $g_tbl_praefix . '_keymanager_data'
+                )));
 
-            $sql = 'DELETE FROM ' . TBL_KEYMANAGER_LOG . '
+                $sql = 'DELETE FROM ' . TBL_KEYMANAGER_LOG . '
                           WHERE kml_kmk_id IN
 				        (SELECT kmk_id
 					       FROM ' . TBL_KEYMANAGER_KEYS . '
                           WHERE kmk_org_id = ? )';
 
-            $result_log = $gDb->queryPrepared($sql, array(
-                $gCurrentOrgId
-            ));
+                $result_log = $gDb->queryPrepared($sql, array(
+                    $gCurrentOrgId
+                ));
 
-            $result .= ($result_log ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
-                $g_tbl_praefix . '_keymanager_log'
-            )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
-                $g_tbl_praefix . '_keymanager_log'
-            )));
+                $result .= ($result_log ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
+                    $g_tbl_praefix . '_keymanager_log'
+                )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
+                    $g_tbl_praefix . '_keymanager_log'
+                )));
 
-            $sql = 'DELETE FROM ' . TBL_KEYMANAGER_KEYS . '
+                $sql = 'DELETE FROM ' . TBL_KEYMANAGER_KEYS . '
 	        	          WHERE kmk_org_id = ? ';
 
-            $result_keys = $gDb->queryPrepared($sql, array(
-                $gCurrentOrgId
-            ));
-            $result .= ($result_keys ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
-                $g_tbl_praefix . '_keymanager_keys'
-            )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
-                $g_tbl_praefix . '_keymanager_keys'
-            )));
+                $result_keys = $gDb->queryPrepared($sql, array(
+                    $gCurrentOrgId
+                ));
+                $result .= ($result_keys ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
+                    $g_tbl_praefix . '_keymanager_keys'
+                )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
+                    $g_tbl_praefix . '_keymanager_keys'
+                )));
 
-            $sql = 'DELETE FROM ' . TBL_KEYMANAGER_FIELDS . '
+                $sql = 'DELETE FROM ' . TBL_KEYMANAGER_FIELDS . '
                           WHERE kmf_org_id = ? ';
 
-            $result_fields = $gDb->queryPrepared($sql, array(
-                $gCurrentOrgId
-            ));
-            $result .= ($result_fields ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
-                $g_tbl_praefix . '_keymanager_fields'
-            )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
-                $g_tbl_praefix . '_keymanager_fields'
-            )));
+                $result_fields = $gDb->queryPrepared($sql, array(
+                    $gCurrentOrgId
+                ));
+                $result .= ($result_fields ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN', array(
+                    $g_tbl_praefix . '_keymanager_fields'
+                )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYDATA_DELETED_IN_ERROR', array(
+                    $g_tbl_praefix . '_keymanager_fields'
+                )));
 
-            // drop tables keys, data, log and fields
-            $table_array = array(
-                TBL_KEYMANAGER_FIELDS,
-                TBL_KEYMANAGER_DATA,
-                TBL_KEYMANAGER_KEYS,
-                TBL_KEYMANAGER_LOG
-            );
+                // drop tables keys, data, log and fields
+                $table_array = array(
+                    TBL_KEYMANAGER_FIELDS,
+                    TBL_KEYMANAGER_DATA,
+                    TBL_KEYMANAGER_KEYS,
+                    TBL_KEYMANAGER_LOG
+                );
 
-            foreach ($table_array as $table_name) {
-                $result_db = false;
+                foreach ($table_array as $table_name) {
+                    $result_db = false;
 
-                // wenn in der Tabelle keine Eintraege mehr sind, dann kann sie geloescht werden
-                $sql = 'SELECT * FROM ' . $table_name . ' ';
-                $statement = $gDb->queryPrepared($sql);
+                    // wenn in der Tabelle keine Eintraege mehr sind, dann kann sie geloescht werden
+                    $sql = 'SELECT * FROM ' . $table_name . ' ';
+                    $statement = $gDb->queryPrepared($sql);
 
-                if ($statement->rowCount() == 0) {
-                    $sql = 'DROP TABLE ' . $table_name . ' ';
-                    $result_db = $gDb->queryPrepared($sql);
-                    $result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYTABLE_DELETED', array(
-                        $table_name
-                    )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR', array(
-                        $table_name
-                    )));
-                } else {
-                    $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_NOTPOSSIBLE', array(
-                        $table_name
-                    ));
+                    if ($statement->rowCount() == 0) {
+                        $sql = 'DROP TABLE ' . $table_name . ' ';
+                        $result_db = $gDb->queryPrepared($sql);
+                        $result .= ($result_db ? $gL10n->get('PLG_KEYMANAGER_UNINST_KEYTABLE_DELETED', array(
+                            $table_name
+                        )) : $gL10n->get('PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_ERROR', array(
+                            $table_name
+                        )));
+                    } else {
+                        $result .= $gL10n->get('PLG_KEYMANAGER_UNINST_KEYTABLE_DELETE_NOTPOSSIBLE', array(
+                            $table_name
+                        ));
+                    }
                 }
+            } catch (\RuntimeException $exception) {
+                $result .= $exception->getMessage();
+                // => EXIT
+            } catch (\UnexpectedValueException $exception) {
+                $result .= $exception->getMessage();
+                // => EXIT
             }
 
             $gNavigation->clear();
             $gMessage->setForwardUrl($gHomepage);
-
             $gMessage->show($result);
-
             break;
     }
 } catch (Exception $e) {
