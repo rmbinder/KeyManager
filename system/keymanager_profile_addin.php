@@ -70,22 +70,13 @@ foreach ($keys->keys as $key) {
         $templateRow['received_on'] = $received_on;
     }
 
-    if ($pPreferences->isPffInst()) {
-        $templateRow['actions'][] = array(
-            'url' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/' . PLUGIN_FOLDER . '/system/keys_export_to_pff.php', array(
-                'key_id' => $key['kmk_id']
-            )),
-            'icon' => 'bi bi-printer',
-            'tooltip' => $gL10n->get('PLG_KEYMANAGER_KEY_PRINT')
-        );
-    }
     if (isUserAuthorizedForPreferences()) {
         $templateRow['actions'][] = array(
             'url' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/' . PLUGIN_FOLDER . '/system/keys_delete.php', array(
                 'key_id' => $key['kmk_id'],
                 'key_former' => $key['kmk_former']
             )),
-            'icon' => 'bi bi-dash-circle-fill',
+            'icon' => 'bi bi-trash',
             'tooltip' => $gL10n->get('PLG_KEYMANAGER_KEY_DELETE')
         );
     }

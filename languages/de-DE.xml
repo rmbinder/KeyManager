@@ -2,8 +2,8 @@
 <resources>    
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
     <string name="PLG_KEYMANAGER_ACCESS_PREFERENCES_DESC">Hier können, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigt werden.</string>   
-    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Zugriff auf das Plugin KeyManager</string>
-    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN_DESC">Mitglieder dieser Rolle haben Zugriff auf das Plugin KeyManager</string>          
+    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN">Zugriff auf das Plugin Schlüsselverwalter</string>
+    <string name="PLG_KEYMANAGER_ACCESS_TO_PLUGIN_DESC">Mitglieder dieser Rolle haben Zugriff auf das Plugin Schlüsselverwalter</string>          
     <string name="PLG_KEYMANAGER_ADD_DATE">Datum anfügen</string>
     <string name="PLG_KEYMANAGER_ADD_DATE_DESC">Soll an eine Exportdatei ein Datum im Format JJJJ-MM-TT angefügt werden, so ist der Haken zu setzen.</string> 
     <string name="PLG_KEYMANAGER_CONFIGURATION">Konfiguration</string>
@@ -45,8 +45,8 @@
     <string name="PLG_KEYMANAGER_KEYFIELDSMANAGE_DESC">In der Schlüsselfeldpflege können Schlüsselfelder angelegt und bearbeitet werden.</string>
     <string name="PLG_KEYMANAGER_KEYLIST">Schlüsselliste</string>
     <string name="PLG_KEYMANAGER_KEYNAME">Schlüsselname</string>  
-    <string name="PLG_KEYMANAGER_NAME">KeyManager</string>
-    <string name="PLG_KEYMANAGER_NAME_DESC">Das Plugin KeyManager</string>
+    <string name="PLG_KEYMANAGER_NAME">Schlüsselverwalter</string>
+    <string name="PLG_KEYMANAGER_NAME_DESC">Das Plugin Schlüsselverwalter</string>
     <string name="PLG_KEYMANAGER_NEW">Neu</string>
     <string name="PLG_KEYMANAGER_NUMBER">Anzahl</string>
     <string name="PLG_KEYMANAGER_NUMBER_DESC">Anzahl der anzufügenden Schlüssel</string>    
