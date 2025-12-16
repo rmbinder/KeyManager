@@ -9,40 +9,38 @@
  *
  ***********************************************************************************************
  */
- 
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Menu\Entity\MenuEntry;
 use Admidio\Infrastructure\Exception;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 use Plugins\KeyManager\classes\Service\Keys;
 
-require_once(__DIR__ . '/../../../system/common.php');
-require_once(__DIR__ . '/common_function.php');
+try {
+    require_once (__DIR__ . '/../../../system/common.php');
+    require_once (__DIR__ . '/common_function.php');
 
+    $pPreferences = new ConfigTable();
+    $pPreferences->read();
 
-$pPreferences = new ConfigTable();
-$pPreferences->read();
+    // only authorized user are allowed to start this module
+    if (! isUserAuthorizedForPreferences()) {
+        throw new Exception('SYS_NO_RIGHTS');
+        // => EXIT
+    }
 
-// only authorized user are allowed to start this module
-if (!isUserAuthorizedForPreferences())
-{
-    throw new Exception('SYS_NO_RIGHTS');
-    // => EXIT
-}
+    // set module headline
+    $headline = $gL10n->get('PLG_KEYMANAGER_KEYFIELDS');
 
-// set module headline
-$headline = $gL10n->get('PLG_KEYMANAGER_KEYFIELDS');
+    $gNavigation->addUrl(CURRENT_URL, $headline);
 
-$gNavigation->addUrl(CURRENT_URL, $headline);
+    unset($_SESSION['fields_request']);
 
-unset($_SESSION['fields_request']);
+    $keys = new Keys($gDb, $gCurrentOrgId);
 
-$keys = new Keys($gDb, $gCurrentOrgId);
+    // create html page object
+    $page = new HtmlPage('plg-keymanager-fields', $headline);
 
-// create html page object
-$page = new HtmlPage('plg-keymanager-fields', $headline);
-
-$page->addJavascript('
+    $page->addJavascript('
     /**
      * @param {string} direction
      * @param {int}    kmfID
@@ -90,102 +88,104 @@ $page->addJavascript('
 
         if (secondSequence > 0) {
             // Nun erst mal die neue Position von dem gewaehlten Feld aktualisieren
-            $.get("' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/keymanager/fields_function.php', array('mode' => 4)) . '&kmf_id=" + kmfID + "&sequence=" + direction);
+            $.get("' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/keymanager/fields_function.php', array(
+        'mode' => 4
+    )) . '&kmf_id=" + kmfID + "&sequence=" + direction);
         }
     }
 ');
 
-$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_edit_new.php',  'bi-plus-circle');
-    
-// Create table
-$table = new HtmlTable('tbl_profile_fields', $page, true);
-$table->setMessageIfNoRowsFound('SYS_NO_ENTRIES');
+    $page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KEYMANAGER_KEYFIELD_CREATE'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/fields_edit_new.php', 'bi-plus-circle');
 
-// create array with all column heading values
-$columnHeading = array(
-    $gL10n->get('SYS_FIELD'),
-    '&nbsp;',
-    $gL10n->get('SYS_DESCRIPTION'),
-  '<i class="bi bi-asterisk" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>',
-    $gL10n->get('ORG_DATATYPE'),
-    '&nbsp;'
-);
-$table->addRowHeadingByArray($columnHeading);
+    // Create table
+    $table = new HtmlTable('tbl_profile_fields', $page, true);
+    $table->setMessageIfNoRowsFound('SYS_NO_ENTRIES');
 
-// Intialize variables
-$description = '';
-$mandatory   = '';
-$kmfSystem   = '';     
-
-foreach ($keys->mKeyFields as $keyField)
-{	
-    $kmfId = (int) $keyField->getValue('kmf_id');
- 
-    // cut long text strings and provide tooltip
-    if($keyField->getValue('kmf_description') === '')
-    {
-        $fieldDescription = '&nbsp;';
-    }
-    else
-    {
-        $fieldDescription = $keyField->getValue('kmf_description', 'database');
-
-        if(strlen($fieldDescription) > 60)
-        {
-            // read first 60 chars of text, then search for last space and cut the text there. After that add a "more" link
-            $textPrev = substr($fieldDescription, 0, 60);
-            $maxPosPrev = strrpos($textPrev, ' ');
-            $fieldDescription = substr($textPrev, 0, $maxPosPrev).
-                ' <span class="collapse" id="viewdetails'.$kmfId.'">'.substr($fieldDescription, $maxPosPrev).'.
-                </span> <a class="admidio-icon-link" data-bs-toggle="collapse" data-bs-target="#viewdetails'.$kmfId.'"><i class="bi bi-chevron double right" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_MORE').'"></i></a>';
-        }
-    }
-
-    if ($keyField->getValue('kmf_mandatory') == 1)
-    {
-        $mandatory = '<i class="bi bi-asterisk" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').'"></i>';
-    }
-    else
-    {
-         $mandatory = '<i class="bi bi-asterisk admidio-opacity-reduced" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_REQUIRED_INPUT').': '.$gL10n->get('SYS_NO').'"></i>';
-    }
-
-    $keyFieldText = array(
-    					'CHECKBOX'     => $gL10n->get('SYS_CHECKBOX'),
-                        'DATE'         => $gL10n->get('SYS_DATE'),
-                        'DROPDOWN'     => $gL10n->get('SYS_DROPDOWN_LISTBOX'),
-                        'RADIO_BUTTON' => $gL10n->get('SYS_RADIO_BUTTON'),
-                        'TEXT'         => $gL10n->get('SYS_TEXT').' (100)',
-                        'TEXT_BIG'     => $gL10n->get('SYS_TEXT').' (4000)',
-                        'NUMBER'       => $gL10n->get('SYS_NUMBER'),
-                        'DECIMAL'      => $gL10n->get('SYS_DECIMAL_NUMBER'));
-                        
-    $kmfSystem = '';  
-           
-    if ($keyField->getValue('kmf_system') == 1)
-    {
-        $kmfSystem .= '<i class="bi bi-trash invisible"></i>';
-    }
-    else
-    {
-    	$kmfSystem .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_delete.php', array('kmf_id' => $kmfId)).'">
-                <i class="bi bi-trash" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE').'"></i></a>';
-    }
-
-    // create array with all column values
-    $columnValues = array(
-        '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL. FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/fields_edit_new.php', array('kmf_id' => $kmfId)).'">'. convlanguagePKM($keyField->getValue('kmf_name')).'</a> ',
-        '<a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.MenuEntry::MOVE_UP.'\', '.$kmfId.')">
-            <i class="bi bi-chevron-up" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_UP', array('SYS_PROFILE_FIELD')) . '"></i></a>
-        <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\''.MenuEntry::MOVE_DOWN.'\', '.$kmfId.')">
-            <i class="bi bi-chevron-down" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_DOWN', array('SYS_PROFILE_FIELD')) . '"></i></a>',     
-        $fieldDescription,
-        $mandatory,
-    	$keyFieldText[$keyField->getValue('kmf_type')],
-        $kmfSystem
+    // create array with all column heading values
+    $columnHeading = array(
+        $gL10n->get('SYS_FIELD'),
+        '&nbsp;',
+        $gL10n->get('SYS_DESCRIPTION'),
+        '<i class="bi bi-asterisk" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_REQUIRED_INPUT') . '"></i>',
+        $gL10n->get('ORG_DATATYPE'),
+        '&nbsp;'
     );
-    $table->addRowByArray($columnValues, 'row_kmf_'.$kmfId);
-}
+    $table->addRowHeadingByArray($columnHeading);
 
-$page->addHtml($table->show());
-$page->show();
+    // Intialize variables
+    $description = '';
+    $mandatory = '';
+    $kmfSystem = '';
+
+    foreach ($keys->mKeyFields as $keyField) {
+        $kmfId = (int) $keyField->getValue('kmf_id');
+
+        // cut long text strings and provide tooltip
+        if ($keyField->getValue('kmf_description') === '') {
+            $fieldDescription = '&nbsp;';
+        } else {
+            $fieldDescription = $keyField->getValue('kmf_description', 'database');
+
+            if (strlen($fieldDescription) > 60) {
+                // read first 60 chars of text, then search for last space and cut the text there. After that add a "more" link
+                $textPrev = substr($fieldDescription, 0, 60);
+                $maxPosPrev = strrpos($textPrev, ' ');
+                $fieldDescription = substr($textPrev, 0, $maxPosPrev) . ' <span class="collapse" id="viewdetails' . $kmfId . '">' . substr($fieldDescription, $maxPosPrev) . '.
+                </span> <a class="admidio-icon-link" data-bs-toggle="collapse" data-bs-target="#viewdetails' . $kmfId . '"><i class="bi bi-chevron double right" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MORE') . '"></i></a>';
+            }
+        }
+
+        if ($keyField->getValue('kmf_mandatory') == 1) {
+            $mandatory = '<i class="bi bi-asterisk" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_REQUIRED_INPUT') . '"></i>';
+        } else {
+            $mandatory = '<i class="bi bi-asterisk admidio-opacity-reduced" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_REQUIRED_INPUT') . ': ' . $gL10n->get('SYS_NO') . '"></i>';
+        }
+
+        $keyFieldText = array(
+            'CHECKBOX' => $gL10n->get('SYS_CHECKBOX'),
+            'DATE' => $gL10n->get('SYS_DATE'),
+            'DROPDOWN' => $gL10n->get('SYS_DROPDOWN_LISTBOX'),
+            'RADIO_BUTTON' => $gL10n->get('SYS_RADIO_BUTTON'),
+            'TEXT' => $gL10n->get('SYS_TEXT') . ' (100)',
+            'TEXT_BIG' => $gL10n->get('SYS_TEXT') . ' (4000)',
+            'NUMBER' => $gL10n->get('SYS_NUMBER'),
+            'DECIMAL' => $gL10n->get('SYS_DECIMAL_NUMBER')
+        );
+
+        $kmfSystem = '';
+
+        if ($keyField->getValue('kmf_system') == 1) {
+            $kmfSystem .= '<i class="bi bi-trash invisible"></i>';
+        } else {
+            $kmfSystem .= '<a class="admidio-icon-link" href="' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/fields_delete.php', array(
+                'kmf_id' => $kmfId
+            )) . '">
+                <i class="bi bi-trash" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_DELETE') . '"></i></a>';
+        }
+
+        // create array with all column values
+        $columnValues = array(
+            '<a href="' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/fields_edit_new.php', array(
+                'kmf_id' => $kmfId
+            )) . '">' . convlanguagePKM($keyField->getValue('kmf_name')) . '</a> ',
+            '<a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\'' . MenuEntry::MOVE_UP . '\', ' . $kmfId . ')">
+            <i class="bi bi-chevron-up" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_UP', array(
+                'SYS_PROFILE_FIELD'
+            )) . '"></i></a>
+        <a class="admidio-icon-link" href="javascript:void(0)" onclick="moveCategory(\'' . MenuEntry::MOVE_DOWN . '\', ' . $kmfId . ')">
+            <i class="bi bi-chevron-down" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_MOVE_DOWN', array(
+                'SYS_PROFILE_FIELD'
+            )) . '"></i></a>',
+            $fieldDescription,
+            $mandatory,
+            $keyFieldText[$keyField->getValue('kmf_type')],
+            $kmfSystem
+        );
+        $table->addRowByArray($columnValues, 'row_kmf_' . $kmfId);
+    }
+
+    $page->addHtml($table->show());
+    $page->show();
+} catch (Exception $e) {
+    $gMessage->show($e->getMessage());
+}

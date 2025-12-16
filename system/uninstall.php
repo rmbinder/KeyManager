@@ -9,8 +9,8 @@
  *
  * Parameters:
  *
- * mode     : security_check - security check
- *            uninst - uninstallation procedure
+ * mode     : security_check    - security check
+ *            uninst            - uninstallation procedure
  *
  ***********************************************************************************************
  */

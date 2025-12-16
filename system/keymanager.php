@@ -13,16 +13,16 @@
  * ****************************************************************************
  * Parameters:
  *
- * mode : Output(html, print, csv-ms, csv-oo, pdf, pdfl, xlsx)
- * filter_string : general filter string
- * filter_keyname : filter for keyname
- * filter_receiver : filter for receiver
- * show_all : 0 - (Default) show active keys only
- * 1 - show all keys (also made to the former)
- * export_and_filter : 0 - (Default) No filter and export menu
- * 1 - Filter and export menu is enabled
- * same_side : 0 - (Default) side was called by another side
- * 1 - internal call of the side
+ * mode                 : Output(html, print, csv-ms, csv-oo, pdf, pdfl, xlsx)
+ * filter_string        : general filter string
+ * filter_keyname       : filter for keyname
+ * filter_receiver      : filter for receiver
+ * show_all             : 0 - (Default) show active keys only
+ *                        1 - show all keys (also made to the former)
+ * export_and_filter    : 0 - (Default) No filter and export menu
+ *                        1 - Filter and export menu is enabled
+ * same_side            : 0 - (Default) side was called by another side
+ *                        1 - internal call of the side
  *
  * ***************************************************************************
  */
@@ -34,7 +34,6 @@ use Plugins\KeyManager\classes\Config\ConfigTable;
 use Plugins\KeyManager\classes\Service\Keys;
 
 try {
-
     require_once (__DIR__ . '/../../../system/common.php');
     require_once (__DIR__ . '/common_function.php');
 
@@ -230,8 +229,7 @@ try {
             if ($getExportAndFilter) {
                 $datatable = false;
             } else {
-                // Workaround für Admidio 5 (ohne Verwendung der Presenter-Klassen; $datatable darf nicht true sein)
-                // $datatable = true;
+                $datatable = true;
             }
             $hoverRows = true;
 
