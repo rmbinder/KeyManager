@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * KeyManager
  *
- * Version 3.0.0 Beta 1
+ * Version 3.0.0
  *
  * KeyManager is an Admidio plugin for managing building and room keys.
  * 
@@ -22,7 +22,7 @@ use Admidio\Infrastructure\Exception;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 
 // Fehlermeldungen anzeigen
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 try {
     require_once (__DIR__ . '/../../system/common.php');
