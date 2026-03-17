@@ -165,7 +165,7 @@ try {
         'showContextDependentFirstEntry' => true,
         'helpTextId' => 'PLG_KEYMANAGER_PROFILE_ADDIN_DESC'
     ));
-    $formProfileAddin->addCustomContent('', $gL10n->get('PLG_KEYMANAGER_PROFILE_ADDIN_DESC2'));
+
     $formProfileAddin->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array(
         'icon' => 'bi-check-lg',
         'class' => ' offset-sm-3'

@@ -11,7 +11,6 @@
     <string name="PLG_KEYMANAGER_CREATED_WITH">erstellt mit dem Plugin KeyManager der Online-Mitgliederverwaltung Admidio</string> 
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
-    <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
     <string name="PLG_KEYMANAGER_EXPORT">Export</string>
     <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Export und Filter</string>
     <string name="PLG_KEYMANAGER_FIELD">Feld einer lfd. Nr.</string>
@@ -59,7 +58,6 @@
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PROFILE_ADDIN">Einstellungen für die Profilansicht</string>
     <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC">In der Profilansicht eines Mitglieds können ausgegebene Schlüssel angezeigt werden. Standardmäßig wird nur der Schlüsselname angezeigt. Hier kann, zusätzlich zum Schlüsselnamen, ein weiteres Schlüsselfeld ausgewählt und angezeigt werden.</string>    
-    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC2">Damit in der Profilansicht Schlüssel angezeigt werden, muss folgende Zeile in die profile.php eingefügt werden: "require_once(ADMIDIO_PATH . FOLDER_PLUGINS .'/keymanager/keymanager_profile_addin.php');".\n\nWeitere Infos dazu finden sich in der Datei keymanager_profile_addin.php.</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Empfänger</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Alle Schlüssel anzeigen</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Sonderfall: Aktueller Benutzer oder Administrator</string>    

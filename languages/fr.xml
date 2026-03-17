@@ -11,7 +11,6 @@
     <string name="PLG_KEYMANAGER_CREATED_WITH">créé avec le Plugin KeyManager de l'administration des membres en ligne Admidio</string> 
     <string name="PLG_KEYMANAGER_DOCUMENTATION">Documentation</string>
     <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
-    <string name="PLG_KEYMANAGER_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
     <string name="PLG_KEYMANAGER_EXPORT">Exporter</string>
     <string name="PLG_KEYMANAGER_EXPORT_AND_FILTER">Exporter et filtrer</string>
     <string name="PLG_KEYMANAGER_FIELD">Champ de course non.</string>
@@ -59,7 +58,6 @@
     <string name="PLG_KEYMANAGER_PLUGIN_VERSION">Version</string>
     <string name="PLG_KEYMANAGER_PROFILE_ADDIN">Paramètres d'affichage du profil</string>
     <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC">Les clés émises peuvent être consultées dans la vue du profil d'un membre. Par défaut, seul le nom de la clé est affiché. Outre le nom de la clé, un autre champ clé peut être sélectionné et affiché ici.</string>    
-    <string name="PLG_KEYMANAGER_PROFILE_ADDIN_DESC2">Pour que les clés soient affichées dans la vue de profil, la ligne suivante doit être ajoutée à profile.php: "require_once(ADMIDIO_PATH . FOLDER_PLUGINS .'/keymanager/keymanager_profile_addin.php');".\n\nDe plus amples informations peuvent être trouvées dans le fichier keymanager_profile_addin.php.</string>
     <string name="PLG_KEYMANAGER_RECEIVER">Destinataires</string>     
     <string name="PLG_KEYMANAGER_SHOW_ALL_KEYS">Afficher toutes les clés</string>
     <string name="PLG_KEYMANAGER_SPECIAL_CASE_CURUSER_OR_ADMIN">Cas particulier: utilisateur actuel ou administrateur</string>    
