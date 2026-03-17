@@ -55,7 +55,7 @@ try {
         $_SESSION['pKeyManager']['show_all'] = false;
     }
     if (! isset($_SESSION['pKeyManager']['export_and_filter'])) {
-        $_SESSION['pKeyManager']['export_and_filter'] = false;
+        $_SESSION['pKeyManager']['export_and_filter'] = true;
     }
 
     $getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array(

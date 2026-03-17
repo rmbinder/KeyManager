@@ -22,7 +22,7 @@ use Admidio\Infrastructure\Exception;
 use Plugins\KeyManager\classes\Config\ConfigTable;
 
 // Fehlermeldungen anzeigen
-//error_reporting(E_ALL);
+// error_reporting(E_ALL);
 
 try {
     require_once (__DIR__ . '/../../system/common.php');
@@ -32,24 +32,23 @@ try {
     if (! isUserAuthorized()) {
         throw new Exception('SYS_NO_RIGHTS');
     }
-    
-      $gNavigation->addStartUrl(CURRENT_URL);
-      
+
+    $gNavigation->addStartUrl(CURRENT_URL);
 
     $pPreferences = new ConfigTable();
     if ($pPreferences->checkForUpdate()) {
         $pPreferences->init();
-    } 
+    }
     $pPreferences->read();
 
     if ($pPreferences->config['install']['access_role_id'] == 0 || $pPreferences->config['install']['menu_item_id'] == 0) {
-        
+
         $urlInst = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/install.php';
         $gMessage->show($gL10n->get('PLG_KEYMANAGER_INSTALL_UPDATE_REQUIRED', array(
             '<a href="' . $urlInst . '">' . $urlInst . '</a>'
         )));
     }
-    
+
     admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/keymanager.php');
 } catch (Exception $e) {
     $gMessage->show($e->getMessage());
